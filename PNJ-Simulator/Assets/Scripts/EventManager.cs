@@ -7,11 +7,9 @@ using UnityEngine;
 /// </summary>
 public enum EventType
 {
-    KEY_PRESSED,
     END_SCENE,
     SELL,
-    GIVE_QUEST,
-
+    GIVE_QUEST
 }
 
 public delegate void Callback();
