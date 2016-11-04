@@ -8,6 +8,7 @@ using UnityEngine;
 public enum EventType
 {
     END_SCENE,
+    KILL_MONSTER,
     SELL,
     GIVE_QUEST
 }
