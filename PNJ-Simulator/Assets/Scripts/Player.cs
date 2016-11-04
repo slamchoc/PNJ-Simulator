@@ -17,7 +17,7 @@ public class Player : MonoBehaviour {
 	
 	}
 
-    void move (float x, float y)
+    public void move (float x, float y)
     {
 
     }

@@ -40,14 +40,16 @@ public class InputManager : MonoBehaviour {
             case ScenesType.SHOP:
                 if (menu != null)
                     OnMenu();
-                else
+                else if(player != null)
                     OnMap();
                 break;
             case ScenesType.MAIN_MENU:
-                OnMenu();
+                if(menu != null)
+                    OnMenu();
                 break;
             case ScenesType.BATTLE:
-                OnBattle();
+                if(player!=null)
+                    OnBattle();
                 break;
             default:
                 break;
@@ -95,7 +97,7 @@ public class InputManager : MonoBehaviour {
 
     private void OnMap()
     {
-
+        player.move(horizontal, vertical);
     }
 
     private void OnBattle()
