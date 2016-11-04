@@ -7,12 +7,11 @@ using UnityEngine;
 /// </summary>
 public enum EventType
 {
-    TURN_ENDED,
-    GAME_ENDED,
-    ACTION_DONE,
-    TILE_CLICKED,
-    HOURGLASS_CLICKED,
-    HOURGLASS_EATEN
+    KEY_PRESSED,
+    END_SCENE,
+    SELL,
+    GIVE_QUEST,
+
 }
 
 public delegate void Callback();
