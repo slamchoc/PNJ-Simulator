@@ -10,7 +10,9 @@ public enum EventType
     END_SCENE,
     KILL_MONSTER,
     SELL,
-    GIVE_QUEST
+    GIVE_QUEST,
+    MENU_ENTERED,
+    MENU_EXIT
 }
 
 public delegate void Callback();
