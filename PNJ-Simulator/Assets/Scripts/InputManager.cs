@@ -116,8 +116,13 @@ public class InputManager : MonoBehaviour {
     private void OnMap()
     {
         player.move(horizontal, vertical);
-        if (submit != 0)
+        if (submit != 0 && !Validated)
+        {
             player.interact();
+            Validated = true;
+        }
+        else if (submit == 0)
+            Validated = false;
     }
 
     private void OnBattle()

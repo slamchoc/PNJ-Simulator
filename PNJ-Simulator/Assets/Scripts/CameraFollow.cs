@@ -17,7 +17,7 @@ public class CameraFollow : MonoBehaviour {
         if (target != null)
         {
             Vector3 velocity = target.GetComponentInParent<Rigidbody>().velocity;
-            Vector3 future =  Vector3.SmoothDamp(this.transform.position, target.transform.position, ref velocity, 0.2f);
+            Vector3 future =  Vector3.SmoothDamp(this.transform.position, target.transform.position, ref velocity, 0.1f);
             this.gameObject.transform.position = new Vector3(future.x, future.y, -10);
         }
         else

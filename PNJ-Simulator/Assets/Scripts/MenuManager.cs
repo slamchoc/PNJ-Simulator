@@ -62,13 +62,13 @@ public class MenuManager : MonoBehaviour
                                     );
         DontDestroyOnLoad(this.gameObject);
 
-        mainMenuStartPos = new Vector3(0, 2.1f, 0);
+        mainMenuStartPos = new Vector3(0, 2.1f, -4);
         mainMenuOffset = new Vector3(0, -2.1f, 0);
 
-        fightStartPos = new Vector3(0, 2.1f, 0);
+        fightStartPos = new Vector3(0, 2.1f, -4);
         fightOffset = new Vector3(0, -2.1f, 0);
 
-        dialogueStartPos = new Vector3(-6.75f, -0.5f, -2);
+        dialogueStartPos = new Vector3(-6.75f, -0.5f, -4);
         dialogueOffset = new Vector3(0, 0.75f, 0);
 
         actualScene = ScenesType.MAIN_MENU;
@@ -149,18 +149,24 @@ public class MenuManager : MonoBehaviour
         {
 
             GameObject tmpPanel = Instantiate(panelDialogue);
+            tmpPanel.transform.parent = Camera.main.transform;
             tmpPanel.GetComponentInChildren<TextMesh>().text = pair.Second;
             tmpPanel.transform.position = panelPos;
+
             tmpPanel.transform.localScale = new Vector3(tmpPanel.transform.localScale.x* dialogueScale.x, tmpPanel.transform.localScale.y * dialogueScale.y, tmpPanel.transform.localScale.z * dialogueScale.z);
             panelPos += dialogueOffset;
             actualMenuPrinted.Add(tmpPanel);
         }
 
         GameObject text = Instantiate(textDialogue);
+        text.transform.parent = Camera.main.transform;
+
         text.GetComponentInChildren<TextMesh>().text = _menu.text;
         actualMenuPrinted.Add(text);
 
         GameObject arrow = Instantiate(arrowDialogue);
+        arrow.transform.parent = Camera.main.transform;
+
         arrow.transform.position = dialogueStartPos - new Vector3(1.5f,0,0);
         arrow.transform.localScale = new Vector3(arrow.transform.localScale.x * dialogueScale.x, arrow.transform.localScale.y * dialogueScale.y, arrow.transform.localScale.z * dialogueScale.z);
         actualMenuPrinted.Add(arrow);
@@ -174,6 +180,8 @@ public class MenuManager : MonoBehaviour
         foreach (Pair<Callback,string> pair in _menu.options)
         {
             GameObject tmpPanel = Instantiate(panelFight);
+            tmpPanel.transform.parent = Camera.main.transform;
+
             tmpPanel.GetComponentInChildren<TextMesh>().text = pair.Second;
             tmpPanel.transform.position = panelPos;
             panelPos += fightOffset;
@@ -181,6 +189,8 @@ public class MenuManager : MonoBehaviour
 
         }
         GameObject arrow = Instantiate(arrowFight);
+        arrow.transform.parent = Camera.main.transform;
+
         actualMenuPrinted.Add(arrow);
         currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
     }
