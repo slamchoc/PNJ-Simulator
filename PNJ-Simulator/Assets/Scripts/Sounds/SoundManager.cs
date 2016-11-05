@@ -127,6 +127,5 @@ public class SoundManager : MonoBehaviour {
         EventManager.removeActionFromEvent<SoundsType>(EventType.PLAY_SOUND_ONCE, playSound);
         EventManager.removeActionFromEvent<SoundsType>(EventType.PLAY_SOUND_LOOP, playSoundLoop);
         EventManager.removeActionFromEvent(EventType.STOP_SOUND, stopSounds);
-
     }
 }

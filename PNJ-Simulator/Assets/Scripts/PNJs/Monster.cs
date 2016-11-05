@@ -62,6 +62,8 @@ public class Monster : PNJ
 
     void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Collision with " + collision.gameObject);
+        Debug.Log(collision.gameObject.transform.position + " " + this.gameObject.transform.position);
         if(collision.gameObject.GetComponent<Player>() != null)
         {
 
@@ -79,6 +81,8 @@ public class Monster : PNJ
         EventManager.removeActionFromEvent<ScenesType>(EventType.NEW_SCENE, sceneLoaded);
 
         EventManager.raise<Menu>(EventType.MENU_ENTERED, menu);
+        EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.MUSIQUE_PNJ);
+
         Destroy(this.gameObject);
     }
 }
