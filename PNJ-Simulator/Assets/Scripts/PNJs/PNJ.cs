@@ -16,6 +16,7 @@ public class PNJ : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+    
 	
 	}
 
