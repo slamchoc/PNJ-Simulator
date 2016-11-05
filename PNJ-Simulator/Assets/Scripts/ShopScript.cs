@@ -7,14 +7,14 @@ public class ShopScript : MonoBehaviour {
 
     public GameObject cinematique;
     [SerializeField]
-    private GameObject table;
-    [SerializeField]
     private GameObject stair;
 
     [SerializeField]
     private Hero hero;
 
-    private Menu nextMenu;
+    /// <summary>
+    /// the current visitor of the shop
+    /// </summary>
     private GameObject visitor;
 
     private int currentDay = 0;
@@ -32,12 +32,18 @@ public class ShopScript : MonoBehaviour {
             0
             );
 
-        Menu tableMenu = new Menu(
-                                        new List<Pair<Callback, String>> { new Pair<Callback, String>() }, ""
+        Menu stairMenu = new Menu(
+                                        new List<Pair<Callback, String>> { new Pair<Callback, String>(nextDay,"dormir") }, "(* Enfin, la journee se termine *)"
                                     );
-        table.GetComponent<PNJ>().setMenu(tableMenu);
+        stair.GetComponent<PNJ>().setMenu(stairMenu);
+        EventManager.addActionToEvent(EventType.END_DAY, nextDay);
+        //TODO c'est degueux, trouver autre chose !
+        hero = FindObjectOfType<Hero>();
+    }
 
-        nextDay();
+    void OnDestroy()
+    {
+        EventManager.removeActionFromEvent(EventType.END_DAY, nextDay);
     }
 
     // Update is called once per frame
@@ -59,7 +65,10 @@ public class ShopScript : MonoBehaviour {
                 cinematique.SetActive(false);
                 EventManager.raise(EventType.STOP_SOUND);
             }
+
+            nextDay();
         }
+
     }
 
     private GameObject generatePNJ()
@@ -85,8 +94,14 @@ public class ShopScript : MonoBehaviour {
             }
 
         }
+        visitor.SetActive(true);
         visitor.transform.position = new Vector3(0, 5, -2);
         visitor.transform.localScale = new Vector2(2, 2);
         visitor.GetComponent<Rigidbody>().velocity = new Vector3(0,0.5f,0);
+    }
+
+    void exitVisitor()
+    {
+        visitor.GetComponent<Rigidbody>().velocity = new Vector3(0, -0.5f, 0);
     }
 }

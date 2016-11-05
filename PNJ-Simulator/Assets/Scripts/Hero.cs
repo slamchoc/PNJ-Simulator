@@ -5,13 +5,14 @@ using System;
 public class Hero : MonoBehaviour {
 
     [SerializeField]
-    Player player;
+    public Player player;
 
     public Menu nextMenu { get; private set; }
 
 	// Use this for initialization
 	void Start () {
         Debug.Assert(player != null);
+        DontDestroyOnLoad(this.gameObject);
 	}
 	
 	// Update is called once per frame
@@ -134,7 +135,7 @@ public class Hero : MonoBehaviour {
 
         jourFin = new Menu(
                             new List<Pair<Callback, String>> {
-                                                            new Pair<Callback, String>(() => { EventManager.raise(EventType.MENU_EXIT); }, "terminer le jour")
+                                                            new Pair<Callback, String>(() => { nextMenu = null;  EventManager.raise(EventType.MENU_EXIT); EventManager.raise(EventType.END_DAY); }, "terminer le jour")
                                                              },
                             "Merci, et bonne journee a vous"
                         );
@@ -198,7 +199,7 @@ public class Hero : MonoBehaviour {
                    );
         jour2Internal2 = new Menu(
                        new List<Pair<Callback, String>> {
-                                                                new Pair<Callback, String>(()=> { player.addGold();player.looseReputation(); EventManager.raise(EventType.MENU_EXIT); }, "terminer le jour")
+                                                                new Pair<Callback, String>(()=> { nextMenu = null; player.addGold();player.looseReputation(); EventManager.raise(EventType.MENU_EXIT); }, "terminer le jour")
                                                         },
                        "(* Le Heros commence a m'enerver !\nIl n'y aura plus personne pour aujourd'hui.\n Je vais vers l'escalier, il serai temps d'aller me coucher *)"
                    );
@@ -250,7 +251,7 @@ public class Hero : MonoBehaviour {
                             );
         jour5Buy = new Menu(
                                 new List<Pair<Callback, String>> {
-                                                                new Pair<Callback, String>(()=> { player.addGold();player.looseReputation(); EventManager.raise(EventType.MENU_EXIT); }, "continuer")
+                                                                new Pair<Callback, String>(()=> { nextMenu = null;player.addGold();player.looseReputation(); EventManager.raise(EventType.MENU_EXIT); }, "continuer")
                                                                  },
                                 "Heros :\nBon OK, mais c'est la derniere fois sinon ...\nEssaie de faire ce que je fait avec ta camelote"
                             );    }
@@ -314,7 +315,7 @@ public class Hero : MonoBehaviour {
                     );
         jour7_9 = new Menu(
                         new List<Pair<Callback, String>> {
-                                                                new Pair<Callback, String>(()=> { EventManager.raise(EventType.MENU_EXIT); }, "continuer")
+                                                                new Pair<Callback, String>(()=> {nextMenu = null; EventManager.raise(EventType.MENU_EXIT); }, "continuer")
                                                          },
                         "(* A part ca moi aussi je peux le faire ! *)"
                     );
