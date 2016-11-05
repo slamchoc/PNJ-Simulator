@@ -94,7 +94,6 @@ public class InputManager : MonoBehaviour {
                     menu.decrementPosition();
                 else
                     menu.incrementPosition();
-                EventManager.raise(EventType.SELECTION_CHANGED);
                 SelectedOptionChanged = true;
             }
         }
@@ -104,7 +103,6 @@ public class InputManager : MonoBehaviour {
         {
             menu.call();
             Validated = true;
-            EventManager.raise(EventType.SELECTION_VALIDATED);
         }
         else if (submit == 0)
             Validated = false;
