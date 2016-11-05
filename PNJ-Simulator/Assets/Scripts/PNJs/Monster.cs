@@ -20,6 +20,8 @@ public class Monster : PNJ
     [SerializeField]
     private float speed = 1.5f;
 
+    private int damages = 3;
+
     public void createMonster(int _pvs, Vector3 _patternA, Vector3 _patternB)
     {
         nbPvs = _pvs;
@@ -60,8 +62,14 @@ public class Monster : PNJ
         if (nbPvs < 0)
         {
             EventManager.raise(EventType.KILL_MONSTER, this.gameObject);
+            EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.MONSTRE_MORT);
+
             EventManager.raise(EventType.MENU_EXIT);
             Destroy(this.gameObject);
+        }
+        else
+        {
+            EventManager.raise<int>(EventType.DAMAGE_PLAYER, damages);
         }
     }
 
