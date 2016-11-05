@@ -16,22 +16,22 @@ public class PNJFactory : MonoBehaviour
         createPNJs();
     }
 
-    Callback mDel;
-
     private void createPNJs()
     {
+        /******* Creation des PNJs *********/
+        List<Pair<Callback, String>> listCallbacks = new List<Pair<Callback, String>>();
+        listCallbacks.Add(new Pair<Callback, String>(() => { Debug.Log("?"); }, "Loultest"));
+        string textPnj = "Je suis le texte du PNJ";
 
-        Pair<Callback, String> prout = new Pair<Callback, String>(mDel, "Loultest");
-        List<Pair<Callback, String>> prat = new List<Pair<Callback, String>>();
-        prat.Add(prout);
-        createPNJ(new Vector3(0, 0, 0), prat, "Je suis le texte du PNJ");
+        createPNJ(new Vector3(0, 0, 0), listCallbacks, textPnj);
+
+        /************ Creation des monstres **********************/
+        listCallbacks = new List<Pair<Callback, String>>();
+        listCallbacks.Add(new Pair<Callback, String>(() => { Debug.Log("?"); }, "Loultest"));
+        string textMonster = "Je suis le texte du MONSTRE";
+
+        createMonster(new Vector3(0, 0, 0), listCallbacks, textMonster, 3, new Vector3(0,0,0), new Vector3(1,1,0));
     }
-
-	// Update is called once per frame
-	void Update ()
-    {
-	
-	}
 
     void createPNJ(Vector3 position, List<Pair<Callback, String>> menu, string text)
     {
