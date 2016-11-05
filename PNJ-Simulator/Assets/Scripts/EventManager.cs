@@ -15,6 +15,8 @@ public enum EventType
     ATTACK_PLAYER,
     NEW_SCENE,
     KILL_MONSTER,
+    DAMAGE_ENNEMY,
+    DAMAGE_PLAYER,
     SELL,
     GIVE_QUEST,
     MENU_ENTERED,
