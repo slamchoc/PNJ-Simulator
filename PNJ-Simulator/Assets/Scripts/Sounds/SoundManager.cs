@@ -6,7 +6,36 @@ using System.Collections;
 
 public enum Sounds
 {
-     PORTE_OUVERTE
+    AMBIANCE_FORET,
+    AMBIANCE_FORGE,
+    AMBIANCE_VILLAGE,
+    COUP_EPEE,
+    COUP_EPEE_ECLAIR,
+    COUP1,
+    COUP2,
+    DEFONCAGE,
+    EPEE_RANGEE,
+    MUSIQUE_CINEMATIQUE,
+    MUSIQUE_CINEMATIQUE2,
+    MUSIQUE_CONNE,
+    MUSIQUE_DONJON,
+    MUSIQUE_HEROS,
+    MUSIQUE_VILLAGE,
+    PETIT_COUP1,
+    PETIT_COUP2,
+    PETIT_COUP3,
+    PETIT_COUP4,
+    PETIT_COUP5,
+    PETIT_COUP6,
+    PETIT_COUP7,
+    PETIT_COUP8,
+    PORTE_CASSEE,
+    PORTE_OUVERTE,
+    POUIT_ACCEPTATION,
+    POUIT_DEPLACEMENT,
+    POUIT_RETOUR,
+    REUSSITE_EPIQUE,
+    SON_FOULE
 }
 
 public class SoundManager : MonoBehaviour {
@@ -33,7 +62,6 @@ public class SoundManager : MonoBehaviour {
 
         DontDestroyOnLoad(this.gameObject);
 
-
         // Loading of the sounds 
         sources = new List<AudioClip>();
         var info = new DirectoryInfo(absolutePath);
@@ -46,8 +74,9 @@ public class SoundManager : MonoBehaviour {
             translateAudioToString.Add(clip.name, clip); 
         }
 
-        EventManager.addActionToEvent<Sounds>(EventType.PLAY_SOUND, playSound);
-	}
+        EventManager.addActionToEvent<Sounds>(EventType.PLAY_SOUND_ONCE, playSound);
+        EventManager.addActionToEvent<Sounds>(EventType.PLAY_SOUND_LOOP, playSoundLoop);
+    }
 
     bool IsValidFileType(string fileName)
     {
@@ -70,21 +99,27 @@ public class SoundManager : MonoBehaviour {
 
     public void playSound(Sounds soundToPlay)
     {
-        switch(soundToPlay)
-        {
-            case Sounds.PORTE_OUVERTE:
-                break;
-            default:
-                break;
-        }
+        GameObject audio = Instantiate(audioPrefab);
+        audio.transform.parent = this.transform;
+
+        Debug.Log(soundToPlay+" to "+ translateAudioToString.Keys.ElementAt((int)soundToPlay));
+
+        audio.GetComponent<Sound>().playOnce(translateAudioToString.Values.ElementAt((int)soundToPlay));
     }
 
-    private void startSound(string name)
+    public void playSoundLoop(Sounds soundToPlayLoop)
     {
         GameObject audio = Instantiate(audioPrefab);
         audio.transform.parent = this.transform;
-        audio.GetComponent<Sound>().playOnce(translateAudioToString[name]);
+
+        Debug.Log(soundToPlayLoop + " to " + translateAudioToString.Keys.ElementAt((int)soundToPlayLoop));
+
+        audio.GetComponent<Sound>().playLoop(translateAudioToString.Values.ElementAt((int)soundToPlayLoop));
     }
-	
-	
+
+    void OnDestroy()
+    {
+        EventManager.removeActionFromEvent<Sounds>(EventType.PLAY_SOUND_ONCE, playSound);
+        EventManager.removeActionFromEvent<Sounds>(EventType.PLAY_SOUND_LOOP, playSoundLoop);
+    }
 }
