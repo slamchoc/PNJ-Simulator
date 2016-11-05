@@ -178,8 +178,8 @@ public class ShopScript : MonoBehaviour {
         textRandom = PNJName+" :\nBonjour forgeron, peux-tu me conseiller en " + rand1 + " ?\nJe dois me battre contre "+rand2;  
         textOption1Random = "Donner une quete";
         option1Retour = new Menu(new List<Pair<Callback, String>> {new Pair<Callback,String>(queteRetour,"continuer")},texteQuete);
-        textOption2Random = rand1+rand3;
-        textOption3Random = rand1+rand4;
+        textOption2Random = rand1+" "+rand3;
+        textOption3Random = rand1+" "+rand4;
 
         if (isSecondChoiceGood)
         {
