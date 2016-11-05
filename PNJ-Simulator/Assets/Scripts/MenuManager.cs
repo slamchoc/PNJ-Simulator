@@ -76,7 +76,7 @@ public class MenuManager : MonoBehaviour
         EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, sceneChanged);
         EventManager.addActionToEvent<Menu>(EventType.MENU_ENTERED, menuToPrint);
         EventManager.addActionToEvent(EventType.MENU_EXIT,onMenuExit);
-        EventManager.raise<Menu>(EventType.MENU_ENTERED, mainMenu);
+        //EventManager.raise<Menu>(EventType.MENU_ENTERED, mainMenu);
     }
 
     // Update is called once per frame
@@ -86,12 +86,12 @@ public class MenuManager : MonoBehaviour
         {
             Menu menu = currentMenuActive.First;
             GameObject arrow = currentMenuActive.Second;
-            if(actualScene == ScenesType.MAIN_MENU)
+            /*if(actualScene == ScenesType.MAIN_MENU)
                 arrow.transform.position = new Vector3(arrow.transform.position.x, mainMenuStartPos.y + menu.position * mainMenuOffset.y, arrow.transform.position.z);
             else if(actualScene == ScenesType.BATTLE)
                 arrow.transform.position = new Vector3(arrow.transform.position.x, fightStartPos.y + menu.position * fightOffset.y, arrow.transform.position.z);
             else
-                arrow.transform.position = new Vector3(arrow.transform.position.x, dialogueStartPos.y + menu.position * dialogueOffset.y, arrow.transform.position.z);
+                arrow.transform.position = new Vector3(arrow.transform.position.x, dialogueStartPos.y + menu.position * dialogueOffset.y, arrow.transform.position.z);*/
         }
 	}
 
