@@ -97,6 +97,7 @@ public class Player : MonoBehaviour {
       
         if (lifePoint <= 0)
         {
+            EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.MORT_PNJ);
             EventManager.raise(EventType.PLAYER_DEAD);
         }
     }

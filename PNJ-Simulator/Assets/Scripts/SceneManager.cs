@@ -38,6 +38,26 @@ public class SceneManager : MonoBehaviour
         {
             Debug.Log("raise");
             EventManager.raise<ScenesType>(EventType.NEW_SCENE, actualScene);
+
+            switch (actualScene)
+            {
+                case ScenesType.MAIN_MENU:
+                    EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.MUSIQUE_HEROS);
+                    break;
+                case ScenesType.BATTLE:
+                    EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.MUSIQUE_PNJ);
+                    break;
+                case ScenesType.MAP:
+                    EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.AMBIANCE_VILLAGE);
+                    break;
+                case ScenesType.SHOP:
+                    EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.AMBIANCE_FORGE);
+                    break;
+                default:
+                    Debug.Log("Probleme dans changeScene");
+                    break;
+            }
+
             eventRaised = true;
         }
     }
@@ -53,6 +73,8 @@ public class SceneManager : MonoBehaviour
     public void changeScene(ScenesType newScene)
     {
         EventManager.raise<ScenesType>(EventType.END_SCENE, actualScene);
+        EventManager.raise(EventType.STOP_SOUND);
+
         eventRaised = false;
         actualScene = newScene;
 
