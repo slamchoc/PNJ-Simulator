@@ -19,7 +19,7 @@ public class InputManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        currentType = ScenesType.MAIN_MENU;
+        currentType = ScenesType.MAP;
         DontDestroyOnLoad(this.gameObject);
         EventManager.addActionToEvent<ScenesType>(EventType.END_SCENE, OnSceneChanged);
         EventManager.addActionToEvent<Menu>(EventType.MENU_ENTERED, OnMenuEntered);
