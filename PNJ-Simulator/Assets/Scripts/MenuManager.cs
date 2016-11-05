@@ -51,7 +51,8 @@ public class MenuManager : MonoBehaviour
                                                                             },"Game"),
                                                                             new Pair<Callback,String>(()=> 
                                                                             {
-                                                                                Debug.Log("choix alt");
+                                                                                EventManager.raise(EventType.MENU_EXIT);
+                                                                                sceneManager.changeScene(ScenesType.MAP);
                                                                             },"Alt"),
                                                                             new Pair<Callback,String>(()=> 
                                                                             {
