@@ -68,7 +68,7 @@ public class MenuManager : MonoBehaviour
         fightStartPos = new Vector3(0, 2.1f, 0);
         fightOffset = new Vector3(0, -2.1f, 0);
 
-        dialogueStartPos = new Vector3(-6.75f, -1.5f, 0);
+        dialogueStartPos = new Vector3(-6.75f, -1.5f, -2);
         dialogueOffset = new Vector3(0, 0.75f, 0);
 
         actualScene = ScenesType.MAIN_MENU;
