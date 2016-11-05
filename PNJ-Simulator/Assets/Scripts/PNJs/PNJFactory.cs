@@ -87,8 +87,8 @@ public class PNJFactory : MonoBehaviour
             listGO[1].GetComponent<Rigidbody>().velocity = new Vector3(5, 0, 0);
             Destroy(listGO[1], 5f);
         }, "Donner une quete au Garde"));
-        textPnj = "Vous ne passerz pas.";
-        listPNJs.Add(new PNJToCreate(new Vector3(0.63f, 0.5f, -1), listCallbacks, textPnj));
+        textPnj = "Vous ne passerez pas.";
+        listPNJs.Add(new PNJToCreate(new Vector3(0.63f, 0.5f, -1), listCallbacks, textPnj));  
 
         listCallbacks = new List<Pair<Callback, String>>();
         listCallbacks.Add(new Pair<Callback, String>(() =>
@@ -100,7 +100,7 @@ public class PNJFactory : MonoBehaviour
             Destroy(listGO[2], 5f);
 
         }, "Donner une quete au Garde"));
-        textPnj = "Vous ne passerz pas.";
+        textPnj = "Vous ne passerez pas.";
         listPNJs.Add(new PNJToCreate(new Vector3(0.63f, 1.7f, -1), listCallbacks, textPnj));
 
         /************ Creation des monstres **********************/
