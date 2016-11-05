@@ -19,8 +19,12 @@ public class SceneManager : MonoBehaviour
 {
     ScenesType actualScene = ScenesType.MAIN_MENU;
 
-	// Use this for initialization
-	void Start ()
+    private string sceneToLoad = "";
+
+    private bool eventRaised = true;
+
+    // Use this for initialization
+    void Start ()
     {
         DontDestroyOnLoad(this.gameObject);
         EventManager.addActionToEvent<ScenesType>(EventType.CHANGE_SCENE, changeScene);
@@ -28,7 +32,11 @@ public class SceneManager : MonoBehaviour
 
     void Update()
     {
-
+        if(sceneToLoad == UnityEngine.SceneManagement.SceneManager.GetActiveScene().name && !eventRaised)
+        {
+            EventManager.raise<ScenesType>(EventType.NEW_SCENE, actualScene);
+            eventRaised = true;
+        }
     }
 
     /// <summary>
@@ -38,7 +46,7 @@ public class SceneManager : MonoBehaviour
     public void changeScene(ScenesType newScene)
     {
         EventManager.raise<ScenesType>(EventType.END_SCENE, actualScene);
-
+        eventRaised = false;
         actualScene = newScene;
 
         switch (newScene)
@@ -60,28 +68,33 @@ public class SceneManager : MonoBehaviour
                 Debug.Log("Probleme dans changeScene");
                 break;
         }
-
-        EventManager.raise<ScenesType>(EventType.NEW_SCENE, newScene);
     }
 
     void goToMainMenu()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenuScene");
+        sceneToLoad = "MainMenuScene";
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
     }
 
     void goToBattle()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("BattleScene");
+        sceneToLoad = "BattleScene";
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
     }
 
     void goToMap()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Mapscene");
+        sceneToLoad = "Mapscene";
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
     }
 
     void goToShop()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("ShopScene");
+        sceneToLoad = "ShopScene";
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
     }
 
     public void quitGame()
