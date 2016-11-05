@@ -63,8 +63,17 @@ public class PNJFactory : MonoBehaviour
         List<Pair<Callback, String>> listCallbacks = new List<Pair<Callback, String>>();
         listCallbacks.Add(new Pair<Callback, String>(() => { Debug.Log("?"); }, "Loultest"));
         string textPnj = "Je suis le texte du PNJ";
+        listPNJs.Add( new PNJToCreate(new Vector3(-6, -6, -1), listCallbacks, textPnj));
 
-        listPNJs.Add( new PNJToCreate(new Vector3(-3, -3, -1), listCallbacks, textPnj));
+        listCallbacks = new List<Pair<Callback, String>>();
+        listCallbacks.Add(new Pair<Callback, String>(() => { Debug.Log("?"); }, "Loultest"));
+        textPnj = "Je suis le texte du garde !";
+        listPNJs.Add(new PNJToCreate(new Vector3(1.25f, 1.17f, -1), listCallbacks, textPnj));
+
+        listCallbacks = new List<Pair<Callback, String>>();
+        listCallbacks.Add(new Pair<Callback, String>(() => { Debug.Log("?"); }, "Loultest"));
+        textPnj = "Je suis le texte du garde numero 2!";
+        listPNJs.Add(new PNJToCreate(new Vector3(1.25f, 0.17f, -1), listCallbacks, textPnj));
 
         /************ Creation des monstres **********************/
 
@@ -77,10 +86,21 @@ public class PNJFactory : MonoBehaviour
         {
             EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.WEAK);
         }, "Attaque faible"));
-
         string textMonster = "??";
+        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(6,3,-2), new Vector3(9,3,-2)));
 
-        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(-3,3,0), new Vector3(3,3,0)));
+        listCallbacks = new List<Pair<Callback, String>>();
+        listCallbacks.Add(new Pair<Callback, String>(() =>
+        {
+            EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.STRONG);
+        }, "Attaque forte"));
+        listCallbacks.Add(new Pair<Callback, String>(() =>
+        {
+            EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.WEAK);
+        }, "Attaque faible"));
+        textMonster = "??";
+        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(10, 15, -2), new Vector3(9, 13, -2)));
+
     }
 }
 
