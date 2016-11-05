@@ -23,6 +23,7 @@ public class SceneManager : MonoBehaviour
 	void Start ()
     {
         DontDestroyOnLoad(this.gameObject);
+        EventManager.addActionToEvent<ScenesType>(EventType.CHANGE_SCENE, changeScene);
     }
 
     void Update()
@@ -91,6 +92,7 @@ public class SceneManager : MonoBehaviour
 
     void OnDestroy()
     {
-        EventManager.removeActionFromEvent<ScenesType>(EventType.END_SCENE, changeScene);
+        EventManager.removeActionFromEvent<ScenesType>(EventType.CHANGE_SCENE, changeScene);
+
     }
 }

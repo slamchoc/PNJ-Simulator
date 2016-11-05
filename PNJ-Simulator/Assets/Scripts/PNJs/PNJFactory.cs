@@ -10,6 +10,9 @@ public class PNJFactory : MonoBehaviour
     [SerializeField]
     private GameObject prefabMonster;
 
+
+
+
     // Use this for initialization
     void Start ()
     {
@@ -26,11 +29,21 @@ public class PNJFactory : MonoBehaviour
         createPNJ(new Vector3(0, 0, -1), listCallbacks, textPnj);
 
         /************ Creation des monstres **********************/
-        /*listCallbacks = new List<Pair<Callback, String>>();
-        listCallbacks.Add(new Pair<Callback, String>(() => { Debug.Log("?"); }, "Loultest"));
-        string textMonster = "Je suis le texte du MONSTRE";
+        listCallbacks = new List<Pair<Callback, String>>();
+        listCallbacks.Add(new Pair<Callback, String>(() => 
+        {
+            Debug.Log("HIT");
+            EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.STRONG);
+        }, "Attaque forte"));
+        listCallbacks.Add(new Pair<Callback, String>(() =>
+        {
+            Debug.Log("HIT");
+            EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.WEAK);
+        }, "Attaque faible"));
 
-        createMonster(new Vector3(0, 0, -1), listCallbacks, textMonster, 3, new Vector3(0,0,0), new Vector3(1,1,0));*/
+        string textMonster = "??";
+
+        createMonster(new Vector3(0, 0, -1), listCallbacks, textMonster, 3, new Vector3(0,0,0), new Vector3(1,1,0));
     }
 
     void createPNJ(Vector3 position, List<Pair<Callback, String>> menu, string text)
