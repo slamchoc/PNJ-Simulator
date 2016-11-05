@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 
-public class Menu : MonoBehaviour {
+public class Menu
+{
 
-    private string text;
-    private List<Pair<Callback, String>> options;
+    public string text { get; private set; }
+    public List<Pair<Callback, String>> options { get; private set; }
     public int position { get; private set; }
 
     public Menu(List<Pair<Callback, String>> _options, String _text)

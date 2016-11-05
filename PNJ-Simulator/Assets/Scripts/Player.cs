@@ -17,7 +17,7 @@ public class Player : MonoBehaviour {
     {
         currentOrientation = (dy > 0 ? Orientation.UP : Orientation.LEFT);
         currentOrientation = (dx < 0 ? Orientation.LEFT : Orientation.RIGHT);
-        GetComponent<Rigidbody2D>().velocity = new Vector2(dx * speed, dy * speed);
+        GetComponent<Rigidbody>().velocity = new Vector2(dx * speed, dy * speed);
     }
 
     public void interact()
@@ -28,6 +28,8 @@ public class Player : MonoBehaviour {
         RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, 1.5f);
         if (hit.collider != null)
             interactWith = hit.collider.gameObject;
+        else
+            return;
 
         PNJ interactScript = interactWith.GetComponent<PNJ>();
 
