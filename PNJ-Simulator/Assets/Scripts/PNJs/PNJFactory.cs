@@ -10,6 +10,8 @@ public class PNJFactory : MonoBehaviour
     [SerializeField]
     private GameObject prefabMonster;
 
+    public List<Sprite> PNJS;
+    public List<Sprite> monstres;
 
     List<GameObject> listGO = new List<GameObject>();
 
@@ -50,12 +52,12 @@ public class PNJFactory : MonoBehaviour
         Debug.Log("Instantiate");
 
         for (int i = 0; i < listMonsters.Count; i++)
-            listMonsters[i].instantiateMonster(prefabMonster, i);
+            listMonsters[i].instantiateMonster(prefabMonster, monstres[i] ,i);
         listGO.Clear();
 
-        foreach (PNJToCreate m in listPNJs)
+        for (int i = 0; i < listPNJs.Count; i++)
         {
-            listGO.Add(m.createPNJ(prefabPNJ));
+            listGO.Add(listPNJs[i].createPNJ(prefabPNJ, PNJS[i]));
         }
     }
 
@@ -149,11 +151,13 @@ class MonsterToCreate
         _patternB = patternB;
     }
 
-    public GameObject instantiateMonster(GameObject prefabMonster, int id)
+    public GameObject instantiateMonster(GameObject prefabMonster, Sprite sprite, int id)
     {
         if(!isDead)
         {
             GameObject monster = UnityEngine.Object.Instantiate(prefabMonster);
+            monster.GetComponent<SpriteRenderer>().sprite = sprite;
+
             monster.GetComponent<Monster>().createMonster(_pv, _patternA, _patternB);
             monster.GetComponent<Monster>().setMenu(_menu, _text);
             monster.GetComponent<Monster>().id = id;
@@ -181,11 +185,12 @@ class PNJToCreate
         _text = text;
     }
 
-    public GameObject createPNJ(GameObject prefabPNJ)
+    public GameObject createPNJ(GameObject prefabPNJ, Sprite sprite)
     {
         if (!isDead)
         {
             GameObject pnj = UnityEngine.Object.Instantiate(prefabPNJ);
+            pnj.GetComponent<SpriteRenderer>().sprite = sprite;
             pnj.GetComponent<PNJ>().setMenu(_menu, _text);
             pnj.transform.position = _position;
             return pnj;
