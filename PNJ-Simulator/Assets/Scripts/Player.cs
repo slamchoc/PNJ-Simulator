@@ -16,7 +16,7 @@ public class Player : MonoBehaviour {
     private int lifePoint;
     public int gold { get; private set; }
     public int reputation { get; private set; }
-    private Orientation currentOrientation = Orientation.RIGHT;
+    private Orientation currentOrientation = Orientation.DOWN;
     [SerializeField]
     private float speed;
     [SerializeField]
