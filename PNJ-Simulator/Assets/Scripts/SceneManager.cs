@@ -34,6 +34,7 @@ public class SceneManager : MonoBehaviour
     {
         if(sceneToLoad == UnityEngine.SceneManagement.SceneManager.GetActiveScene().name && !eventRaised)
         {
+            Debug.Log("raise");
             EventManager.raise<ScenesType>(EventType.NEW_SCENE, actualScene);
             eventRaised = true;
         }

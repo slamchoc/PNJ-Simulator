@@ -24,10 +24,8 @@ public class PNJFactory : MonoBehaviour
         else
         {
             DontDestroyOnLoad(this.gameObject);
-            Debug.Log(listMonsters.Count);
 
             createPNJs();
-            instantiatePNJs();
             EventManager.addActionToEvent<GameObject>(EventType.KILL_MONSTER, monsterHasbeenKilled);
             EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, newSceneLoaded);
         }
@@ -35,7 +33,9 @@ public class PNJFactory : MonoBehaviour
 
     void newSceneLoaded(ScenesType newScene)
     {
-        if(newScene == ScenesType.MAP)
+        Debug.Log(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+
+        if (newScene == ScenesType.MAP)
             instantiatePNJs();
     }
 
@@ -49,6 +49,8 @@ public class PNJFactory : MonoBehaviour
 
     private void instantiatePNJs()
     {
+        Debug.Log("Instantiate");
+
         for (int i = 0; i < listMonsters.Count; i++)
             listMonsters[i].instantiateMonster(prefabMonster, i);
         listGO.Clear();
@@ -61,6 +63,7 @@ public class PNJFactory : MonoBehaviour
 
     private void createPNJs()
     {
+        Debug.Log("create pnj");
         listGO.Clear();
 
 
