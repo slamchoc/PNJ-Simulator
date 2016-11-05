@@ -88,8 +88,7 @@ public class ShopScript : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        hero.gameObject.SetActive(true);
-        hero.player.gameObject.SetActive(true);
+
         /*menu du PNJ*/
         goodRetour = new Menu(
                                 new List<Pair<Callback, String>> { new Pair<Callback, String>(() => { exitVisitor(); hero.player.addGold(); hero.player.addReputation(); EventManager.raise(EventType.MENU_EXIT); }, "finir journee") }
@@ -119,10 +118,14 @@ public class ShopScript : MonoBehaviour {
         EventManager.addActionToEvent(EventType.SLAM_DOOR,slamDoor);
         //TODO c'est degueux, trouver autre chose !
         hero = FindObjectOfType<Hero>();
+        hero.gameObject.SetActive(true);
+        hero.player.gameObject.SetActive(true);
         hero.player.transform.localScale = new Vector2(2, 2);
         hero.transform.localScale = new Vector2(2, 2);
         hero.player.transform.position = initPlayerPosition;
+        hero.GetComponent<SpriteRenderer>().enabled = true;
         hero.transform.position = new Vector2(10,10);
+
 
     }
 
