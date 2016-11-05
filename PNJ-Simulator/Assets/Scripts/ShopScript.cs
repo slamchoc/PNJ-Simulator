@@ -66,9 +66,9 @@ public class ShopScript : MonoBehaviour {
                 needCinematique = false;
                 cinematique.SetActive(false);
                 EventManager.raise(EventType.STOP_SOUND);
+                nextDay();
             }
 
-            nextDay();
         }
 
     }
@@ -98,11 +98,11 @@ public class ShopScript : MonoBehaviour {
         visitor.SetActive(true);
         visitor.transform.position = new Vector3(0, 5, -2);
         visitor.transform.localScale = new Vector2(2, 2);
-        visitor.GetComponent<Rigidbody>().velocity = new Vector3(0,0.5f,0);
+        visitor.GetComponent<Rigidbody>().velocity = new Vector3(0,-0.5f,0);
     }
 
     void exitVisitor()
     {
-        visitor.GetComponent<Rigidbody>().velocity = new Vector3(0, -0.5f, 0);
+        visitor.GetComponent<Rigidbody>().velocity = new Vector3(0, 0.5f, 0);
     }
 }
