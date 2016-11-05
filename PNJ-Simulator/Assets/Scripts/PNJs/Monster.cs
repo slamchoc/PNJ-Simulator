@@ -92,6 +92,8 @@ public class Monster : PNJ
     {
         if(oldScene == ScenesType.BATTLE)
         {
+            Debug.Log("BATTLE loaded, raise de menu entered");
+
             EventManager.removeActionFromEvent<ScenesType>(EventType.NEW_SCENE, sceneLoaded);
 
             EventManager.raise<Menu>(EventType.MENU_ENTERED, menu);

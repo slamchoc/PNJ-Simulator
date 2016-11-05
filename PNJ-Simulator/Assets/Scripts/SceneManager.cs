@@ -36,6 +36,8 @@ public class SceneManager : MonoBehaviour
     {
         if(sceneToLoad == UnityEngine.SceneManagement.SceneManager.GetActiveScene().name && !eventRaised)
         {
+            Debug.Log("scene loaded");
+
             EventManager.raise<ScenesType>(EventType.NEW_SCENE, actualScene);
 
             switch (actualScene)
@@ -48,6 +50,7 @@ public class SceneManager : MonoBehaviour
                     break;
                 case ScenesType.MAP:
                     EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.AMBIANCE_VILLAGE);
+                    EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.SON_FOULE);
                     break;
                 case ScenesType.SHOP:
                     EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.AMBIANCE_FORGE);
@@ -62,7 +65,7 @@ public class SceneManager : MonoBehaviour
     }
     public void playerIsDead()
     {
-
+        Debug.Log("Player DED");
     }
 
     /// <summary>
@@ -71,6 +74,7 @@ public class SceneManager : MonoBehaviour
     /// <param name="newScene"></param>
     public void changeScene(ScenesType newScene)
     {
+        Debug.Log("Change scene to " + newScene);
         EventManager.raise<ScenesType>(EventType.END_SCENE, actualScene);
         EventManager.raise(EventType.STOP_SOUND);
 

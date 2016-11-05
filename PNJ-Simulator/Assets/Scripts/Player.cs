@@ -80,7 +80,6 @@ public class Player : MonoBehaviour {
 
     void damagesTaken(int damages)
     {
-        Debug.Log(lifePoint + " " + damages);
         lifePoint -= damages;
         if(damages > lifePoint/3)
         {

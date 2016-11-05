@@ -88,7 +88,7 @@ public class MenuManager : MonoBehaviour
             Menu menu = currentMenuActive.First;
             GameObject arrow = currentMenuActive.Second;
             if (arrow == null)
-                Debug.LogError("CRITICAL !");
+                Debug.LogError("CRITICAL arrow == null !");
 
             if(actualScene == ScenesType.MAIN_MENU)
                 arrow.transform.position = new Vector3(arrow.transform.position.x, mainMenuStartPos.y + menu.position * mainMenuOffset.y, arrow.transform.position.z);
@@ -106,6 +106,7 @@ public class MenuManager : MonoBehaviour
 
     void menuToPrint(Menu _menu)
     {
+        Debug.Log("Menu to print");
         switch(actualScene)
         {
             case ScenesType.MAIN_MENU:
@@ -180,6 +181,8 @@ public class MenuManager : MonoBehaviour
 
     void printBattle(Menu _menu)
     {
+
+        Debug.Log("Print battle asked, creation des arrows ");
         Vector3 panelPos = fightStartPos;
         foreach (Pair<Callback,string> pair in _menu.options)
         {

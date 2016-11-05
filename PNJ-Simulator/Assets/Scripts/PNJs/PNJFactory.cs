@@ -33,8 +33,6 @@ public class PNJFactory : MonoBehaviour
 
     void newSceneLoaded(ScenesType newScene)
     {
-        Debug.Log(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
-
         if (newScene == ScenesType.MAP)
             instantiatePNJs();
     }
