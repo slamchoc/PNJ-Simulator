@@ -15,6 +15,11 @@ public class Player : MonoBehaviour {
     [SerializeField]
     Animator animator;
 
+    void Start()
+    {
+        DontDestroyOnLoad(this);
+    }
+
     public void move (float dx, float dy)
     {
         if (dy > 0)
