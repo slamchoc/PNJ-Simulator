@@ -92,11 +92,11 @@ public class MenuManager : MonoBehaviour
             Debug.Log(fightStartPos.y + " " + menu.position + " " + fightOffset.y);
 
             if (actualScene == ScenesType.MAIN_MENU)
-                arrow.transform.position = new Vector3(arrow.transform.position.x , mainMenuStartPos.y + menu.position * mainMenuOffset.y - Camera.main.transform.position.y, arrow.transform.position.z);
+                arrow.transform.position = new Vector3(arrow.transform.position.x , mainMenuStartPos.y + menu.position * mainMenuOffset.y , arrow.transform.position.z);
             else if(actualScene == ScenesType.BATTLE)
-                arrow.transform.position = new Vector3(arrow.transform.position.x , fightStartPos.y + menu.position * fightOffset.y - Camera.main.transform.position.y, arrow.transform.position.z);
+                arrow.transform.position = new Vector3(arrow.transform.position.x , fightStartPos.y + menu.position * fightOffset.y, arrow.transform.position.z);
             else
-                arrow.transform.position = new Vector3(arrow.transform.position.x , dialogueStartPos.y + menu.position * dialogueOffset.y - Camera.main.transform.position.y, arrow.transform.position.z);
+                arrow.transform.position = new Vector3(arrow.transform.position.x , dialogueStartPos.y + menu.position * dialogueOffset.y , arrow.transform.position.z);
 
             Debug.Log(arrow.transform.position);
         }
