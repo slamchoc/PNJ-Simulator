@@ -36,7 +36,7 @@ public class Player : MonoBehaviour {
         this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
         EventManager.addActionToEvent<ScenesType>(EventType.END_SCENE, sceneEnded);
-        EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, sceneEnded);
+        EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, sceneBegin);
 
         EventManager.addActionToEvent<AttackType>(EventType.ATTACK_ENNEMY, attack);
     }
@@ -45,7 +45,7 @@ public class Player : MonoBehaviour {
     void OnDestroy()
     {
         EventManager.removeActionFromEvent<ScenesType>(EventType.END_SCENE, sceneEnded);
-        EventManager.removeActionFromEvent<ScenesType>(EventType.NEW_SCENE, sceneEnded);
+        EventManager.removeActionFromEvent<ScenesType>(EventType.NEW_SCENE, sceneBegin);
 
         EventManager.removeActionFromEvent<AttackType>(EventType.ATTACK_ENNEMY, attack);
     }
@@ -79,6 +79,12 @@ public class Player : MonoBehaviour {
     {
         if (sceneEnded == ScenesType.MAIN_MENU)
             this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        else if (sceneEnded == ScenesType.SHOP)
+        {
+            Debug.Log("?");
+            this.gameObject.transform.localScale = new Vector3(1, 1, 1);
+
+        }
     }
 
     void sceneBegin(ScenesType sceneEnded)

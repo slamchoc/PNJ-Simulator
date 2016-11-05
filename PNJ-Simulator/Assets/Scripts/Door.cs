@@ -3,18 +3,15 @@ using System.Collections;
 
 public class Door : MonoBehaviour {
 
-    [SerializeField]
-    SceneManager sceneManager;
-
     // Use this for initialization
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.GetComponent<PNJ>() != null)
             Destroy(other.gameObject);
         else if (other.gameObject.GetComponent<Hero>() != null)
             other.gameObject.SetActive(false);
         else if (other.gameObject.GetComponent<Player>() != null)
-            sceneManager.changeScene(ScenesType.MAP);
+            EventManager.raise<ScenesType>(EventType.CHANGE_SCENE, ScenesType.MAP);
         else
             Destroy(other.gameObject);
 
