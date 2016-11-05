@@ -4,9 +4,12 @@ using System;
 
 public class Heros : MonoBehaviour {
 
+    [SerializeField]
+    Player player;
+
 	// Use this for initialization
 	void Start () {
-	
+        Debug.Assert(player != null);
 	}
 	
 	// Update is called once per frame
@@ -166,7 +169,7 @@ public class Heros : MonoBehaviour {
                    );
         jour2Internal2 = new Menu(
                        new List<Pair<Callback, String>> {
-                                                                new Pair<Callback, String>(()=> { /*TODO gain gold, loose rep*/ EventManager.raise(EventType.MENU_EXIT); }, "terminer le jour")
+                                                                new Pair<Callback, String>(()=> { player.addGold();player.looseReputation(); EventManager.raise(EventType.MENU_EXIT); }, "terminer le jour")
                                                         },
                        "(* Le Heros commence a m'enerver !\nIl n'y aura plus personne pour aujourd'hui.\n Je vais vers l'escalier, il serai temps d'aller me coucher *)"
                    );
@@ -218,7 +221,7 @@ public class Heros : MonoBehaviour {
                             );
         jour5Buy = new Menu(
                                 new List<Pair<Callback, String>> {
-                                                                new Pair<Callback, String>(()=> { /*TODO gain gold perte reput */ EventManager.raise(EventType.MENU_EXIT); }, "continuer")
+                                                                new Pair<Callback, String>(()=> { player.addGold();player.looseReputation(); EventManager.raise(EventType.MENU_EXIT); }, "continuer")
                                                                  },
                                 "Heros :\nBon OK, mais c'est la derniere fois sinon ...\nEssaie de faire ce que je fait avec ta camelote"
                             );

@@ -167,4 +167,9 @@ public class Player : MonoBehaviour {
     {
         reputation += (int)(reputation*0.1f);
     }
+
+    public void looseReputation()
+    {
+        reputation -= (int)(reputation * 0.2f);
+    }
 }
