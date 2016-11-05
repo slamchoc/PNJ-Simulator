@@ -34,6 +34,7 @@ public class SceneManager : MonoBehaviour
     {
         if(sceneToLoad == UnityEngine.SceneManagement.SceneManager.GetActiveScene().name && !eventRaised)
         {
+            Debug.Log("raise");
             EventManager.raise<ScenesType>(EventType.NEW_SCENE, actualScene);
             eventRaised = true;
         }
@@ -61,8 +62,7 @@ public class SceneManager : MonoBehaviour
                 goToMap();
                 break;
             case ScenesType.SHOP:
-                Debug.Log("DONT FORGET TO CHANGE DAT");
-                goToMap();
+                goToShop();
                 break;
             default:
                 Debug.Log("Probleme dans changeScene");

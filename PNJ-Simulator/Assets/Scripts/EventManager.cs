@@ -19,6 +19,7 @@ public enum EventType
     DAMAGE_PLAYER,
     SELL,
     GIVE_QUEST,
+    END_DAY,
     MENU_ENTERED,
     MENU_EXIT,
     QUIT_GAME,

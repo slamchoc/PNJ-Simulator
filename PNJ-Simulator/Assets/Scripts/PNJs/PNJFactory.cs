@@ -11,6 +11,8 @@ public class PNJFactory : MonoBehaviour
     private GameObject prefabMonster;
 
 
+    List<GameObject> listGO = new List<GameObject>();
+
     private List<MonsterToCreate> listMonsters = new List<MonsterToCreate>();
     private List<PNJToCreate> listPNJs = new List<PNJToCreate>();
 
@@ -21,12 +23,9 @@ public class PNJFactory : MonoBehaviour
             Destroy(this.gameObject);
         else
         {
-            Debug.Log("add !");
             DontDestroyOnLoad(this.gameObject);
-            Debug.Log(listMonsters.Count);
 
             createPNJs();
-            instantiatePNJs();
             EventManager.addActionToEvent<GameObject>(EventType.KILL_MONSTER, monsterHasbeenKilled);
             EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, newSceneLoaded);
         }
@@ -34,7 +33,9 @@ public class PNJFactory : MonoBehaviour
 
     void newSceneLoaded(ScenesType newScene)
     {
-        if(newScene == ScenesType.MAP)
+        Debug.Log(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+
+        if (newScene == ScenesType.MAP)
             instantiatePNJs();
     }
 
@@ -48,23 +49,60 @@ public class PNJFactory : MonoBehaviour
 
     private void instantiatePNJs()
     {
+        Debug.Log("Instantiate");
+
         for (int i = 0; i < listMonsters.Count; i++)
             listMonsters[i].instantiateMonster(prefabMonster, i);
+        listGO.Clear();
 
         foreach (PNJToCreate m in listPNJs)
-            m.createPNJ(prefabPNJ);
+        {
+            listGO.Add(m.createPNJ(prefabPNJ));
+        }
     }
 
     private void createPNJs()
     {
-        Debug.Log("createPNJ");
+        Debug.Log("create pnj");
+        listGO.Clear();
+
 
         /******* Creation des PNJs *********/
         List<Pair<Callback, String>> listCallbacks = new List<Pair<Callback, String>>();
-        listCallbacks.Add(new Pair<Callback, String>(() => { Debug.Log("?"); }, "Loultest"));
-        string textPnj = "Je suis le texte du PNJ";
+        listCallbacks.Add(new Pair<Callback, String>(() => {
+            Debug.Log(listGO[0]);
+            EventManager.raise(EventType.MENU_EXIT);
+            listGO[0].GetComponent<Collider>().enabled = false;
+            listGO[0].GetComponent<Rigidbody>().velocity = new Vector3(1, 0,0);
+        }, "OK."));
+        string textPnj = "Bla bla";
+        listPNJs.Add( new PNJToCreate(new Vector3(-6, -6, -1), listCallbacks, textPnj));
 
-        listPNJs.Add( new PNJToCreate(new Vector3(-3, -3, -1), listCallbacks, textPnj));
+        listCallbacks = new List<Pair<Callback, String>>();
+        listCallbacks.Add(new Pair<Callback, String>(() => {
+            Debug.Log(listGO[1]);
+            EventManager.raise(EventType.MENU_EXIT);
+            listGO[1].GetComponent<Collider>().enabled = false;
+            listGO[1].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            listGO[1].GetComponent<Rigidbody>().velocity = new Vector3(5, 0, 0);
+            Destroy(listGO[1], 5f);
+        }, "Donner une quete au Garde"));
+        textPnj = "Vous ne passerz pas.";
+        listPNJs.Add(new PNJToCreate(new Vector3(1.25f, 1.17f, -1), listCallbacks, textPnj));
+
+        listCallbacks = new List<Pair<Callback, String>>();
+        listCallbacks.Add(new Pair<Callback, String>(() =>
+        {
+            Debug.Log(listGO[2]);
+            EventManager.raise(EventType.MENU_EXIT);
+            listGO[2].GetComponent<Collider>().enabled = false;
+            listGO[2].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            listGO[2].GetComponent<Rigidbody>().velocity = new Vector3(5, 0, 0);
+            Destroy(listGO[2], 5f);
+
+        }, "Donner une quete au Garde"));
+        textPnj = "Vous ne passerz pas.";
+        listPNJs.Add(new PNJToCreate(new Vector3(1.25f, 0.17f, -1), listCallbacks, textPnj));
 
         /************ Creation des monstres **********************/
 
@@ -77,10 +115,21 @@ public class PNJFactory : MonoBehaviour
         {
             EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.WEAK);
         }, "Attaque faible"));
-
         string textMonster = "??";
+        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(6,3,-2), new Vector3(9,3,-2)));
 
-        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(-3,3,0), new Vector3(3,3,0)));
+        listCallbacks = new List<Pair<Callback, String>>();
+        listCallbacks.Add(new Pair<Callback, String>(() =>
+        {
+            EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.STRONG);
+        }, "Attaque forte"));
+        listCallbacks.Add(new Pair<Callback, String>(() =>
+        {
+            EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.WEAK);
+        }, "Attaque faible"));
+        textMonster = "??";
+        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(10, 15, -2), new Vector3(9, 13, -2)));
+
     }
 }
 
@@ -103,7 +152,7 @@ class MonsterToCreate
         _patternB = patternB;
     }
 
-    public void instantiateMonster(GameObject prefabMonster, int id)
+    public GameObject instantiateMonster(GameObject prefabMonster, int id)
     {
         if(!isDead)
         {
@@ -113,7 +162,10 @@ class MonsterToCreate
             monster.GetComponent<Monster>().id = id;
 
             monster.transform.position = _patternA;
+            return monster;
         }
+
+        return null;
     }
 }
 
@@ -132,13 +184,15 @@ class PNJToCreate
         _text = text;
     }
 
-    public void createPNJ(GameObject prefabPNJ)
+    public GameObject createPNJ(GameObject prefabPNJ)
     {
         if (!isDead)
         {
             GameObject pnj = UnityEngine.Object.Instantiate(prefabPNJ);
             pnj.GetComponent<PNJ>().setMenu(_menu, _text);
             pnj.transform.position = _position;
+            return pnj;
         }
+        return null;
     }
 }
