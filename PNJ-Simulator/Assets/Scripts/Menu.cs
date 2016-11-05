@@ -25,11 +25,13 @@ public class Menu
         position++;
         if (position >= options.Count)
             position = 0;
+        EventManager.raise(EventType.SELECTION_CHANGED);
     }
     public void decrementPosition()
     {
         position--;
         if (position < 0)
             position = options.Count - 1;
+        EventManager.raise(EventType.SELECTION_CHANGED);
     }
 }
