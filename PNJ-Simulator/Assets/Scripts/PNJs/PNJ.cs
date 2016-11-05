@@ -19,9 +19,9 @@ public class PNJ : MonoBehaviour
 	
 	}
 
-    public void setMenu(Delegate[] arrayOfFunctions)
+    public void setMenu(Pair<Callback,String>[] arrayOfFunctions, String text)
     {
-        menu = new Menu(arrayOfFunctions);
+        menu = new Menu(arrayOfFunctions, text);
     }
 
     virtual public void printMenu()
