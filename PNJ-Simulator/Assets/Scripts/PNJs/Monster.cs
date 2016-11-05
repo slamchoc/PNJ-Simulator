@@ -19,7 +19,7 @@ public class Monster : PNJ
     [SerializeField]
     private float speed = 1.5f;
 
-    public Monster(int _pvs, Vector3 _patternA, Vector3 _patternB)
+    public void createMonster(int _pvs, Vector3 _patternA, Vector3 _patternB)
     {
         nbPvs = _pvs;
         pointPatterA = _patternA;
