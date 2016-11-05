@@ -17,12 +17,14 @@ public class Player : MonoBehaviour {
 
     public void move (float dx, float dy)
     {
-        currentOrientation = (dy > 0 ? Orientation.UP : Orientation.DOWN);
+        if (dy > 0)
+            currentOrientation = Orientation.UP;
+        else if (dy < 0)
+            currentOrientation = Orientation.DOWN;
         if (dx < 0)
             currentOrientation = Orientation.LEFT;
         else if (dx > 0)
             currentOrientation = Orientation.RIGHT;
-        Debug.Log(currentOrientation);
         GetComponent<Rigidbody>().velocity = new Vector2(dx * speed, dy * speed);
         if (dx != 0 || dy != 0)
             playAnimation();
