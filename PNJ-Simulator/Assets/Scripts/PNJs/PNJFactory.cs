@@ -80,6 +80,7 @@ public class PNJFactory : MonoBehaviour
             Debug.Log(listGO[1]);
             EventManager.raise(EventType.MENU_EXIT);
             listGO[1].GetComponent<Collider>().enabled = false;
+            listGO[1].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             listGO[1].GetComponent<Rigidbody>().velocity = new Vector3(3, 0, 0);
             Destroy(listGO[1], 5f);
         }, "Donner une quete au Garde"));
@@ -92,6 +93,7 @@ public class PNJFactory : MonoBehaviour
             Debug.Log(listGO[2]);
             EventManager.raise(EventType.MENU_EXIT);
             listGO[2].GetComponent<Collider>().enabled = false;
+            listGO[2].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             listGO[2].GetComponent<Rigidbody>().velocity = new Vector3(3, 0, 0);
             Destroy(listGO[2], 5f);
 
