@@ -18,6 +18,8 @@ public class MenuManager : MonoBehaviour
     private GameObject panelFight;
     [SerializeField]
     private GameObject panelDialogue;
+    [SerializeField]
+    private GameObject textDialogue;
 
     [SerializeField]
     private SceneManager sceneManager;
@@ -32,7 +34,6 @@ public class MenuManager : MonoBehaviour
 
     private Menu mainMenu;
 
-    //private List<Pair<Menu,GameObject>> currentMenuActive = new List<Pair<Menu,GameObject>>();
     Pair<Menu, GameObject> currentMenuActive = new Pair<Menu, GameObject>();
 
 
@@ -66,22 +67,20 @@ public class MenuManager : MonoBehaviour
         fightStartPos = new Vector3(0, 2.1f, 0);
         fightOffset = new Vector3(0, -2.1f, 0);
 
-        dialogueStartPos = new Vector3(0, 2.1f, 0);
-        dialogueOffset = new Vector3(0, -2.1f, 0);
+        dialogueStartPos = new Vector3(-6.75f, 0, 0);
+        dialogueOffset = new Vector3(0, -0.75f, 0);
+
+        actualScene = ScenesType.MAIN_MENU;
 
         EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, sceneChanged);
         EventManager.addActionToEvent<Menu>(EventType.MENU_ENTERED, menuToPrint);
         EventManager.addActionToEvent(EventType.MENU_EXIT,onMenuExit);
         EventManager.raise<Menu>(EventType.MENU_ENTERED, mainMenu);
-        //menuToPrint(mainMenu);
     }
 
     // Update is called once per frame
     void Update ()
     {
-        //foreach(Pair<Menu,GameObject> menu in currentMenuActive)
-        //{
-        // TODO : Gerer les differentes positions de départ des differents menus
         if (currentMenuActive != null)
         {
             Menu menu = currentMenuActive.First;
@@ -93,12 +92,7 @@ public class MenuManager : MonoBehaviour
                 arrow.transform.position = new Vector3(arrow.transform.position.x, fightStartPos.y + menu.position * fightOffset.y, arrow.transform.position.z);
             else
                 arrow.transform.position = new Vector3(arrow.transform.position.x, dialogueStartPos.y + menu.position * dialogueOffset.y, arrow.transform.position.z);
-
-
-            //arrow.transform.position = new Vector3(arrow.transform.position.x, -menu.position * 2.1f, arrow.transform.position.z);
         }
-            //menu.Second.transform.position = new Vector3(menu.Second.transform.position.x , menu.Second.transform.position.y + menu.First.position, menu.Second.transform.position.z);
-        //}
 	}
 
     void sceneChanged(ScenesType newScene)
@@ -140,12 +134,13 @@ public class MenuManager : MonoBehaviour
         }
         GameObject arrow = Instantiate(arrowMainMenu);
 
-        //currentMenuActive.Add(new Pair<Menu, GameObject>(_menu, arrow));
         currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
     }
 
     void printDialogue(Menu _menu)
     {
+        Vector3 dialogueScale = new Vector3(0.4f, 0.3f, 1);
+
         Vector3 panelPos = dialogueStartPos;
         foreach (Pair<Callback, string> pair in _menu.options)
         {
@@ -153,9 +148,17 @@ public class MenuManager : MonoBehaviour
             GameObject tmpPanel = Instantiate(panelDialogue);
             tmpPanel.GetComponentInChildren<TextMesh>().text = pair.Second;
             tmpPanel.transform.position = panelPos;
+            tmpPanel.transform.localScale = new Vector3(tmpPanel.transform.localScale.x* dialogueScale.x, tmpPanel.transform.localScale.y * dialogueScale.y, tmpPanel.transform.localScale.z * dialogueScale.z);
             panelPos += dialogueOffset;
         }
+
+        GameObject text = Instantiate(textDialogue);
+        text.GetComponentInChildren<TextMesh>().text = _menu.text;
+
         GameObject arrow = Instantiate(arrowDialogue);
+        arrow.transform.position = dialogueStartPos - new Vector3(1.5f,0,0);
+        arrow.transform.localScale = new Vector3(arrow.transform.localScale.x * dialogueScale.x, arrow.transform.localScale.y * dialogueScale.y, arrow.transform.localScale.z * dialogueScale.z);
+
 
         currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
     }
@@ -178,7 +181,9 @@ public class MenuManager : MonoBehaviour
 
     void onMenuExit()
     {
+        Destroy(currentMenuActive.Second.gameObject);
         currentMenuActive = null;
+
     }
 
     void OnDestroy()

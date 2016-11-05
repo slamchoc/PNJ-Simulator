@@ -16,6 +16,16 @@ public class Menu
         options = _options;
     }
 
+    public Menu(Menu _nextOne, String _text)
+    {
+        position = 0;
+        text = _text;
+        options = new List<Pair<Callback, string>> { new Pair<Callback,String>(()=>
+                                                                            {
+                                                                                EventManager.raise<Menu>(EventType.MENU_ENTERED,_nextOne);
+                                                                            },"Continue...")};
+    }
+
 	public void call()
     {
         options[position].First();
@@ -25,13 +35,13 @@ public class Menu
         position++;
         if (position >= options.Count)
             position = 0;
-        EventManager.raise(EventType.SELECTION_CHANGED);
+        EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE,SoundsType.POUIT_DEPLACEMENT );
     }
     public void decrementPosition()
     {
         position--;
         if (position < 0)
             position = options.Count - 1;
-        EventManager.raise(EventType.SELECTION_CHANGED);
+        EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.POUIT_DEPLACEMENT);
     }
 }

@@ -16,7 +16,10 @@ public enum EventType
     GIVE_QUEST,
     MENU_ENTERED,
     MENU_EXIT,
-    QUIT_GAME
+    QUIT_GAME,
+    PLAY_SOUND_ONCE,
+    PLAY_SOUND_LOOP
+
 }
 
 public delegate void Callback();
