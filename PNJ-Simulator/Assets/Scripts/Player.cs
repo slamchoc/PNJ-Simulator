@@ -116,4 +116,24 @@ public class Player : MonoBehaviour {
         else if (currentOrientation == Orientation.LEFT)
             animator.Play("WalkLeft");
     }
+
+    public void stopAnimation()
+    {
+        if (currentOrientation == Orientation.UP)
+            animator.enabled = false;
+        else if (currentOrientation == Orientation.RIGHT)
+            animator.Play("RightIdle");
+        else if (currentOrientation == Orientation.LEFT)
+            animator.Play("LeftIdle");
+    }
+
+    public void addGold()
+    {
+        gold += (int)(100 + (reputation - 100) / 2);
+    }
+
+    public void addReputation()
+    {
+        reputation += (int)(reputation*0.1f);
+    }
 }
