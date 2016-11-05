@@ -52,7 +52,8 @@ public class SceneManager : MonoBehaviour
                 goToMap();
                 break;
             case ScenesType.SHOP:
-                goToShop();
+                Debug.Log("DONT FORGET TO CHANGE DAT");
+                goToMap();
                 break;
             default:
                 Debug.Log("Probleme dans changeScene");
