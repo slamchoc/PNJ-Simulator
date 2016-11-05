@@ -70,7 +70,7 @@ public class MenuManager : MonoBehaviour
         dialogueStartPos = new Vector3(-6.75f, 0, 0);
         dialogueOffset = new Vector3(0, -0.75f, 0);
 
-        actualScene = ScenesType.MAP;
+        actualScene = ScenesType.MAIN_MENU;
 
         EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, sceneChanged);
         EventManager.addActionToEvent<Menu>(EventType.MENU_ENTERED, menuToPrint);
@@ -81,7 +81,6 @@ public class MenuManager : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-        // TODO : Gerer les differentes positions de départ des differents menus
         if (currentMenuActive != null)
         {
             Menu menu = currentMenuActive.First;
@@ -93,12 +92,7 @@ public class MenuManager : MonoBehaviour
                 arrow.transform.position = new Vector3(arrow.transform.position.x, fightStartPos.y + menu.position * fightOffset.y, arrow.transform.position.z);
             else
                 arrow.transform.position = new Vector3(arrow.transform.position.x, dialogueStartPos.y + menu.position * dialogueOffset.y, arrow.transform.position.z);
-
-
-            //arrow.transform.position = new Vector3(arrow.transform.position.x, -menu.position * 2.1f, arrow.transform.position.z);
         }
-            //menu.Second.transform.position = new Vector3(menu.Second.transform.position.x , menu.Second.transform.position.y + menu.First.position, menu.Second.transform.position.z);
-        //}
 	}
 
     void sceneChanged(ScenesType newScene)
@@ -187,7 +181,9 @@ public class MenuManager : MonoBehaviour
 
     void onMenuExit()
     {
+        Destroy(currentMenuActive.Second.gameObject);
         currentMenuActive = null;
+
     }
 
     void OnDestroy()
