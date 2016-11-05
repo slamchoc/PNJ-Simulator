@@ -16,9 +16,15 @@ public class PNJFactory : MonoBehaviour
         createPNJs();
     }
 
+    Callback mDel;
+
     private void createPNJs()
     {
-        ;
+
+        Pair<Callback, String> prout = new Pair<Callback, String>(mDel, "Loultest");
+        List<Pair<Callback, String>> prat = new List<Pair<Callback, String>>();
+        prat.Add(prout);
+        createPNJ(new Vector3(0, 0, 0), prat, "Je suis le texte du PNJ");
     }
 
 	// Update is called once per frame
@@ -27,14 +33,14 @@ public class PNJFactory : MonoBehaviour
 	
 	}
 
-    void createPNJ(Vector3 position, Pair<Callback, String>[] menu, string text)
+    void createPNJ(Vector3 position, List<Pair<Callback, String>> menu, string text)
     {
-        GameObject pnj =  Instantiate(prefabPNJ);
+        GameObject pnj = Instantiate(prefabPNJ);
         pnj.GetComponent<PNJ>().setMenu(menu, text);
         pnj.transform.position = position;
     }
 
-    void createMonster(Vector3 position, Pair<Callback, String>[] menu, string text, int pv,  Vector3 patternA, Vector3 patternB)
+    void createMonster(Vector3 position, List<Pair<Callback, String>> menu, string text, int pv,  Vector3 patternA, Vector3 patternB)
     {
         GameObject monster = Instantiate(prefabMonster);
         monster.GetComponent<Monster>().createMonster(pv, patternA, patternB);
