@@ -68,7 +68,7 @@ public class Monster : PNJ
             //We save the monster
             DontDestroyOnLoad(this.gameObject);
 
-            EventManager.raise<ScenesType>(EventType.NEW_SCENE, ScenesType.BATTLE);
+            EventManager.raise<ScenesType>(EventType.CHANGE_SCENE, ScenesType.BATTLE);
             EventManager.raise<Menu>(EventType.MENU_ENTERED, menu);
             Destroy(this.gameObject);
         }
