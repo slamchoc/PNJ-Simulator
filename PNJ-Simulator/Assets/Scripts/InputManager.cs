@@ -23,7 +23,7 @@ public class InputManager : MonoBehaviour {
 	void Start () {
         currentType = ScenesType.MAIN_MENU;
         DontDestroyOnLoad(this.gameObject);
-        EventManager.addActionToEvent<ScenesType>(EventType.END_SCENE, OnSceneChanged);
+        EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, OnSceneChanged);
         EventManager.addActionToEvent<Menu>(EventType.MENU_ENTERED, OnMenuEntered);
         EventManager.addActionToEvent(EventType.MENU_EXIT, OnMenuExit);
     }
