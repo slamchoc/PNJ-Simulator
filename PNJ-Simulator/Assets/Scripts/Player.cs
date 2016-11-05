@@ -16,7 +16,7 @@ public class Player : MonoBehaviour {
     private int lifePoint;
     public int gold { get; private set; }
     public int reputation { get; private set; }
-    private Orientation currentOrientation = Orientation.RIGHT;
+    private Orientation currentOrientation = Orientation.DOWN;
     [SerializeField]
     private float speed;
     [SerializeField]
@@ -26,6 +26,17 @@ public class Player : MonoBehaviour {
     {
         DontDestroyOnLoad(this);
         EventManager.addActionToEvent<ScenesType>(EventType.END_SCENE, sceneEnded);
+        EventManager.addActionToEvent<AttackType>(EventType.ATTACK_ENNEMY, attack);
+    }
+
+    void OnDestroy()
+    {
+        EventManager.removeActionFromEvent<ScenesType>(EventType.END_SCENE, sceneEnded);
+        EventManager.removeActionFromEvent<AttackType>(EventType.ATTACK_ENNEMY, attack);
+    }
+
+    void attack(AttackType type)
+    {
 
     }
 
@@ -47,17 +58,7 @@ public class Player : MonoBehaviour {
         GetComponent<Rigidbody>().velocity = new Vector2(dx * speed, dy * speed);
         if (dx != 0 || dy != 0)
         {
-            animator.enabled = true;
             playAnimation();
-        }
-        else if (currentOrientation == Orientation.DOWN)
-        {
-            animator.enabled = true;
-            animator.Play("Idle");
-        }
-        else
-        {
-            //stopAnimation();
         }
         
     }
@@ -124,5 +125,15 @@ public class Player : MonoBehaviour {
             animator.Play("RightIdle");
         else if (currentOrientation == Orientation.LEFT)
             animator.Play("LeftIdle");
+    }
+
+    public void addGold()
+    {
+        gold += (int)(100 + (reputation - 100) / 2);
+    }
+
+    public void addReputation()
+    {
+        reputation += (int)(reputation*0.1f);
     }
 }

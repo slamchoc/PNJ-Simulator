@@ -86,7 +86,6 @@ public class MenuManager : MonoBehaviour
         {
             Menu menu = currentMenuActive.First;
             GameObject arrow = currentMenuActive.Second;
-            Debug.Log(arrow + " " + currentMenuActive+" "+currentMenuActive.First+" "+ currentMenuActive.Second);
             if(actualScene == ScenesType.MAIN_MENU)
                 arrow.transform.position = new Vector3(arrow.transform.position.x, mainMenuStartPos.y + menu.position * mainMenuOffset.y, arrow.transform.position.z);
             else if(actualScene == ScenesType.BATTLE)
@@ -142,6 +141,7 @@ public class MenuManager : MonoBehaviour
 
     void printDialogue(Menu _menu)
     {
+
         Vector3 dialogueScale = new Vector3(0.4f, 0.3f, 1);
 
         Vector3 panelPos = dialogueStartPos;
@@ -165,13 +165,11 @@ public class MenuManager : MonoBehaviour
         arrow.transform.localScale = new Vector3(arrow.transform.localScale.x * dialogueScale.x, arrow.transform.localScale.y * dialogueScale.y, arrow.transform.localScale.z * dialogueScale.z);
         actualMenuPrinted.Add(arrow);
 
-
         currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
     }
 
     void printBattle(Menu _menu)
     {
-        Debug.Log("Printbattle");
         Vector3 panelPos = fightStartPos;
         foreach (Pair<Callback,string> pair in _menu.options)
         {
@@ -184,7 +182,6 @@ public class MenuManager : MonoBehaviour
         }
         GameObject arrow = Instantiate(arrowFight);
         actualMenuPrinted.Add(arrow);
-
         currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
     }
 
