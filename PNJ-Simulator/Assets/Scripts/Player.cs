@@ -16,7 +16,7 @@ public class Player : MonoBehaviour {
     private int lifePoint;
     public int gold { get; private set; }
     public int reputation { get; private set; }
-    private Orientation currentOrientation = Orientation.RIGHT;
+    private Orientation currentOrientation = Orientation.DOWN;
     [SerializeField]
     private float speed;
     [SerializeField]
@@ -26,6 +26,17 @@ public class Player : MonoBehaviour {
     {
         DontDestroyOnLoad(this);
         EventManager.addActionToEvent<ScenesType>(EventType.END_SCENE, sceneEnded);
+        EventManager.addActionToEvent<AttackType>(EventType.ATTACK_ENNEMY, attack);
+    }
+
+    void OnDestroy()
+    {
+        EventManager.removeActionFromEvent<ScenesType>(EventType.END_SCENE, sceneEnded);
+        EventManager.removeActionFromEvent<AttackType>(EventType.ATTACK_ENNEMY, attack);
+    }
+
+    void attack(AttackType type)
+    {
 
     }
 

@@ -43,7 +43,7 @@ public class PNJFactory : MonoBehaviour
 
         string textMonster = "??";
 
-        createMonster(new Vector3(3, 3, -1), listCallbacks, textMonster, 3, new Vector3(0,0,0), new Vector3(1,1,0));
+        createMonster(listCallbacks, textMonster, 3, new Vector3(-3,3,0), new Vector3(3,3,0));
     }
 
     void createPNJ(Vector3 position, List<Pair<Callback, String>> menu, string text)
@@ -53,11 +53,11 @@ public class PNJFactory : MonoBehaviour
         pnj.transform.position = position;
     }
 
-    void createMonster(Vector3 position, List<Pair<Callback, String>> menu, string text, int pv,  Vector3 patternA, Vector3 patternB)
+    void createMonster(List<Pair<Callback, String>> menu, string text, int pv,  Vector3 patternA, Vector3 patternB)
     {
         GameObject monster = Instantiate(prefabMonster);
         monster.GetComponent<Monster>().createMonster(pv, patternA, patternB);
         monster.GetComponent<Monster>().setMenu(menu, text);
-        monster.transform.position = position;
+        monster.transform.position = patternA;
     }
 }
