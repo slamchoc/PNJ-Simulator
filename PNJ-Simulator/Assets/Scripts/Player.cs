@@ -60,12 +60,11 @@ public class Player : MonoBehaviour {
         {
             case AttackType.WEAK:
                 damages = damagesAttackWeak;
-                break;
-            case AttackType.MIDDLE:
-                damages = damagesAttackMiddle;
+                attack1();
                 break;
             case AttackType.STRONG:
                 damages = damagesAttackStrong;
+                attack2();
                 break;
             case AttackType.MAGICAL:
                 damages = damagesAttackMagical;
