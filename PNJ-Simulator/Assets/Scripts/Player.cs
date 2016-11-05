@@ -12,12 +12,25 @@ public class Player : MonoBehaviour {
     private Orientation currentOrientation = Orientation.RIGHT;
     [SerializeField]
     private float speed;
+    [SerializeField]
+    Animator animator;
 
     public void move (float dx, float dy)
     {
-        currentOrientation = (dy > 0 ? Orientation.UP : Orientation.LEFT);
-        currentOrientation = (dx < 0 ? Orientation.LEFT : Orientation.RIGHT);
+        if (dy > 0)
+            currentOrientation = Orientation.UP;
+        else if (dy < 0)
+            currentOrientation = Orientation.DOWN;
+        if (dx < 0)
+            currentOrientation = Orientation.LEFT;
+        else if (dx > 0)
+            currentOrientation = Orientation.RIGHT;
         GetComponent<Rigidbody>().velocity = new Vector2(dx * speed, dy * speed);
+        if (dx != 0 || dy != 0)
+            playAnimation();
+        else if (currentOrientation == Orientation.DOWN)
+            animator.Play("Idle");
+        
     }
 
     public void interact()
@@ -52,5 +65,17 @@ public class Player : MonoBehaviour {
     public void splash()
     {
 
+    }
+
+    public void playAnimation()
+    {
+        if(currentOrientation == Orientation.UP)
+            animator.Play("WalkUp");
+        else if (currentOrientation == Orientation.DOWN)
+            animator.Play("WalkDown");
+        else if (currentOrientation == Orientation.RIGHT)
+            animator.Play("WalkRight");
+        else if (currentOrientation == Orientation.LEFT)
+            animator.Play("WalkLeft");
     }
 }
