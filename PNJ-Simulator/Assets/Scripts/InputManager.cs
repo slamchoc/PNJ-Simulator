@@ -16,6 +16,7 @@ public class InputManager : MonoBehaviour {
     private float submit;
 
     private bool SelectedOptionChanged = false;
+    private bool Validated = false;
 
 
 	// Use this for initialization
@@ -98,8 +99,13 @@ public class InputManager : MonoBehaviour {
         }
         else
             SelectedOptionChanged = false;
-        if (submit != 0)
+        if (submit != 0 && !Validated)
+        {
             menu.call();
+            Validated = true;
+        }
+        else if (submit == 0)
+            Validated = false;
     }
 
     private void OnMap()
