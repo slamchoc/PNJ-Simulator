@@ -36,13 +36,14 @@ public class Player : MonoBehaviour {
         EventManager.addActionToEvent<ScenesType>(EventType.END_SCENE, sceneEnded);
         EventManager.addActionToEvent<AttackType>(EventType.ATTACK_ENNEMY, attack);
     }
+    
 
     void OnDestroy()
     {
         EventManager.removeActionFromEvent<ScenesType>(EventType.END_SCENE, sceneEnded);
         EventManager.removeActionFromEvent<AttackType>(EventType.ATTACK_ENNEMY, attack);
     }
-
+    
     void attack(AttackType type)
     {
         int damages = 0;
@@ -88,7 +89,7 @@ public class Player : MonoBehaviour {
         {
             playAnimation();
         }
-        
+
     }
 
     public void interact()
@@ -131,9 +132,13 @@ public class Player : MonoBehaviour {
     public void splash()
     {
         if (currentOrientation == Orientation.LEFT)
+        {
             animator.Play("LeftSplash");
+        }
         else
+        {
             animator.Play("RightSplash");
+        }
     }
 
     public void playAnimation()
