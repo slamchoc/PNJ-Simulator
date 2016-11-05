@@ -13,7 +13,8 @@ public enum EventType
     SELL,
     GIVE_QUEST,
     MENU_ENTERED,
-    MENU_EXIT
+    MENU_EXIT,
+    QUIT_GAME
 }
 
 public delegate void Callback();
