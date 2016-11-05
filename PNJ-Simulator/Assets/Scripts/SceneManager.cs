@@ -71,6 +71,16 @@ public class SceneManager : MonoBehaviour
         Camera.main.transform.position = this.gameObject.transform.position;
         Camera.main.GetComponent<CameraFollow>().stopCamera = true;
         EventManager.raise(EventType.MENU_EXIT);
+        StartCoroutine(waitThenQuitApplication());
+
+    }
+
+    private IEnumerator waitThenQuitApplication()
+    {
+        yield return new WaitForSeconds(5);
+        Application.Quit();
+        Debug.Log("Applicaation quitee");
+
     }
 
     /// <summary>
