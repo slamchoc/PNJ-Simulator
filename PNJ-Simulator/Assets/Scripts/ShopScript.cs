@@ -24,6 +24,7 @@ public class ShopScript : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        hero.player.transform.localScale = new Vector2(2, 2);
         EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.MUSIQUE_CINEMATIQUE2);
         cinematique.SetActive(false);
         cinematique.transform.position = new Vector3(
@@ -89,7 +90,6 @@ public class ShopScript : MonoBehaviour {
             visitor = generatePNJ();
             if (visitor == null)
             {
-                nextDay();
                 return;
             }
 
