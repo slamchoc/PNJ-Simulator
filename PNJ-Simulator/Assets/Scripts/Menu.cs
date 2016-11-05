@@ -4,28 +4,31 @@ using System.Collections.Generic;
 
 public class Menu : MonoBehaviour {
 
-    private Callback[] options;
-    private int position=0;
+    private string text;
+    private List<Pair<Callback, String>> options;
+    public int position { get; private set; }
 
-    public Menu(Delegate[] _options)
+    public Menu(List<Pair<Callback, String>> _options, String _text)
     {
-        options = (Callback[])_options;
+        position = 0;
+        text = _text;
+        options = _options;
     }
 
 	public void call()
     {
-        options[position]();
+        options[position].First();
     }
     public void incrementPosition()
     {
         position++;
-        if (position >= options.Length)
+        if (position >= options.Count)
             position = 0;
     }
     public void decrementPosition()
     {
         position--;
         if (position <= 0)
-            position = options.Length - 1;
+            position = options.Count - 1;
     }
 }

@@ -15,6 +15,8 @@ public class Player : MonoBehaviour {
 
     public void move (float dx, float dy)
     {
+        currentOrientation = (dy > 0 ? Orientation.UP : Orientation.LEFT);
+        currentOrientation = (dx < 0 ? Orientation.LEFT : Orientation.RIGHT);
         GetComponent<Rigidbody2D>().velocity = new Vector2(dx * speed, dy * speed);
     }
 
