@@ -22,6 +22,14 @@ public class Player : MonoBehaviour {
     [SerializeField]
     Animator animator;
 
+
+    private int damagesAttackMagical = 0;
+
+    private int damagesAttackStrong = 5;
+    private int damagesAttackMiddle = 3;
+    private int damagesAttackWeak = 1;
+
+
     void Start()
     {
         DontDestroyOnLoad(this);
@@ -37,7 +45,27 @@ public class Player : MonoBehaviour {
 
     void attack(AttackType type)
     {
+        int damages = 0;
+        switch(type)
+        {
+            case AttackType.WEAK:
+                damages = damagesAttackWeak;
+                break;
+            case AttackType.MIDDLE:
+                damages = damagesAttackMiddle;
+                break;
+            case AttackType.STRONG:
+                damages = damagesAttackStrong;
+                break;
+            case AttackType.MAGICAL:
+                damages = damagesAttackMagical;
+                break;
+            default:
+                damages = 1;
+                break;
+        }
 
+        EventManager.raise<int>(EventType.DAMAGE_ENNEMY, damages);
     }
 
     void sceneEnded(ScenesType sceneEnded)
@@ -102,7 +130,10 @@ public class Player : MonoBehaviour {
 
     public void splash()
     {
-
+        if (currentOrientation == Orientation.LEFT)
+            animator.Play("LeftSplash");
+        else
+            animator.Play("RightSplash");
     }
 
     public void playAnimation()
@@ -135,5 +166,10 @@ public class Player : MonoBehaviour {
     public void addReputation()
     {
         reputation += (int)(reputation*0.1f);
+    }
+
+    public void looseReputation()
+    {
+        reputation -= (int)(reputation * 0.2f);
     }
 }

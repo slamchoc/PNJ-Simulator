@@ -8,6 +8,7 @@ public class Monster : PNJ
     /// </summary>
     private int nbPvs = 1;
 
+    public int id = 0;
     /// <summary>
     /// Points that the monster will cross
     /// </summary>
@@ -57,32 +58,46 @@ public class Monster : PNJ
     {
         nbPvs =  nbPvs - pvRemoved;
         if (nbPvs < 0)
-            EventManager.raise(EventType.KILL_MONSTER);
+        {
+            EventManager.raise(EventType.KILL_MONSTER, this.gameObject);
+            EventManager.raise(EventType.MENU_EXIT);
+            Destroy(this.gameObject);
+        }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision with " + collision.gameObject);
-        Debug.Log(collision.gameObject.transform.position + " " + this.gameObject.transform.position);
         if(collision.gameObject.GetComponent<Player>() != null)
         {
-
             //We save the monster
             DontDestroyOnLoad(this.gameObject);
 
             EventManager.raise<ScenesType>(EventType.CHANGE_SCENE, ScenesType.BATTLE);
-
             EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, sceneLoaded);
+            this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+
         }
     }
 
     void sceneLoaded(ScenesType oldScene)
     {
-        EventManager.removeActionFromEvent<ScenesType>(EventType.NEW_SCENE, sceneLoaded);
+        if(oldScene == ScenesType.BATTLE)
+        {
+            EventManager.removeActionFromEvent<ScenesType>(EventType.NEW_SCENE, sceneLoaded);
 
-        EventManager.raise<Menu>(EventType.MENU_ENTERED, menu);
-        EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.MUSIQUE_PNJ);
+            EventManager.raise<Menu>(EventType.MENU_ENTERED, menu);
+            EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.MUSIQUE_PNJ);
+            EventManager.addActionToEvent<int>(EventType.DAMAGE_ENNEMY, hitMonster);
 
-        Destroy(this.gameObject);
+        }
     }
+
+    void OnDestroy()
+    {
+        EventManager.removeActionFromEvent<ScenesType>(EventType.NEW_SCENE, sceneLoaded);
+        EventManager.removeActionFromEvent<int>(EventType.DAMAGE_ENNEMY, hitMonster);
+
+    }
+
 }
