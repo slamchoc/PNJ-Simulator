@@ -105,4 +105,14 @@ public class Player : MonoBehaviour {
         else if (currentOrientation == Orientation.LEFT)
             animator.Play("LeftIdle");
     }
+
+    public void addGold()
+    {
+        gold += (int)(100 + (reputation - 100) / 2);
+    }
+
+    public void addReputation()
+    {
+        reputation += (int)(reputation*0.1f);
+    }
 }
