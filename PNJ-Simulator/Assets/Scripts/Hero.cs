@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System;
 
-public class Hero : MonoBehaviour {
+public class Heros : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -20,12 +20,12 @@ public class Hero : MonoBehaviour {
     }
 
     /* Shop Dialogues */
+    Menu jour1;
     Menu jour1VenteEpee;
     Menu jour1RecevoirEpee;
     Menu jour1VenteBouclier;
     Menu jour1RecevoirBouclier;
     Menu jourFin;
-    Menu jour1;
 
     Menu jour2;
     Menu jour2Suite;
@@ -46,6 +46,17 @@ public class Hero : MonoBehaviour {
     Menu jour5Inside;
     Menu jour5Buy;
 
+    Menu jour7;
+    Menu jour7_1;
+    Menu jour7_2;
+    Menu jour7_3;
+    Menu jour7_4;
+    Menu jour7_5;
+    Menu jour7_6;
+    Menu jour7_7;
+    Menu jour7_8;
+    Menu jour7_9;
+
     String venteEpee = "Tiens voila cette epee, elle est de tres bonne facture.\nElle a ete forgee a base d'eponge de Valsemin";
     String betterSword = "Ouais mais cette epee elle est mieux !";
 
@@ -57,7 +68,7 @@ public class Hero : MonoBehaviour {
                                                                 new Pair<Callback, String>(()=> { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour1VenteEpee); }, "vendre epee"),
                                                                 new Pair<Callback, String>(() => { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour1VenteBouclier); }, "vendre bouclier")
                                                                  },
-                                "Hero :\nBonjour, forgeron.\nC'est la premiere fois que j'entre dans ton echoppe.\nAurais-tu un armement de qualite a me proposer ?"
+                                "Heros :\nBonjour, forgeron.\nC'est la premiere fois que j'entre dans ton echoppe.\nAurais-tu un armement de qualite a me proposer ?"
                             );
 
         jour1VenteBouclier = new Menu(
@@ -71,7 +82,7 @@ public class Hero : MonoBehaviour {
                                 new List<Pair<Callback, String>> {
                                                                 new Pair<Callback, String>(() => { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour1VenteEpee); }, "vendre epee")
                                                                  },
-                                "Hero :\nNon, je vous ai demande un armement !"
+                                "Heros :\nNon, je vous ai demande un armement !"
                             );
 
         jour1VenteEpee = new Menu(
@@ -85,7 +96,7 @@ public class Hero : MonoBehaviour {
                             new List<Pair<Callback, String>> {
                                                             new Pair<Callback, String>(() => { EventManager.raise<Menu>(EventType.MENU_ENTERED, jourFin); }, "Continuer")
                                                              },
-                            "Hero :\nHa ... Heu ... Tres bien, je la prend.\nJe vous laisse, j'ai un royaume a sauver, moi !"
+                            "Heros :\nHa ... Heu ... Tres bien, je la prend.\nJe vous laisse, j'ai un royaume a sauver, moi !"
                         );
 
         jourFin = new Menu(
@@ -108,7 +119,7 @@ public class Hero : MonoBehaviour {
                                 new List<Pair<Callback, String>> {
                                                                 new Pair<Callback, String>(()=> { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour2VenteEpee); }, "vendre epee")
                                                                  },
-                                "Hero :\nOuais bonjour, ton epee s'est cassee tres rapidement.\nC'est ca ta bonne qualite ???\nTu n'as pas une autre epee ?"
+                                "Heros :\nOuais bonjour, ton epee s'est cassee tres rapidement.\nC'est ca ta bonne qualite ???\nTu n'as pas une autre epee ?"
                             );
         jour2VenteEpee = new Menu(
                                 new List<Pair<Callback, String>> {
@@ -120,7 +131,7 @@ public class Hero : MonoBehaviour {
                                 new List<Pair<Callback, String>> {
                                                                 new Pair<Callback, String>(()=> { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour2betterSword); }, "continuer")
                                                                  },
-                                "Hero :\nNan mais c'est la meme ..."
+                                "Heros :\nNan mais c'est la meme ..."
                             );
         jour2betterSword = new Menu(
                         new List<Pair<Callback, String>> {
@@ -132,7 +143,7 @@ public class Hero : MonoBehaviour {
                         new List<Pair<Callback, String>> {
                                                                 new Pair<Callback, String>(()=> { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour2Internal); }, "continuer")
                                                          },
-                        "Hero :\nBon d'accord, je vais essayer ..."
+                        "Heros :\nBon d'accord, je vais essayer ..."
                     );
         jour2Internal = new Menu(
                        new List<Pair<Callback, String>> {
@@ -145,7 +156,7 @@ public class Hero : MonoBehaviour {
                        new List<Pair<Callback, String>> {
                                                                 new Pair<Callback, String>(()=> { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour2Fin); }, "continuer")
                                                         },
-                       "Hero :\nMerci .. j'espere pour toi que ce sera mieux"
+                       "Heros :\nMerci .. j'espere pour toi que ce sera mieux"
                    );
         jour2Fin = new Menu(
                        new List<Pair<Callback, String>> {
@@ -155,9 +166,9 @@ public class Hero : MonoBehaviour {
                    );
         jour2Internal2 = new Menu(
                        new List<Pair<Callback, String>> {
-                                                                new Pair<Callback, String>(()=> { /*TODO gain gold, loose rep*/ }, "terminer le jour")
+                                                                new Pair<Callback, String>(()=> { /*TODO gain gold, loose rep*/ EventManager.raise(EventType.MENU_EXIT); }, "terminer le jour")
                                                         },
-                       "(* Le hero commence a m'enerver !\nIl n'y aura plus personne pour aujourd'hui.\n Je vais vers l'escalier, il serai temps d'aller me coucher *)"
+                       "(* Le Heros commence a m'enerver !\nIl n'y aura plus personne pour aujourd'hui.\n Je vais vers l'escalier, il serai temps d'aller me coucher *)"
                    );
     }
 
@@ -167,7 +178,7 @@ public class Hero : MonoBehaviour {
                                 new List<Pair<Callback, String>> {
                                                                 new Pair<Callback, String>(()=> { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour5Suite); }, "continuer")
                                                                  },
-                                "HERO :\nMAIS C'EST DE LA MERDE !!!"
+                                "HEROS :\nMAIS C'EST DE LA MERDE !!!"
                             );
         jour5Suite = new Menu(
                                 new List<Pair<Callback, String>> {
@@ -179,7 +190,7 @@ public class Hero : MonoBehaviour {
                                 new List<Pair<Callback, String>> {
                                                                 new Pair<Callback, String>(()=> { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour5VenteEpee); }, "continuer")
                                                                  },
-                                "hero :\nMais ferme la !\nL'epee c'est la meme, et c'est de la merde !\nDonne moi une bonne epee sale paysan !"
+                                "Heros :\nMais ferme la !\nL'epee c'est la meme, et c'est de la merde !\nDonne moi une bonne epee sale paysan !"
                             );
         jour5VenteEpee = new Menu(
                                 new List<Pair<Callback, String>> {
@@ -191,7 +202,7 @@ public class Hero : MonoBehaviour {
                                 new List<Pair<Callback, String>> {
                                                                 new Pair<Callback, String>(()=> { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour5Better); }, "continuer")
                                                                  },
-                                "HERO :\nMAIS T'EST CON, C'EST LA MEME !"
+                                "HEROS :\nMAIS T'EST CON, C'EST LA MEME !"
                             );
         jour5Better = new Menu(
                                 new List<Pair<Callback, String>> {
@@ -207,10 +218,76 @@ public class Hero : MonoBehaviour {
                             );
         jour5Buy = new Menu(
                                 new List<Pair<Callback, String>> {
-                                                                new Pair<Callback, String>(()=> { /*TODO gain gold perte reput */ }, "continuer")
+                                                                new Pair<Callback, String>(()=> { /*TODO gain gold perte reput */ EventManager.raise(EventType.MENU_EXIT); }, "continuer")
                                                                  },
-                                "Hero :\nBon OK, mais c'est la derniere fois sinon ...\nEssaie de faire ce que je fait avec ta camelote"
+                                "Heros :\nBon OK, mais c'est la derniere fois sinon ...\nEssaie de faire ce que je fait avec ta camelote"
                             );
         //TODO si atteninte escalier fin jour
+    }
+
+    void initJour7()
+    {
+        jour7 = new Menu(
+                                new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=> { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour7_1); }, "continuer")
+                                                                 },
+                                "HEROS :\nTU TE FOUT DE MA GUEULE !!!"
+                            );
+        jour7_1 = new Menu(
+                                new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=> { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour7_2); }, "continuer")
+                                                                 },
+                                "Heu ... on peut discuter ?"
+                            );
+        jour7_2 = new Menu(
+                                new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=> { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour7_3); }, "continuer")
+                                                                 },
+                                "HEROS :\nNAN, TOUT CE QUE TU VENDS CA SERT A RIEN !!!"
+                            );
+        jour7_3 = new Menu(
+                                new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=> { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour7_4); }, "continuer")
+                                                                 },
+                                "(* Il va se calmer l'autre la ? *)"
+                            );
+        jour7_4 = new Menu(
+                                new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=> { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour7_5); }, "continuer")
+                                                                 },
+                                "HEROS :\nMAIS TU SERS A QUOI DANS LA VIE ?"
+                            );
+        jour7_5 = new Menu(
+                                new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=> { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour7_6); }, "continuer")
+                                                                 },
+                                "(* Bah ... *)"
+                            );
+        jour7_6 = new Menu(
+                                new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=> { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour7_7); }, "continuer")
+                                                                 },
+                                "Heros :\nHeuresement j'ai trouve une superbe epee dans un donjon.\nJe n'aurai plus besoin de revoir ta sale tronche !"
+                            );
+        jour7_7 = new Menu(
+                                new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=> { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour7_8); }, "continuer")
+                                                                 },
+                                "Heros :\nBonne fin de vie"
+                            );
+
+        jour7_8 = new Menu(
+                        new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=> { EventManager.raise<Menu>(EventType.MENU_ENTERED, jour7_9); }, "continuer")
+                                                         },
+                        "(* Il m'insulte mais qu'est-ce qui nous differencie ?\nSon armement, son experience, son charisme ... *)"
+                    );
+        jour7_9 = new Menu(
+                        new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=> { EventManager.raise(EventType.MENU_EXIT); }, "continuer")
+                                                         },
+                        "(* A part ca moi aussi je peux le faire ! *)"
+                    );
+
     }
 }
