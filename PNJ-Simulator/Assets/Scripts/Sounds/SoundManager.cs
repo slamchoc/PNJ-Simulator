@@ -108,7 +108,7 @@ public class SoundManager : MonoBehaviour {
         GameObject audio = Instantiate(audioPrefab);
         audio.transform.parent = this.transform;
 
-        Debug.Log(soundToPlay+" to "+ sources[(int)soundToPlay]);
+       // Debug.Log(soundToPlay+" to "+ sources[(int)soundToPlay]);
 
         audio.GetComponent<Sound>().playOnce(sources[(int)soundToPlay]);
     }
