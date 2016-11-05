@@ -102,7 +102,10 @@ public class Player : MonoBehaviour {
 
     public void splash()
     {
-
+        if (currentOrientation == Orientation.LEFT)
+            animator.Play("LeftSplash");
+        else
+            animator.Play("RightSplash");
     }
 
     public void playAnimation()
