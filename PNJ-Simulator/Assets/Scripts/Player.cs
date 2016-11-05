@@ -143,10 +143,13 @@ public class Player : MonoBehaviour {
         }
     }
 
-    void sceneBegin(ScenesType sceneEnded)
+    void sceneBegin(ScenesType sceneBegin)
     {
-        if (sceneEnded == ScenesType.MAIN_MENU)
+        Debug.Log("sceneBegin " + sceneBegin);
+        if (sceneBegin == ScenesType.MAIN_MENU)
             this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        else if(sceneBegin == ScenesType.SHOP)
+            this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
     }
 
     public void move (float dx, float dy)

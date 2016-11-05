@@ -66,21 +66,17 @@ public class PNJFactory : MonoBehaviour
         Debug.Log("create pnj");
         listGO.Clear();
 
-
         /******* Creation des PNJs *********/
         List<Pair<Callback, String>> listCallbacks = new List<Pair<Callback, String>>();
-        listCallbacks.Add(new Pair<Callback, String>(() => {
-            Debug.Log(listGO[0]);
+        listCallbacks.Add(new Pair<Callback, String>(() => 
+        {
             EventManager.raise(EventType.MENU_EXIT);
-            listGO[0].GetComponent<Collider>().enabled = false;
-            listGO[0].GetComponent<Rigidbody>().velocity = new Vector3(1, 0, 0);
-        }, "OK."));
-        string textPnj = "Bla bla";
+        }, "Fuir."));
+        string textPnj = "Genevieve\nMais que fais tu avec un balai dehors ?\nRentre chez toi, ce n'est pas ta place.";
         listPNJs.Add(new PNJToCreate(new Vector3(-6, -6, -1), listCallbacks, textPnj));
 
+
         listCallbacks = new List<Pair<Callback, String>>();
-
-
         Menu answerGarde = new Menu(
                                new List<Pair<Callback, String>> {
                                                                 new Pair<Callback, String>(()=> 
@@ -117,10 +113,8 @@ public class PNJFactory : MonoBehaviour
         textPnj = "Garde\nTu ne peux pas sortir, désolé.\nTu n'est qu'un forgeron, c'est dangereux d'y aller tout seul.";
         listPNJs.Add(new PNJToCreate(new Vector3(0.63f, 0.5f, -1), listCallbacks, textPnj));
 
+
         listCallbacks = new List<Pair<Callback, String>>();
-
-
-
         Menu answerGarde2 = new Menu(
                                new List<Pair<Callback, String>> {
                                                                 new Pair<Callback, String>(()=>
@@ -157,6 +151,22 @@ public class PNJFactory : MonoBehaviour
         textPnj = "Garde\nTu ne peux pas sortir, désolé.\nTu n'est qu'un forgeron, c'est dangereux d'y aller tout seul.";
         listPNJs.Add(new PNJToCreate(new Vector3(0.63f, 1.7f, -1), listCallbacks, textPnj));
 
+
+        listCallbacks = new List<Pair<Callback, String>>();
+        listCallbacks.Add(new Pair<Callback, String>(() =>
+        {
+            EventManager.raise(EventType.MENU_EXIT);
+        }, "Baisser les yeux"));
+        textPnj = "Gerard\nTu veux faire comme le heros, mais te battre avec un balai...\nT'es mignon mais...";
+        listPNJs.Add(new PNJToCreate(new Vector3(-6, 1, -1), listCallbacks, textPnj));
+
+        listCallbacks = new List<Pair<Callback, String>>();
+        listCallbacks.Add(new Pair<Callback, String>(() =>
+        {
+            EventManager.raise(EventType.MENU_EXIT);
+        }, "Ah ok."));
+        textPnj = "Jean-Eudes\nLe héros est vraiment impressionnant !\nIl va tous nous sauver !";
+        listPNJs.Add(new PNJToCreate(new Vector3(-4, 16, -1), listCallbacks, textPnj));
 
 
 

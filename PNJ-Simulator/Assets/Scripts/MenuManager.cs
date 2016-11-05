@@ -89,7 +89,6 @@ public class MenuManager : MonoBehaviour
             GameObject arrow = currentMenuActive.Second;
             if (arrow == null)
                 Debug.LogError("CRITICAL arrow == null !");
-            Debug.Log(fightStartPos.y + " " + menu.position + " " + fightOffset.y);
 
             if (actualScene == ScenesType.MAIN_MENU)
                 arrow.transform.localPosition = new Vector3(arrow.transform.localPosition.x , mainMenuStartPos.y + menu.position * mainMenuOffset.y , arrow.transform.localPosition.z);
