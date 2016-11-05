@@ -21,6 +21,9 @@ public class CameraFollow : MonoBehaviour {
             this.gameObject.transform.position = new Vector3(future.x, future.y, -10);
         }
         else
-            target = GameObject.FindObjectOfType<Player>().gameObject;
-	}
+        {
+            if(GameObject.FindObjectOfType<Player>() != null )
+                target = GameObject.FindObjectOfType<Player>().gameObject;
+        }
+    }
 }

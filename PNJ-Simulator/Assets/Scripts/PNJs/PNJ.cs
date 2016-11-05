@@ -23,6 +23,10 @@ public class PNJ : MonoBehaviour
     {
         menu = new Menu(arrayOfFunctions, text);
     }
+    public void setMenu(Menu _menu)
+    {
+        menu = _menu;
+    }
 
     virtual public void printMenu()
     {
