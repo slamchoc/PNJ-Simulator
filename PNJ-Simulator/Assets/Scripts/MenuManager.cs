@@ -63,13 +63,13 @@ public class MenuManager : MonoBehaviour
                                     );
         DontDestroyOnLoad(this.gameObject);
 
-        mainMenuStartPos = new Vector3(0, 2.1f, -4);
+        mainMenuStartPos = new Vector3(0, 2.1f, 1);
         mainMenuOffset = new Vector3(0, -2.1f, 0);
 
-        fightStartPos = new Vector3(0, 2.1f, -4);
+        fightStartPos = new Vector3(0, 2.1f, 1);
         fightOffset = new Vector3(0, -2.1f, 0);
 
-        dialogueStartPos = new Vector3(-6.75f, -0.5f, -4);
+        dialogueStartPos = new Vector3(-6.75f, -0.5f, 1);
         dialogueOffset = new Vector3(0, 0.75f, 0);
 
         actualScene = ScenesType.MAIN_MENU;
@@ -92,13 +92,12 @@ public class MenuManager : MonoBehaviour
             Debug.Log(fightStartPos.y + " " + menu.position + " " + fightOffset.y);
 
             if (actualScene == ScenesType.MAIN_MENU)
-                arrow.transform.position = new Vector3(arrow.transform.position.x , mainMenuStartPos.y + menu.position * mainMenuOffset.y , arrow.transform.position.z);
+                arrow.transform.localPosition = new Vector3(arrow.transform.localPosition.x , mainMenuStartPos.y + menu.position * mainMenuOffset.y , arrow.transform.localPosition.z);
             else if(actualScene == ScenesType.BATTLE)
-                arrow.transform.position = new Vector3(arrow.transform.position.x , fightStartPos.y + menu.position * fightOffset.y, arrow.transform.position.z);
+                arrow.transform.localPosition = new Vector3(arrow.transform.localPosition.x , fightStartPos.y + menu.position * fightOffset.y, arrow.transform.localPosition.z);
             else
-                arrow.transform.position = new Vector3(arrow.transform.position.x , dialogueStartPos.y + menu.position * dialogueOffset.y , arrow.transform.position.z);
-
-            Debug.Log(arrow.transform.position);
+                arrow.transform.localPosition = new Vector3(arrow.transform.localPosition.x , dialogueStartPos.y + menu.position * dialogueOffset.y , arrow.transform.localPosition.z);
+            
         }
 	}
 
@@ -138,7 +137,7 @@ public class MenuManager : MonoBehaviour
             tmpPanel.transform.parent = Camera.main.transform;
 
             tmpPanel.GetComponentInChildren<TextMesh>().text = pair.Second;
-            tmpPanel.transform.position = panelPos;
+            tmpPanel.transform.localPosition = panelPos;
             panelPos += mainMenuOffset;
             actualMenuPrinted.Add(tmpPanel);
         }
@@ -160,7 +159,7 @@ public class MenuManager : MonoBehaviour
             GameObject tmpPanel = Instantiate(panelDialogue);
             tmpPanel.transform.parent = Camera.main.transform;
             tmpPanel.GetComponentInChildren<TextMesh>().text = pair.Second;
-            tmpPanel.transform.position = panelPos;
+            tmpPanel.transform.localPosition = panelPos;
 
             tmpPanel.transform.localScale = new Vector3(tmpPanel.transform.localScale.x* dialogueScale.x, tmpPanel.transform.localScale.y * dialogueScale.y, tmpPanel.transform.localScale.z * dialogueScale.z);
             panelPos += dialogueOffset;
@@ -176,7 +175,7 @@ public class MenuManager : MonoBehaviour
         GameObject arrow = Instantiate(arrowDialogue);
         arrow.transform.parent = Camera.main.transform;
 
-        arrow.transform.position = dialogueStartPos - new Vector3(1.5f,0,0);
+        arrow.transform.localPosition = dialogueStartPos - new Vector3(1.5f,0,0);
         arrow.transform.localScale = new Vector3(arrow.transform.localScale.x * dialogueScale.x, arrow.transform.localScale.y * dialogueScale.y, arrow.transform.localScale.z * dialogueScale.z);
         actualMenuPrinted.Add(arrow);
 
@@ -192,7 +191,7 @@ public class MenuManager : MonoBehaviour
             tmpPanel.transform.parent = Camera.main.transform;
 
             tmpPanel.GetComponentInChildren<TextMesh>().text = pair.Second;
-            tmpPanel.transform.position = panelPos;
+            tmpPanel.transform.localPosition = panelPos;
             panelPos += fightOffset;
             actualMenuPrinted.Add(tmpPanel);
         }
