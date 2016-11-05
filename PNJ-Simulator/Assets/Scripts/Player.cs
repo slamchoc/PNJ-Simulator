@@ -27,9 +27,19 @@ public class Player : MonoBehaviour {
             currentOrientation = Orientation.RIGHT;
         GetComponent<Rigidbody>().velocity = new Vector2(dx * speed, dy * speed);
         if (dx != 0 || dy != 0)
+        {
+            animator.enabled = true;
             playAnimation();
+        }
         else if (currentOrientation == Orientation.DOWN)
+        {
+            animator.enabled = true;
             animator.Play("Idle");
+        }
+        else
+        {
+            stopAnimation();
+        }
         
     }
 
@@ -69,7 +79,7 @@ public class Player : MonoBehaviour {
 
     public void playAnimation()
     {
-        if(currentOrientation == Orientation.UP)
+        if (currentOrientation == Orientation.UP)
             animator.Play("WalkUp");
         else if (currentOrientation == Orientation.DOWN)
             animator.Play("WalkDown");
@@ -77,5 +87,15 @@ public class Player : MonoBehaviour {
             animator.Play("WalkRight");
         else if (currentOrientation == Orientation.LEFT)
             animator.Play("WalkLeft");
+    }
+
+    public void stopAnimation()
+    {
+        if (currentOrientation == Orientation.UP)
+            animator.enabled = false;
+        else if (currentOrientation == Orientation.RIGHT)
+            animator.Play("RightIdle");
+        else if (currentOrientation == Orientation.LEFT)
+            animator.Play("LeftIdle");
     }
 }
