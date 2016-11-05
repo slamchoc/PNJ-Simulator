@@ -38,6 +38,11 @@ public class InputManager : MonoBehaviour {
         switch (currentType)
         {
             case ScenesType.MAP:
+                if (menu != null)
+                    OnMenu();
+                else if (player != null)
+                    OnMap();
+                break;
             case ScenesType.SHOP:
                 if (menu != null)
                     OnMenu();
@@ -111,5 +116,7 @@ public class InputManager : MonoBehaviour {
             player.attack1();
         if (attack2 != 0)
             player.attack2();
+        if (splash != 0)
+            player.splash();
     }
 }
