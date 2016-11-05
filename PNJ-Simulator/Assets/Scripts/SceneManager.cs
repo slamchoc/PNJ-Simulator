@@ -17,20 +17,24 @@ public enum ScenesType
 /// </summary>
 public class SceneManager : MonoBehaviour
 {
+    ScenesType actualScene = ScenesType.MAIN_MENU;
+
 	// Use this for initialization
 	void Start ()
     {
         DontDestroyOnLoad(this.gameObject);
-        EventManager.addActionToEvent<ScenesType>(EventType.END_SCENE, changeScene);
     }
 
     /// <summary>
     /// Switch between the scenes
     /// </summary>
     /// <param name="newScene"></param>
-    void changeScene(ScenesType newScene)
+    public void changeScene(ScenesType newScene)
     {
-        switch(newScene)
+        EventManager.raise<ScenesType>(EventType.END_SCENE, actualScene);
+        actualScene = newScene;
+
+        switch (newScene)
         {
             case ScenesType.MAIN_MENU:
                 goToMainMenu();
@@ -48,6 +52,8 @@ public class SceneManager : MonoBehaviour
                 Debug.Log("Probleme dans changeScene");
                 break;
         }
+
+        EventManager.raise<ScenesType>(EventType.NEW_SCENE, newScene);
     }
 
     void goToMainMenu()

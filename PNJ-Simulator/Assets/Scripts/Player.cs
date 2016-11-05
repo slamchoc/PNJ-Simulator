@@ -5,24 +5,17 @@ public enum Orientation { UP,DOWN,LEFT,RIGHT}
 
 public class Player : MonoBehaviour {
     
+    [SerializeField]
     private int lifePoint;
     public int gold { get; private set; }
     public int reputation { get; private set; }
-    private Orientation currentOrientation;
+    private Orientation currentOrientation = Orientation.RIGHT;
+    [SerializeField]
+    private float speed;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-    public void move (float x, float y)
+    public void move (float dx, float dy)
     {
-
+        GetComponent<Rigidbody2D>().velocity = new Vector2(dx * speed, dy * speed);
     }
 
     public void interact()
@@ -33,5 +26,12 @@ public class Player : MonoBehaviour {
         RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, 1.5f);
         if (hit.collider != null)
             interactWith = hit.collider.gameObject;
+
+        PNJ interactScript = interactWith.GetComponent<PNJ>();
+
+        if (interactScript != null)
+        {
+            interactScript.printMenu();
+        }
     }
 }
