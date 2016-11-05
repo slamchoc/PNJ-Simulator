@@ -42,10 +42,19 @@ public class MenuManager : MonoBehaviour
          mainMenu = new Menu
                                     (
                                         new List<Pair<Callback, String>> {
-                                                                            new Pair<Callback,String>(()=> {
-        EventManager.raise(EventType.MENU_EXIT);sceneManager.changeScene(ScenesType.SHOP); },"Game"),
-                                                                            new Pair<Callback,String>(()=> { Debug.Log("choix alt"); },"Alt"),
-                                                                            new Pair<Callback,String>(()=> { Application.Quit(); }, "Exit")
+                                                                            new Pair<Callback,String>(()=> 
+                                                                            {
+                                                                                EventManager.raise(EventType.MENU_EXIT);
+                                                                                sceneManager.changeScene(ScenesType.SHOP);
+                                                                            },"Game"),
+                                                                            new Pair<Callback,String>(()=> 
+                                                                            {
+                                                                                Debug.Log("choix alt");
+                                                                            },"Alt"),
+                                                                            new Pair<Callback,String>(()=> 
+                                                                            {
+                                                                                sceneManager.quitGame();
+                                                                            }, "Exit")
                                                                         },
                                         "mainMenu"
                                     );
