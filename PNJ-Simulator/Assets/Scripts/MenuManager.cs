@@ -86,7 +86,7 @@ public class MenuManager : MonoBehaviour
         {
             Menu menu = currentMenuActive.First;
             GameObject arrow = currentMenuActive.Second;
-
+            Debug.Log(arrow + " " + currentMenuActive+" "+currentMenuActive.First+" "+ currentMenuActive.Second);
             if(actualScene == ScenesType.MAIN_MENU)
                 arrow.transform.position = new Vector3(arrow.transform.position.x, mainMenuStartPos.y + menu.position * mainMenuOffset.y, arrow.transform.position.z);
             else if(actualScene == ScenesType.BATTLE)
@@ -171,6 +171,7 @@ public class MenuManager : MonoBehaviour
 
     void printBattle(Menu _menu)
     {
+        Debug.Log("Printbattle");
         Vector3 panelPos = fightStartPos;
         foreach (Pair<Callback,string> pair in _menu.options)
         {
@@ -185,7 +186,6 @@ public class MenuManager : MonoBehaviour
         actualMenuPrinted.Add(arrow);
 
         currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
-
     }
 
     void onMenuExit()

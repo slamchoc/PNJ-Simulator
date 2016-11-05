@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public enum EventType
 {
+    CHANGE_SCENE,
     SELECTION_CHANGED,
     SELECTION_VALIDATED,
     END_SCENE,

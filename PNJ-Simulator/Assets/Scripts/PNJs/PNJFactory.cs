@@ -10,6 +10,9 @@ public class PNJFactory : MonoBehaviour
     [SerializeField]
     private GameObject prefabMonster;
 
+
+
+
     // Use this for initialization
     void Start ()
     {
