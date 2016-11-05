@@ -59,4 +59,18 @@ public class Monster : PNJ
         if (nbPvs < 0)
             EventManager.raise(EventType.KILL_MONSTER);
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.GetComponent<Player>() != null)
+        {
+
+            //We save the monster
+            DontDestroyOnLoad(this.gameObject);
+
+            EventManager.raise<ScenesType>(EventType.NEW_SCENE, ScenesType.BATTLE);
+            EventManager.raise<Menu>(EventType.MENU_ENTERED, menu);
+            Destroy(this.gameObject);
+        }
+    }
 }
