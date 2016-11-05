@@ -69,8 +69,16 @@ public class Monster : PNJ
             DontDestroyOnLoad(this.gameObject);
 
             EventManager.raise<ScenesType>(EventType.CHANGE_SCENE, ScenesType.BATTLE);
-            EventManager.raise<Menu>(EventType.MENU_ENTERED, menu);
-            Destroy(this.gameObject);
+
+            EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, sceneLoaded);
         }
+    }
+
+    void sceneLoaded(ScenesType oldScene)
+    {
+        EventManager.removeActionFromEvent<ScenesType>(EventType.NEW_SCENE, sceneLoaded);
+
+        EventManager.raise<Menu>(EventType.MENU_ENTERED, menu);
+        Destroy(this.gameObject);
     }
 }
