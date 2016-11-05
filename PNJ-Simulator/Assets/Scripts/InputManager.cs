@@ -6,7 +6,7 @@ public class InputManager : MonoBehaviour {
     [SerializeField] private Menu menu;
     [SerializeField] private Player player;
 
-    private ScenesType currentType;
+    [SerializeField] private ScenesType currentType;
 
     private float horizontal;
     private float vertical;
