@@ -91,4 +91,12 @@ public class Monster : PNJ
 
         }
     }
+
+    void OnDestroy()
+    {
+        EventManager.removeActionFromEvent<ScenesType>(EventType.NEW_SCENE, sceneLoaded);
+        EventManager.removeActionFromEvent<int>(EventType.DAMAGE_ENNEMY, hitMonster);
+
+    }
+
 }
