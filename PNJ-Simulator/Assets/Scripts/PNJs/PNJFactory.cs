@@ -27,18 +27,18 @@ public class PNJFactory : MonoBehaviour
 	
 	}
 
-    void createPNJ(Vector3 position, Delegate[] menu)
+    void createPNJ(Vector3 position, Pair<Callback, String>[] menu, string text)
     {
         GameObject pnj =  Instantiate(prefabPNJ);
-        pnj.GetComponent<PNJ>().setMenu(menu);
+        pnj.GetComponent<PNJ>().setMenu(menu, text);
         pnj.transform.position = position;
     }
 
-    void createMonster(Vector3 position, Delegate[] menu, int pv,  Vector3 patternA, Vector3 patternB)
+    void createMonster(Vector3 position, Pair<Callback, String>[] menu, string text, int pv,  Vector3 patternA, Vector3 patternB)
     {
         GameObject monster = Instantiate(prefabMonster);
-        monster.GetComponent<Monster>().Monster(pv, patternA, patternB);
-        monster.GetComponent<Monster>().setMenu(menu);
+        monster.GetComponent<Monster>().createMonster(pv, patternA, patternB);
+        monster.GetComponent<Monster>().setMenu(menu, text);
         monster.transform.position = position;
     }
 }
