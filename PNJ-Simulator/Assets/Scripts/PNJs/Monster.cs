@@ -22,8 +22,11 @@ public class Monster : PNJ
 
     private int damages = 3;
 
+    private bool neverCollided = true;
+
     public void createMonster(int _pvs, Vector3 _patternA, Vector3 _patternB)
     {
+        neverCollided = true;
         nbPvs = _pvs;
         pointPatterA = _patternA;
         pointPatterB = _patternB;
@@ -33,6 +36,8 @@ public class Monster : PNJ
 
     void Start()
     {
+        neverCollided = true;
+
         this.transform.position = pointPatterA;
         this.transform.GetComponent<Rigidbody>().velocity = pointPatterB - pointPatterA;
     }
@@ -75,16 +80,20 @@ public class Monster : PNJ
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.GetComponent<Player>() != null)
+        if(collision.gameObject.GetComponent<Player>() != null )
         {
-            //We save the monster
-            DontDestroyOnLoad(this.gameObject);
+            if(neverCollided)
+            {
+                neverCollided = false;
+                Debug.Log("COLLISION ENTER !");
+                //We save the monster
+                DontDestroyOnLoad(this.gameObject);
 
-            EventManager.raise<ScenesType>(EventType.CHANGE_SCENE, ScenesType.BATTLE);
-            EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, sceneLoaded);
-            this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-
+                EventManager.raise<ScenesType>(EventType.CHANGE_SCENE, ScenesType.BATTLE);
+                EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, sceneLoaded);
+                this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            }
         }
     }
 
