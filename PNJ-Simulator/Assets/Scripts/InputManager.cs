@@ -18,7 +18,6 @@ public class InputManager : MonoBehaviour {
     private bool SelectedOptionChanged = false;
     private bool Validated = false;
 
-
 	// Use this for initialization
 	void Start () {
         currentType = ScenesType.MAIN_MENU;
