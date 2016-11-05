@@ -5,7 +5,7 @@ using System.Linq;
 using System.Collections;
 using System;
 
-public enum Sounds
+public enum SoundsType
 {
     AMBIANCE_FORET,
     AMBIANCE_FORGE,
@@ -16,11 +16,10 @@ public enum Sounds
     COUP2,
     DEFONCAGE,
     EPEE_RANGEE,
-    MUSIQUE_CINEMATIQUE,
     MUSIQUE_CINEMATIQUE2,
-    MUSIQUE_CONNE,
     MUSIQUE_DONJON,
     MUSIQUE_HEROS,
+    MUSIQUE_PNJ,
     MUSIQUE_VILLAGE,
     PETIT_COUP1,
     PETIT_COUP2,
@@ -71,8 +70,8 @@ public class SoundManager : MonoBehaviour {
             StartCoroutine(LoadFile(sourcesFiles[i].FullName, i ));
         }
 
-        EventManager.addActionToEvent<Sounds>(EventType.PLAY_SOUND_ONCE, playSound);
-        EventManager.addActionToEvent<Sounds>(EventType.PLAY_SOUND_LOOP, playSoundLoop);
+        EventManager.addActionToEvent<SoundsType>(EventType.PLAY_SOUND_ONCE, playSound);
+        EventManager.addActionToEvent<SoundsType>(EventType.PLAY_SOUND_LOOP, playSoundLoop);
     }
 
     bool IsValidFileType(string fileName)
@@ -83,18 +82,16 @@ public class SoundManager : MonoBehaviour {
     IEnumerator LoadFile(string path, int i)
     {
         WWW www = new WWW("file://" + path);
-        print("loading " + path);
 
         AudioClip clip = www.GetAudioClip(false);
         while (clip.loadState != AudioDataLoadState.Loaded)
             yield return www;
 
-        print("done loading");
         clip.name = Path.GetFileName(path);
         sources[i] = (clip);
     }
 
-    public void playSound(Sounds soundToPlay)
+    public void playSound(SoundsType soundToPlay)
     {
         GameObject audio = Instantiate(audioPrefab);
         audio.transform.parent = this.transform;
@@ -104,7 +101,7 @@ public class SoundManager : MonoBehaviour {
         audio.GetComponent<Sound>().playOnce(sources[(int)soundToPlay]);
     }
 
-    public void playSoundLoop(Sounds soundToPlayLoop)
+    public void playSoundLoop(SoundsType soundToPlayLoop)
     {
         GameObject audio = Instantiate(audioPrefab);
         audio.transform.parent = this.transform;
@@ -116,7 +113,7 @@ public class SoundManager : MonoBehaviour {
 
     void OnDestroy()
     {
-        EventManager.removeActionFromEvent<Sounds>(EventType.PLAY_SOUND_ONCE, playSound);
-        EventManager.removeActionFromEvent<Sounds>(EventType.PLAY_SOUND_LOOP, playSoundLoop);
+        EventManager.removeActionFromEvent<SoundsType>(EventType.PLAY_SOUND_ONCE, playSound);
+        EventManager.removeActionFromEvent<SoundsType>(EventType.PLAY_SOUND_LOOP, playSoundLoop);
     }
 }
