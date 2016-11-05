@@ -62,6 +62,7 @@ public class Monster : PNJ
         if (nbPvs < 0)
         {
             EventManager.raise(EventType.KILL_MONSTER, this.gameObject);
+            EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.MONSTRE_MORT);
 
             EventManager.raise(EventType.MENU_EXIT);
             Destroy(this.gameObject);

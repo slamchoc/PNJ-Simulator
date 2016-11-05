@@ -16,6 +16,8 @@ public enum SoundsType
     COUP2,
     DEFONCAGE,
     EPEE_RANGEE,
+    MONSTRE_MORT,
+    MORT_PNJ,
     MUSIQUE_CINEMATIQUE2,
     MUSIQUE_DONJON,
     MUSIQUE_HEROS,
