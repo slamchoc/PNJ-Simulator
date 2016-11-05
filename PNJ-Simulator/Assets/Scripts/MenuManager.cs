@@ -70,6 +70,8 @@ public class MenuManager : MonoBehaviour
         dialogueStartPos = new Vector3(0, 2.1f, 0);
         dialogueOffset = new Vector3(0, -2.1f, 0);
 
+        actualScene = ScenesType.MAIN_MENU;
+
         EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, sceneChanged);
         EventManager.addActionToEvent<Menu>(EventType.MENU_ENTERED, menuToPrint);
         EventManager.addActionToEvent(EventType.MENU_EXIT,onMenuExit);
