@@ -39,6 +39,8 @@ public class ShopScript : MonoBehaviour {
         EventManager.addActionToEvent(EventType.END_DAY, nextDay);
         //TODO c'est degueux, trouver autre chose !
         hero = FindObjectOfType<Hero>();
+        hero.player.transform.localScale = new Vector2(2, 2);
+        hero.player.transform.position = new Vector3(0, -1, -2);
     }
 
     void OnDestroy()
@@ -89,7 +91,6 @@ public class ShopScript : MonoBehaviour {
             visitor = generatePNJ();
             if (visitor == null)
             {
-                nextDay();
                 return;
             }
 
