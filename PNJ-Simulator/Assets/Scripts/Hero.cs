@@ -41,6 +41,7 @@ public class Hero : MonoBehaviour {
         {
             initJour7();
             nextMenu = jour7;
+            EventManager.raise(EventType.SLAM_DOOR);
         }
         else
             return false;
@@ -135,7 +136,7 @@ public class Hero : MonoBehaviour {
 
         jourFin = new Menu(
                             new List<Pair<Callback, String>> {
-                                                            new Pair<Callback, String>(() => { nextMenu = null; EventManager.raise(EventType.MENU_EXIT); EventManager.raise(EventType.MENU_EXIT); EventManager.raise(EventType.END_DAY); }, "terminer le jour")
+                                                            new Pair<Callback, String>(() => {GetComponent<Rigidbody>().velocity = new Vector3(0,0.5f,0); nextMenu = null; EventManager.raise(EventType.MENU_EXIT); EventManager.raise(EventType.MENU_EXIT); EventManager.raise(EventType.END_DAY); }, "terminer le jour")
                                                              },
                             "Merci, et bonne journee a vous"
                         );
@@ -199,7 +200,7 @@ public class Hero : MonoBehaviour {
                    );
         jour2Internal2 = new Menu(
                        new List<Pair<Callback, String>> {
-                                                                new Pair<Callback, String>(()=> { nextMenu = null; player.addGold();player.looseReputation(); EventManager.raise(EventType.MENU_EXIT); }, "terminer le jour")
+                                                                new Pair<Callback, String>(()=> {GetComponent<Rigidbody>().velocity = new Vector3(0,0.5f,0); nextMenu = null; player.addGold();player.looseReputation(); EventManager.raise(EventType.MENU_EXIT); }, "terminer le jour")
                                                         },
                        "(* Le Heros commence a m'enerver !\nIl n'y aura plus personne pour aujourd'hui.\n Je vais vers l'escalier, il serai temps d'aller me coucher *)"
                    );
@@ -251,7 +252,7 @@ public class Hero : MonoBehaviour {
                             );
         jour5Buy = new Menu(
                                 new List<Pair<Callback, String>> {
-                                                                new Pair<Callback, String>(()=> { nextMenu = null;player.addGold();player.looseReputation(); EventManager.raise(EventType.MENU_EXIT); }, "continuer")
+                                                                new Pair<Callback, String>(()=> {GetComponent<Rigidbody>().velocity = new Vector3(0,0.5f,0); nextMenu = null;player.addGold();player.looseReputation(); EventManager.raise(EventType.MENU_EXIT); }, "continuer")
                                                                  },
                                 "Heros :\nBon OK, mais c'est la derniere fois sinon ...\nEssaie de faire ce que je fait avec ta camelote"
                             );    }
@@ -302,7 +303,7 @@ public class Hero : MonoBehaviour {
                             );
         jour7_7 = new Menu(
                                 new List<Pair<Callback, String>> {
-                                                                new Pair<Callback, String>(()=> {EventManager.raise(EventType.MENU_EXIT); EventManager.raise<Menu>(EventType.MENU_ENTERED, jour7_8); }, "continuer")
+                                                                new Pair<Callback, String>(()=> {  EventManager.raise(EventType.MENU_EXIT); EventManager.raise<Menu>(EventType.MENU_ENTERED, jour7_8); }, "continuer")
                                                                  },
                                 "Heros :\nBonne fin de vie"
                             );
@@ -315,7 +316,7 @@ public class Hero : MonoBehaviour {
                     );
         jour7_9 = new Menu(
                         new List<Pair<Callback, String>> {
-                                                                new Pair<Callback, String>(()=> {nextMenu = null; EventManager.raise(EventType.MENU_EXIT); }, "continuer")
+                                                                new Pair<Callback, String>(()=> {GetComponent<Rigidbody>().velocity = new Vector3(0,0.5f,0); nextMenu = null; EventManager.raise(EventType.MENU_EXIT); }, "continuer")
                                                          },
                         "(* A part ca moi aussi je peux le faire ! *)"
                     );
