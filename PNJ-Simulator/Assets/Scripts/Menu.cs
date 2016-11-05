@@ -7,7 +7,7 @@ public class Menu : MonoBehaviour {
     private Callback[] options;
     private int position=0;
 
-    Menu(Delegate[] _options)
+    public Menu(Delegate[] _options)
     {
         options = (Callback[])_options;
     }
