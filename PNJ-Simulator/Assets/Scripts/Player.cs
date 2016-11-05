@@ -130,7 +130,10 @@ public class Player : MonoBehaviour {
 
     public void splash()
     {
-
+        if (currentOrientation == Orientation.LEFT)
+            animator.Play("LeftSplash");
+        else
+            animator.Play("RightSplash");
     }
 
     public void playAnimation()
@@ -163,5 +166,10 @@ public class Player : MonoBehaviour {
     public void addReputation()
     {
         reputation += (int)(reputation*0.1f);
+    }
+
+    public void looseReputation()
+    {
+        reputation -= (int)(reputation * 0.2f);
     }
 }
