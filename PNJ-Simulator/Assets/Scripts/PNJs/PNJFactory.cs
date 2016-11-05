@@ -77,8 +77,8 @@ public class PNJFactory : MonoBehaviour
         listPNJs.Add( new PNJToCreate(new Vector3(-6, -6, -1), listCallbacks, textPnj));
 
         listCallbacks = new List<Pair<Callback, String>>();
-        listCallbacks.Add(new Pair<Callback, String>(() => {
-            Debug.Log(listGO[1]);
+        listCallbacks.Add(new Pair<Callback, String>(() => 
+        {
             EventManager.raise(EventType.MENU_EXIT);
             listGO[1].GetComponent<Collider>().enabled = false;
             listGO[1].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
@@ -91,7 +91,6 @@ public class PNJFactory : MonoBehaviour
         listCallbacks = new List<Pair<Callback, String>>();
         listCallbacks.Add(new Pair<Callback, String>(() =>
         {
-            Debug.Log(listGO[2]);
             EventManager.raise(EventType.MENU_EXIT);
             listGO[2].GetComponent<Collider>().enabled = false;
             listGO[2].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;

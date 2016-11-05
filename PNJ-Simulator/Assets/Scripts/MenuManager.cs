@@ -89,13 +89,16 @@ public class MenuManager : MonoBehaviour
             GameObject arrow = currentMenuActive.Second;
             if (arrow == null)
                 Debug.LogError("CRITICAL arrow == null !");
+            Debug.Log(fightStartPos.y + " " + menu.position + " " + fightOffset.y);
 
-            if(actualScene == ScenesType.MAIN_MENU)
-                arrow.transform.position = new Vector3(arrow.transform.position.x, mainMenuStartPos.y + menu.position * mainMenuOffset.y, arrow.transform.position.z);
+            if (actualScene == ScenesType.MAIN_MENU)
+                arrow.transform.position = new Vector3(arrow.transform.position.x , mainMenuStartPos.y + menu.position * mainMenuOffset.y - Camera.main.transform.position.y, arrow.transform.position.z);
             else if(actualScene == ScenesType.BATTLE)
-                arrow.transform.position = new Vector3(arrow.transform.position.x, fightStartPos.y + menu.position * fightOffset.y, arrow.transform.position.z);
+                arrow.transform.position = new Vector3(arrow.transform.position.x , fightStartPos.y + menu.position * fightOffset.y - Camera.main.transform.position.y, arrow.transform.position.z);
             else
-                arrow.transform.position = new Vector3(arrow.transform.position.x, dialogueStartPos.y + menu.position * dialogueOffset.y, arrow.transform.position.z);
+                arrow.transform.position = new Vector3(arrow.transform.position.x , dialogueStartPos.y + menu.position * dialogueOffset.y - Camera.main.transform.position.y, arrow.transform.position.z);
+
+            Debug.Log(arrow.transform.position);
         }
 	}
 
@@ -106,7 +109,6 @@ public class MenuManager : MonoBehaviour
 
     void menuToPrint(Menu _menu)
     {
-        Debug.Log("Menu to print");
         switch(actualScene)
         {
             case ScenesType.MAIN_MENU:
@@ -133,14 +135,17 @@ public class MenuManager : MonoBehaviour
         foreach (Pair<Callback, string> pair in _menu.options)
         {
             GameObject tmpPanel = Instantiate(panelMainMenu);
+            tmpPanel.transform.parent = Camera.main.transform;
+
             tmpPanel.GetComponentInChildren<TextMesh>().text = pair.Second;
             tmpPanel.transform.position = panelPos;
             panelPos += mainMenuOffset;
             actualMenuPrinted.Add(tmpPanel);
         }
         GameObject arrow = Instantiate(arrowMainMenu);
-        actualMenuPrinted.Add(arrow);
+        arrow.transform.parent = Camera.main.transform;
 
+        actualMenuPrinted.Add(arrow);
         currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
     }
 
@@ -152,7 +157,6 @@ public class MenuManager : MonoBehaviour
         Vector3 panelPos = dialogueStartPos;
         foreach (Pair<Callback, string> pair in _menu.options)
         {
-
             GameObject tmpPanel = Instantiate(panelDialogue);
             tmpPanel.transform.parent = Camera.main.transform;
             tmpPanel.GetComponentInChildren<TextMesh>().text = pair.Second;
@@ -181,8 +185,6 @@ public class MenuManager : MonoBehaviour
 
     void printBattle(Menu _menu)
     {
-
-        Debug.Log("Print battle asked, creation des arrows ");
         Vector3 panelPos = fightStartPos;
         foreach (Pair<Callback,string> pair in _menu.options)
         {
@@ -193,7 +195,6 @@ public class MenuManager : MonoBehaviour
             tmpPanel.transform.position = panelPos;
             panelPos += fightOffset;
             actualMenuPrinted.Add(tmpPanel);
-
         }
         GameObject arrow = Instantiate(arrowFight);
         arrow.transform.parent = Camera.main.transform;
