@@ -13,7 +13,7 @@ public enum Orientation { UP,DOWN,LEFT,RIGHT}
 public class Player : MonoBehaviour {
     
     [SerializeField]
-    private int lifePoint;
+    private int lifePoint = 10;
     public int gold { get; private set; }
     public int reputation { get; private set; }
     private Orientation currentOrientation = Orientation.DOWN;
@@ -37,6 +37,7 @@ public class Player : MonoBehaviour {
 
         EventManager.addActionToEvent<ScenesType>(EventType.END_SCENE, sceneEnded);
         EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, sceneBegin);
+        EventManager.addActionToEvent<int>(EventType.DAMAGE_PLAYER, damagesTaken);
 
         EventManager.addActionToEvent<AttackType>(EventType.ATTACK_ENNEMY, attack);
     }
@@ -46,6 +47,7 @@ public class Player : MonoBehaviour {
     {
         EventManager.removeActionFromEvent<ScenesType>(EventType.END_SCENE, sceneEnded);
         EventManager.removeActionFromEvent<ScenesType>(EventType.NEW_SCENE, sceneBegin);
+        EventManager.removeActionFromEvent<int>(EventType.DAMAGE_PLAYER, damagesTaken);
 
         EventManager.removeActionFromEvent<AttackType>(EventType.ATTACK_ENNEMY, attack);
     }
@@ -73,6 +75,30 @@ public class Player : MonoBehaviour {
         }
 
         EventManager.raise<int>(EventType.DAMAGE_ENNEMY, damages);
+    }
+
+    void damagesTaken(int damages)
+    {
+        lifePoint -= damages;
+        if(damages > lifePoint/3)
+        {
+            EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PNJ_TOUCHE_FORT);
+        }
+        else
+        {
+            float rand = Random.Range(0, 3);
+            if (rand > 2)
+                EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PNJ_TOUCHE1);
+            else if (rand > 1)
+                EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PNJ_TOUCHE2);
+            else
+                EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PNJ_TOUCHE3);
+        }
+      
+        if (lifePoint <= 0)
+        {
+            EventManager.raise(EventType.PLAYER_DEAD);
+        }
     }
 
     void sceneEnded(ScenesType sceneEnded)

@@ -8,6 +8,7 @@ using UnityEngine;
 public enum EventType
 {
     CHANGE_SCENE,
+    PLAYER_DEAD,
     SELECTION_CHANGED,
     SELECTION_VALIDATED,
     END_SCENE,

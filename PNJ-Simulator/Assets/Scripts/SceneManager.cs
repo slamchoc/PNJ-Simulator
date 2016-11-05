@@ -28,6 +28,8 @@ public class SceneManager : MonoBehaviour
     {
         DontDestroyOnLoad(this.gameObject);
         EventManager.addActionToEvent<ScenesType>(EventType.CHANGE_SCENE, changeScene);
+        EventManager.addActionToEvent(EventType.PLAYER_DEAD, playerIsDead);
+
     }
 
     void Update()
@@ -38,6 +40,10 @@ public class SceneManager : MonoBehaviour
             EventManager.raise<ScenesType>(EventType.NEW_SCENE, actualScene);
             eventRaised = true;
         }
+    }
+    public void playerIsDead()
+    {
+
     }
 
     /// <summary>
@@ -106,6 +112,7 @@ public class SceneManager : MonoBehaviour
     void OnDestroy()
     {
         EventManager.removeActionFromEvent<ScenesType>(EventType.CHANGE_SCENE, changeScene);
+        EventManager.removeActionFromEvent(EventType.PLAYER_DEAD, playerIsDead);
 
     }
 }
