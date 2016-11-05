@@ -1,9 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+using System.Collections.Generic;
 
 public class ShopScript : MonoBehaviour {
 
     public GameObject cinematique;
+    [SerializeField]
+    private GameObject table;
+    [SerializeField]
+    private GameObject stair;
+
+    [SerializeField]
+    private Hero hero;
+
+    private Menu nextMenu;
+    private GameObject visitor;
+
+    private int currentDay = 0;
 
     private bool needCinematique = true;
 
@@ -17,6 +31,13 @@ public class ShopScript : MonoBehaviour {
             0,
             0
             );
+
+        Menu tableMenu = new Menu(
+                                        new List<Pair<Callback, String>> { new Pair<Callback, String>() }, ""
+                                    );
+        table.GetComponent<PNJ>().setMenu(tableMenu);
+
+        nextDay();
     }
 
     // Update is called once per frame
@@ -39,5 +60,33 @@ public class ShopScript : MonoBehaviour {
                 EventManager.raise(EventType.STOP_SOUND);
             }
         }
+    }
+
+    private GameObject generatePNJ()
+    {
+        return null;
+    }
+
+
+    void nextDay()
+    {
+        currentDay++;
+        if(hero.load(currentDay))
+        {
+            visitor = hero.gameObject;
+        }
+        else
+        {
+            visitor = generatePNJ();
+            if (visitor == null)
+            {
+                nextDay();
+                return;
+            }
+
+        }
+        visitor.transform.position = new Vector3(0, 5, -2);
+        visitor.transform.localScale = new Vector2(2, 2);
+        visitor.GetComponent<Rigidbody>().velocity = new Vector3(0,0.5f,0);
     }
 }
