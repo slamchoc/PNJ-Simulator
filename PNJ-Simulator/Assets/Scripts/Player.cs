@@ -38,8 +38,10 @@ public class Player : MonoBehaviour {
         GameObject interactWith = null;
         Vector2 direction = new Vector2((currentOrientation == Orientation.LEFT) ? -1 : ((currentOrientation == Orientation.RIGHT) ? 1 : 0),
                                         (currentOrientation == Orientation.DOWN) ? -1 : ((currentOrientation == Orientation.UP) ? 1 : 0));
-        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, 1.5f);
-        if (hit.collider != null)
+
+        RaycastHit hit = new RaycastHit();
+        //Debug.DrawLine(this.transform.position, this.transform.position + new Vector3(direction.x,direction.y,0) * 42f);
+        if (Physics.Raycast(this.transform.position, direction, out hit, 1.5f))
             interactWith = hit.collider.gameObject;
         else
             return;

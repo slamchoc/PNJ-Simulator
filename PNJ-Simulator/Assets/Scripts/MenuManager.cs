@@ -70,7 +70,7 @@ public class MenuManager : MonoBehaviour
         dialogueStartPos = new Vector3(-6.75f, 0, 0);
         dialogueOffset = new Vector3(0, -0.75f, 0);
 
-        actualScene = ScenesType.MAP;
+        actualScene = ScenesType.MAIN_MENU;
 
         EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, sceneChanged);
         EventManager.addActionToEvent<Menu>(EventType.MENU_ENTERED, menuToPrint);
