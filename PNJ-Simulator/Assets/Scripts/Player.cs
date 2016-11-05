@@ -1,6 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum AttackType
+{
+    STRONG,
+    WEAK,
+    MIDDLE,
+    MAGICAL
+}
 public enum Orientation { UP,DOWN,LEFT,RIGHT}
 
 public class Player : MonoBehaviour {
@@ -18,6 +25,13 @@ public class Player : MonoBehaviour {
     void Start()
     {
         DontDestroyOnLoad(this);
+        EventManager.addActionToEvent<ScenesType>(EventType.END_SCENE, sceneEnded);
+
+    }
+
+    void sceneEnded(ScenesType sceneEnded)
+    {
+
     }
 
     public void move (float dx, float dy)
@@ -43,7 +57,7 @@ public class Player : MonoBehaviour {
         }
         else
         {
-            stopAnimation();
+            //stopAnimation();
         }
         
     }
@@ -71,12 +85,18 @@ public class Player : MonoBehaviour {
 
     public void attack1()
     {
-
+        if (currentOrientation == Orientation.LEFT)
+            animator.Play("LeftNormalAttack");
+        else
+            animator.Play("RightNormalAttack");
     }
 
     public void attack2()
     {
-
+        if (currentOrientation == Orientation.LEFT)
+            animator.Play("LeftPowerAttack");
+        else
+            animator.Play("RightPowerAttack");
     }
 
     public void splash()
