@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 
-public class Menu : MonoBehaviour {
+public class Menu
+{
 
-    private string text;
-    private List<Pair<Callback, String>> options;
+    public string text { get; private set; }
+    public List<Pair<Callback, String>> options { get; private set; }
     public int position { get; private set; }
-
+    
     public Menu(List<Pair<Callback, String>> _options, String _text)
     {
         position = 0;
@@ -24,11 +25,13 @@ public class Menu : MonoBehaviour {
         position++;
         if (position >= options.Count)
             position = 0;
+        EventManager.raise(EventType.SELECTION_CHANGED);
     }
     public void decrementPosition()
     {
         position--;
-        if (position <= 0)
+        if (position < 0)
             position = options.Count - 1;
+        EventManager.raise(EventType.SELECTION_CHANGED);
     }
 }

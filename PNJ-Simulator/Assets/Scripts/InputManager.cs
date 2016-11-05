@@ -3,9 +3,10 @@ using System.Collections;
 
 public class InputManager : MonoBehaviour {
 
-    private ScenesType currentType;
-    [SerializeField] private Player player;
     [SerializeField] private Menu menu;
+    [SerializeField] private Player player;
+
+    private ScenesType currentType;
 
     private float horizontal;
     private float vertical;
@@ -15,6 +16,7 @@ public class InputManager : MonoBehaviour {
     private float submit;
 
     private bool SelectedOptionChanged = false;
+    private bool Validated = false;
 
 
 	// Use this for initialization
@@ -23,7 +25,7 @@ public class InputManager : MonoBehaviour {
         DontDestroyOnLoad(this.gameObject);
         EventManager.addActionToEvent<ScenesType>(EventType.END_SCENE, OnSceneChanged);
         EventManager.addActionToEvent<Menu>(EventType.MENU_ENTERED, OnMenuEntered);
-        EventManager.addActionToEvent(EventType.MENU_ENTERED, OnMenuExit);
+        EventManager.addActionToEvent(EventType.MENU_EXIT, OnMenuExit);
     }
 
     // Update is called once per frame
@@ -37,6 +39,11 @@ public class InputManager : MonoBehaviour {
         switch (currentType)
         {
             case ScenesType.MAP:
+                if (menu != null)
+                    OnMenu();
+                else if (player != null)
+                    OnMap();
+                break;
             case ScenesType.SHOP:
                 if (menu != null)
                     OnMenu();
@@ -87,12 +94,18 @@ public class InputManager : MonoBehaviour {
                     menu.decrementPosition();
                 else
                     menu.incrementPosition();
+                SelectedOptionChanged = true;
             }
         }
         else
             SelectedOptionChanged = false;
-        if (submit != 0)
+        if (submit != 0 && !Validated)
+        {
             menu.call();
+            Validated = true;
+        }
+        else if (submit == 0)
+            Validated = false;
     }
 
     private void OnMap()
@@ -104,6 +117,12 @@ public class InputManager : MonoBehaviour {
 
     private void OnBattle()
     {
-
+        player.move(horizontal, vertical);
+        if (attack1 != 0)
+            player.attack1();
+        if (attack2 != 0)
+            player.attack2();
+        if (splash != 0)
+            player.splash();
     }
 }

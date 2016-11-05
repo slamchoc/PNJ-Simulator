@@ -1,10 +1,23 @@
 fileFormatVersion: 2
 guid: cc2b209aaa1716844be5bb71c419d5f5
-timeCreated: 1478305032
+timeCreated: 1478323463
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - arrowMainMenu: {fileID: 1000013412707012, guid: 4a9f2a614219a8c4798fc3eee00c4897,
+      type: 2}
+  - arrowFight: {fileID: 1000013412707012, guid: d142e366fcbbcb34297378f5902f3222,
+      type: 2}
+  - arrowDialogue: {fileID: 1000010920730416, guid: 081475d32bdce21409b0c2e6114fb8da,
+      type: 2}
+  - panelMainMenu: {fileID: 1000011539820072, guid: 6c66299ab6ad44f4bad71cb829de1c0c,
+      type: 2}
+  - panelFight: {fileID: 1000011539820072, guid: 24a55c6ec37e1854ea63febbf854d4d8,
+      type: 2}
+  - panelDialogue: {fileID: 1000011274975446, guid: d315b09228fc5874ab943dcacb1af3d9,
+      type: 2}
+  - sceneManager: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

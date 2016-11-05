@@ -76,6 +76,12 @@ public class SceneManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene("ShopScene");
     }
 
+    public void quitGame()
+    {
+        EventManager.raise(EventType.QUIT_GAME);
+        Application.Quit();
+    }
+
     void OnDestroy()
     {
         EventManager.removeActionFromEvent<ScenesType>(EventType.END_SCENE, changeScene);

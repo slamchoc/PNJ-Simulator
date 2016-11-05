@@ -40,12 +40,12 @@ public class Monster : PNJ
 
         if (Vector3.Distance(this.transform.position, pointPatterB) >= Vector3.Distance(pointPatterA, pointPatterB))
         {
-            this.transform.GetComponent<Rigidbody>().velocity = pointPatterB - pointPatterA;
+            this.transform.GetComponent<Rigidbody>().velocity = (pointPatterB - pointPatterA) * speed;
         }
         else if (Vector3.Distance(this.transform.position, pointPatterA) >= Vector3.Distance(pointPatterA, pointPatterB))
 
         {
-            this.transform.GetComponent<Rigidbody>().velocity = pointPatterA - pointPatterB;
+            this.transform.GetComponent<Rigidbody>().velocity = (pointPatterA - pointPatterB) * speed;
         }
     }
 
