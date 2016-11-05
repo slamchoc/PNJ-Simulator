@@ -35,13 +35,13 @@ public class Menu
         position++;
         if (position >= options.Count)
             position = 0;
-        EventManager.raise(EventType.SELECTION_CHANGED);
+        EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE,SoundsType.POUIT_DEPLACEMENT );
     }
     public void decrementPosition()
     {
         position--;
         if (position < 0)
             position = options.Count - 1;
-        EventManager.raise(EventType.SELECTION_CHANGED);
+        EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.POUIT_DEPLACEMENT);
     }
 }
