@@ -26,6 +26,8 @@ public class SceneManager : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        this.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+
         DontDestroyOnLoad(this.gameObject);
         EventManager.addActionToEvent<ScenesType>(EventType.CHANGE_SCENE, changeScene);
         EventManager.addActionToEvent(EventType.PLAYER_DEAD, playerIsDead);
@@ -48,6 +50,8 @@ public class SceneManager : MonoBehaviour
                     break;
                 case ScenesType.MAP:
                     EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.AMBIANCE_VILLAGE);
+                    EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.MUSIQUE_VILLAGE);
+                    EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.SON_FOULE);
                     break;
                 case ScenesType.SHOP:
                     EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.AMBIANCE_FORGE);
@@ -62,7 +66,11 @@ public class SceneManager : MonoBehaviour
     }
     public void playerIsDead()
     {
-
+        Debug.Log("Player DED");
+        this.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
+        Camera.main.transform.position = this.gameObject.transform.position;
+        Camera.main.GetComponent<CameraFollow>().stopCamera = true;
+        EventManager.raise(EventType.MENU_EXIT);
     }
 
     /// <summary>
@@ -71,6 +79,7 @@ public class SceneManager : MonoBehaviour
     /// <param name="newScene"></param>
     public void changeScene(ScenesType newScene)
     {
+        Debug.Log("Change to " + newScene);
         EventManager.raise<ScenesType>(EventType.END_SCENE, actualScene);
         EventManager.raise(EventType.STOP_SOUND);
 

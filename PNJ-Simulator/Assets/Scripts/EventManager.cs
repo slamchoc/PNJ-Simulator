@@ -21,6 +21,7 @@ public enum EventType
     SELL,
     GIVE_QUEST,
     END_DAY,
+    SLAM_DOOR,
     MENU_ENTERED,
     MENU_EXIT,
     QUIT_GAME,

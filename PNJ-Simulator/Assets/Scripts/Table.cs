@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Table : MonoBehaviour {
 
+
     // Use this for initialization
     void OnTriggerEnter(Collider other)
     {
@@ -16,5 +17,8 @@ public class Table : MonoBehaviour {
             other.gameObject.GetComponent<Hero>().printnextMenu();
             other.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         }
+        
     }
+
+
 }
