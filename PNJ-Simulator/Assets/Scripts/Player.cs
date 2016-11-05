@@ -43,7 +43,7 @@ public class Player : MonoBehaviour {
         }
         else
         {
-            stopAnimation();
+            //stopAnimation();
         }
         
     }
@@ -71,12 +71,18 @@ public class Player : MonoBehaviour {
 
     public void attack1()
     {
-
+        if (currentOrientation == Orientation.LEFT)
+            animator.Play("LeftNormalAttack");
+        else
+            animator.Play("RightNormalAttack");
     }
 
     public void attack2()
     {
-
+        if (currentOrientation == Orientation.LEFT)
+            animator.Play("LeftPowerAttack");
+        else
+            animator.Play("RightPowerAttack");
     }
 
     public void splash()

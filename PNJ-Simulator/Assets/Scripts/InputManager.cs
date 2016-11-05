@@ -17,10 +17,13 @@ public class InputManager : MonoBehaviour {
 
     private bool SelectedOptionChanged = false;
     private bool Validated = false;
+    private bool HasPowerAttack = false;
+    private bool HasNormalAttack = false;
+    private bool HasSplashed = false;
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         currentType = ScenesType.MAIN_MENU;
         DontDestroyOnLoad(this.gameObject);
         EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, OnSceneChanged);
@@ -118,11 +121,28 @@ public class InputManager : MonoBehaviour {
     private void OnBattle()
     {
         player.move(horizontal, vertical);
-        if (attack1 != 0)
+        if (attack1 != 0 && !HasNormalAttack)
+        {
             player.attack1();
-        if (attack2 != 0)
+            HasNormalAttack = true;
+        }
+        else if (attack1 == 0)
+            HasNormalAttack = false;
+        if (attack2 != 0 && !HasPowerAttack)
+        {
             player.attack2();
-        if (splash != 0)
+            HasPowerAttack = true;
+        }
+        else if (attack2 == 0)
+        {
+            HasPowerAttack = false;
+        }
+        if (splash != 0 && !HasSplashed)
+        {
             player.splash();
+            HasSplashed = true;
+        }
+        else if (splash == 0)
+            HasSplashed = false;
     }
 }
