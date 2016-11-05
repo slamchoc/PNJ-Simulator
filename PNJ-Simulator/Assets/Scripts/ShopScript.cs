@@ -88,6 +88,8 @@ public class ShopScript : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        hero.gameObject.SetActive(true);
+        hero.player.gameObject.SetActive(true);
         /*menu du PNJ*/
         goodRetour = new Menu(
                                 new List<Pair<Callback, String>> { new Pair<Callback, String>(() => { exitVisitor(); hero.player.addGold(); hero.player.addReputation(); EventManager.raise(EventType.MENU_EXIT); }, "finir journee") }
