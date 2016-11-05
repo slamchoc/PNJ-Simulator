@@ -45,10 +45,11 @@ public class SceneManager : MonoBehaviour
                        0,
                        0
                        );
-            if (cinematique.transform.position.x > cinematique.GetComponent<SpriteRenderer>().bounds.size.x + Camera.main.aspect * Camera.main.orthographicSize)
+            if (cinematique.transform.position.x > cinematique.GetComponent<SpriteRenderer>().bounds.size.x / 2 + Camera.main.aspect * Camera.main.orthographicSize)
             {
                 cinematiqueBeforeShop = false;
                 cinematique.SetActive(false);
+                EventManager.raise(EventType.STOP_SOUND);
                 goToShop();
             }
         }
@@ -76,6 +77,7 @@ public class SceneManager : MonoBehaviour
             case ScenesType.SHOP:
                 cinematiqueBeforeShop = true;
                 cinematique.SetActive(true);
+                EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.MUSIQUE_CINEMATIQUE2);
                 break;
             default:
                 Debug.Log("Probleme dans changeScene");

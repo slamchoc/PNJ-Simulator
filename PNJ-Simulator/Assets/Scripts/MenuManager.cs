@@ -36,6 +36,7 @@ public class MenuManager : MonoBehaviour
 
     Pair<Menu, GameObject> currentMenuActive = new Pair<Menu, GameObject>();
 
+    List<GameObject> actualMenuPrinted = new List<GameObject>();
 
 	// Use this for initialization
 	void Start ()
@@ -131,8 +132,10 @@ public class MenuManager : MonoBehaviour
             tmpPanel.GetComponentInChildren<TextMesh>().text = pair.Second;
             tmpPanel.transform.position = panelPos;
             panelPos += mainMenuOffset;
+            actualMenuPrinted.Add(tmpPanel);
         }
         GameObject arrow = Instantiate(arrowMainMenu);
+        actualMenuPrinted.Add(arrow);
 
         currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
     }
@@ -150,14 +153,17 @@ public class MenuManager : MonoBehaviour
             tmpPanel.transform.position = panelPos;
             tmpPanel.transform.localScale = new Vector3(tmpPanel.transform.localScale.x* dialogueScale.x, tmpPanel.transform.localScale.y * dialogueScale.y, tmpPanel.transform.localScale.z * dialogueScale.z);
             panelPos += dialogueOffset;
+            actualMenuPrinted.Add(tmpPanel);
         }
 
         GameObject text = Instantiate(textDialogue);
         text.GetComponentInChildren<TextMesh>().text = _menu.text;
+        actualMenuPrinted.Add(text);
 
         GameObject arrow = Instantiate(arrowDialogue);
         arrow.transform.position = dialogueStartPos - new Vector3(1.5f,0,0);
         arrow.transform.localScale = new Vector3(arrow.transform.localScale.x * dialogueScale.x, arrow.transform.localScale.y * dialogueScale.y, arrow.transform.localScale.z * dialogueScale.z);
+        actualMenuPrinted.Add(arrow);
 
 
         currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
@@ -172,8 +178,11 @@ public class MenuManager : MonoBehaviour
             tmpPanel.GetComponentInChildren<TextMesh>().text = pair.Second;
             tmpPanel.transform.position = panelPos;
             panelPos += fightOffset;
+            actualMenuPrinted.Add(tmpPanel);
+
         }
         GameObject arrow = Instantiate(arrowFight);
+        actualMenuPrinted.Add(arrow);
 
         currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
 
@@ -181,9 +190,10 @@ public class MenuManager : MonoBehaviour
 
     void onMenuExit()
     {
-        Destroy(currentMenuActive.Second.gameObject);
+        for(int i = actualMenuPrinted.Count - 1; i >= 0; i-- )
+            Destroy(actualMenuPrinted[i]);
+        actualMenuPrinted.Clear();
         currentMenuActive = null;
-
     }
 
     void OnDestroy()
