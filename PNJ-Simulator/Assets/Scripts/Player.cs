@@ -119,10 +119,17 @@ public class Player : MonoBehaviour {
             return;
 
         PNJ interactScript = interactWith.GetComponent<PNJ>();
+        Hero heroScript = interactWith.GetComponent<Hero>();
 
         if (interactScript != null)
         {
             interactScript.printMenu();
+            return;
+        }
+        else if(heroScript != null)
+        {
+            heroScript.printnextMenu();
+            return;
         }
     }
 
