@@ -18,8 +18,8 @@ public enum EventType
     MENU_EXIT,
     QUIT_GAME,
     PLAY_SOUND_ONCE,
-    PLAY_SOUND_LOOP
-
+    PLAY_SOUND_LOOP,
+    STOP_SOUND
 }
 
 public delegate void Callback();
