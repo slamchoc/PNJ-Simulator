@@ -17,9 +17,21 @@ public class PNJFactory : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        Debug.Log("Start");
-        createPNJs();
-        EventManager.addActionToEvent<GameObject>(EventType.KILL_MONSTER, monsterHasbeenKilled);
+        if (FindObjectsOfType<PNJFactory>().Length > 1)
+            Destroy(this.gameObject);
+        else
+        {
+            createPNJs();
+            EventManager.addActionToEvent<GameObject>(EventType.KILL_MONSTER, monsterHasbeenKilled);
+            EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, newSceneLoaded);
+
+        }
+    }
+
+    void newSceneLoaded(ScenesType newScene)
+    {
+        if(newScene == ScenesType.MAP)
+            createPNJs();
     }
 
     void monsterHasbeenKilled(GameObject monster)
