@@ -98,6 +98,8 @@ public class InputManager : MonoBehaviour {
     private void OnMap()
     {
         player.move(horizontal, vertical);
+        if (submit != 0)
+            player.interact();
     }
 
     private void OnBattle()
