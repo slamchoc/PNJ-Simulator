@@ -54,10 +54,7 @@ public class ShopScript : MonoBehaviour {
     };
     List<String> listNames = new List<String>
     {
-        "",
-        "",
-        "",
-        "",
+        "Totoro"
     };
     List<String> listQuetes = new List<String>
     {
@@ -126,7 +123,7 @@ public class ShopScript : MonoBehaviour {
         hero.GetComponent<SpriteRenderer>().enabled = true;
         hero.transform.position = new Vector2(10,10);
 
-
+        visitor = hero.gameObject;
     }
 
     void OnDestroy()
@@ -181,8 +178,8 @@ public class ShopScript : MonoBehaviour {
         textRandom = PNJName+" :\nBonjour forgeron, peux-tu me conseiller en " + rand1 + " ?\nJe dois me battre contre "+rand2;  
         textOption1Random = "Donner une quete";
         option1Retour = new Menu(new List<Pair<Callback, String>> {new Pair<Callback,String>(queteRetour,"continuer")},texteQuete);
-        String textOption2Random = rand1+rand3;
-        String textOption3Random = rand1+rand4;
+        textOption2Random = rand1+rand3;
+        textOption3Random = rand1+rand4;
 
         if (isSecondChoiceGood)
         {
@@ -224,9 +221,14 @@ public class ShopScript : MonoBehaviour {
         EventManager.raise(EventType.MENU_EXIT);
         hero.player.transform.position = new Vector3(0, -1, -2);
         currentDay++;
+        //on annule le visiteur precedent
+        visitor.transform.position = new Vector2(10, 10);
+        visitor.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+
+        //on regarde le visiteur acctuel
         if(hero.load(currentDay))
         {
-            visitor = hero.gameObject;
+           visitor = hero.gameObject;
         }
         else
         {
@@ -234,8 +236,9 @@ public class ShopScript : MonoBehaviour {
             myPNJ.GetComponent<PNJ>().setMenu(new List<Pair<Callback, String>> { new Pair<Callback, String>(option1, textOption1Random), new Pair<Callback, String>(option2, textOption2Random), new Pair<Callback, String>(option3, textOption3Random) }, textRandom);
             visitor = myPNJ;
         }
+        //on set ce visiteur
         visitor.SetActive(true);
-        visitor.transform.position = new Vector3(0,5,-2);
+        visitor.transform.position = new Vector3(0,4,-2);
         visitor.transform.localScale = new Vector2(2, 2);
         visitor.GetComponent<Rigidbody>().velocity = new Vector3(0,-0.5f,0);
     }

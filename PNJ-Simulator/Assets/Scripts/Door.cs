@@ -11,9 +11,9 @@ public class Door : MonoBehaviour {
     void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.GetComponent<PNJ>() != null)
-            Destroy(other.gameObject);
+            other.gameObject.transform.position = new Vector2(10, 10);
         else if (other.gameObject.GetComponent<Hero>() != null)
-            other.gameObject.SetActive(false);
+            other.gameObject.transform.position = new Vector2(10,10);
         else if (other.gameObject.GetComponent<Player>() != null)
         {
             EventManager.raise<ScenesType>(EventType.CHANGE_SCENE, ScenesType.MAP);
