@@ -18,6 +18,8 @@ public class MenuManager : MonoBehaviour
     private GameObject panelFight;
     [SerializeField]
     private GameObject panelDialogue;
+    [SerializeField]
+    private GameObject textDialogue;
 
     [SerializeField]
     private SceneManager sceneManager;
@@ -32,7 +34,6 @@ public class MenuManager : MonoBehaviour
 
     private Menu mainMenu;
 
-    //private List<Pair<Menu,GameObject>> currentMenuActive = new List<Pair<Menu,GameObject>>();
     Pair<Menu, GameObject> currentMenuActive = new Pair<Menu, GameObject>();
 
 
@@ -73,14 +74,11 @@ public class MenuManager : MonoBehaviour
         EventManager.addActionToEvent<Menu>(EventType.MENU_ENTERED, menuToPrint);
         EventManager.addActionToEvent(EventType.MENU_EXIT,onMenuExit);
         EventManager.raise<Menu>(EventType.MENU_ENTERED, mainMenu);
-        //menuToPrint(mainMenu);
     }
 
     // Update is called once per frame
     void Update ()
     {
-        //foreach(Pair<Menu,GameObject> menu in currentMenuActive)
-        //{
         // TODO : Gerer les differentes positions de départ des differents menus
         if (currentMenuActive != null)
         {
@@ -140,7 +138,6 @@ public class MenuManager : MonoBehaviour
         }
         GameObject arrow = Instantiate(arrowMainMenu);
 
-        //currentMenuActive.Add(new Pair<Menu, GameObject>(_menu, arrow));
         currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
     }
 
@@ -155,6 +152,10 @@ public class MenuManager : MonoBehaviour
             tmpPanel.transform.position = panelPos;
             panelPos += dialogueOffset;
         }
+
+        GameObject text = Instantiate(textDialogue);
+        text.GetComponentInChildren<TextMesh>().text = _menu.text;
+
         GameObject arrow = Instantiate(arrowDialogue);
 
         currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
