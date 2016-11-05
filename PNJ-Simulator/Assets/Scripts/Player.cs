@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System;
 
 public enum AttackType
 {
@@ -52,7 +54,34 @@ public class Player : MonoBehaviour {
 
         EventManager.removeActionFromEvent<AttackType>(EventType.ATTACK_ENNEMY, attack);
     }
-    
+
+    void thinkToYourself(ScenesType lol)
+    {
+        Menu broomTaken = new Menu(
+                               new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=> { EventManager.raise(EventType.MENU_EXIT); }, "..."),
+                                                                },
+                               "Balai récupéré !"
+                           );
+        Menu swordTaken = new Menu(
+                               new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=> { EventManager.raise(EventType.MENU_EXIT); EventManager.raise<Menu>(EventType.MENU_ENTERED, broomTaken);}, "Je vais prendre le balai"),
+                                                                new Pair<Callback, String>(()=> { EventManager.raise(EventType.MENU_EXIT); EventManager.raise<Menu>(EventType.MENU_ENTERED, broomTaken);}, "Je vais prendre le balai")
+                                                                },
+                               "Vous n'avez pas la force necessaire pour manier cette epee."
+                           );
+
+        Menu choice = new Menu(
+                               new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=> { EventManager.raise(EventType.MENU_EXIT); EventManager.raise<Menu>(EventType.MENU_ENTERED, broomTaken);}, "Je vais prendre le balai"),
+                                                                new Pair<Callback, String>(()=> { EventManager.raise(EventType.MENU_EXIT); EventManager.raise<Menu>(EventType.MENU_ENTERED, swordTaken);}, "Je vais prendre l'epee"),
+                                                                },
+                               "Prendre le balai ou l'epee ?"
+                           );
+
+        EventManager.raise<Menu>(EventType.MENU_ENTERED, choice);
+    }
+
     void attack(AttackType type)
     {
         int damages = 0;
@@ -86,7 +115,7 @@ public class Player : MonoBehaviour {
         }
         else
         {
-            float rand = Random.Range(0, 3);
+            float rand = UnityEngine.Random.Range(0, 3);
             if (rand > 2)
                 EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PNJ_TOUCHE1);
             else if (rand > 1)
@@ -104,20 +133,23 @@ public class Player : MonoBehaviour {
 
     void sceneEnded(ScenesType sceneEnded)
     {
+        Debug.Log("scene ended " + sceneEnded);
         if (sceneEnded == ScenesType.MAIN_MENU)
             this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
         else if (sceneEnded == ScenesType.SHOP)
         {
-            Debug.Log("?");
             this.gameObject.transform.localScale = new Vector3(1, 1, 1);
-
+            EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, thinkToYourself);
         }
     }
 
-    void sceneBegin(ScenesType sceneEnded)
+    void sceneBegin(ScenesType sceneBegin)
     {
-        if (sceneEnded == ScenesType.MAIN_MENU)
+        Debug.Log("sceneBegin " + sceneBegin);
+        if (sceneBegin == ScenesType.MAIN_MENU)
             this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        else if(sceneBegin == ScenesType.SHOP)
+            this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
     }
 
     public void move (float dx, float dy)
