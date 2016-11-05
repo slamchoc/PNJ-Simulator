@@ -20,6 +20,8 @@ public class Monster : PNJ
     [SerializeField]
     private float speed = 1.5f;
 
+    private Animator animator = null;
+
     private int damages = 3;
 
     private bool neverCollided = true;
@@ -36,10 +38,12 @@ public class Monster : PNJ
 
     void Start()
     {
+        Debug.Log("Changer les prefabs des ennemis par les prefab MonsterBase et MonsterEpic");
         neverCollided = true;
 
         this.transform.position = pointPatterA;
         this.transform.GetComponent<Rigidbody>().velocity = pointPatterB - pointPatterA;
+        animator = this.transform.GetComponent<Animator>();
     }
 
     void Update()
@@ -50,11 +54,26 @@ public class Monster : PNJ
             if (Vector3.Distance(this.transform.position, pointPatterB) >= Vector3.Distance(pointPatterA, pointPatterB))
             {
                 this.transform.GetComponent<Rigidbody>().velocity = (pointPatterB - pointPatterA) * speed;
+                if (animator != null)
+                {
+                    if (this.transform.GetComponent<Rigidbody>().velocity.x < 0)
+                        animator.Play("LeftMove");
+                    else
+                        animator.Play("Move");
+                }
+
             }
             else if (Vector3.Distance(this.transform.position, pointPatterA) >= Vector3.Distance(pointPatterA, pointPatterB))
 
             {
                 this.transform.GetComponent<Rigidbody>().velocity = (pointPatterA - pointPatterB) * speed;
+                if (animator != null)
+                {
+                    if (this.transform.GetComponent<Rigidbody>().velocity.x < 0)
+                        animator.Play("LeftMove");
+                    else
+                        animator.Play("Move");
+                }
             }
         }
         else
