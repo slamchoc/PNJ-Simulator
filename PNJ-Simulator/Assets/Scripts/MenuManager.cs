@@ -15,24 +15,32 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private GameObject panelDialogue;
 
-    private Menu mainMenu = new Menu
+    [SerializeField]
+    private SceneManager sceneManager;
+
+    private Menu mainMenu;
+
+    //private List<Pair<Menu,GameObject>> currentMenuActive = new List<Pair<Menu,GameObject>>();
+    Pair<Menu, GameObject> currentMenuActive = new Pair<Menu, GameObject>();
+
+
+	// Use this for initialization
+	void Start ()
+    {
+         mainMenu = new Menu
                                     (
                                         new List<Pair<Callback, String>> {
-                                                                            new Pair<Callback,String>(()=> { Debug.Log("game"); },"Game"),
+                                                                            new Pair<Callback,String>(()=> {
+        EventManager.raise(EventType.MENU_EXIT);sceneManager.changeScene(ScenesType.SHOP); },"Game"),
                                                                             new Pair<Callback,String>(()=> { Debug.Log("choix alt"); },"Alt"),
                                                                             new Pair<Callback,String>(()=> { Application.Quit(); }, "Exit")
                                                                         },
                                         "mainMenu"
                                     );
-
-    private List<Pair<Menu,GameObject>> currentMenuActive = new List<Pair<Menu,GameObject>>();
-
-	// Use this for initialization
-	void Start ()
-    {
         DontDestroyOnLoad(this.gameObject);
         EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, sceneChanged);
         EventManager.addActionToEvent<Menu>(EventType.MENU_ENTERED, menuToPrint);
+        EventManager.addActionToEvent(EventType.MENU_EXIT,onMenuExit);
         EventManager.raise<Menu>(EventType.MENU_ENTERED, mainMenu);
         //menuToPrint(mainMenu);
     }
@@ -40,12 +48,17 @@ public class MenuManager : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-	    foreach(Pair<Menu,GameObject> menu in currentMenuActive)
+        //foreach(Pair<Menu,GameObject> menu in currentMenuActive)
+        //{
+        // TODO : Gerer les differentes positions de départ des differents menus
+        if (currentMenuActive != null)
         {
-            // TODO : Gerer les differentes positions de départ des differents menus
-            menu.Second.transform.position = new Vector3(menu.Second.transform.position.x, -menu.First.position * 2.1f, menu.Second.transform.position.z);
-            //menu.Second.transform.position = new Vector3(menu.Second.transform.position.x , menu.Second.transform.position.y + menu.First.position, menu.Second.transform.position.z);
+            Menu menu = currentMenuActive.First;
+            GameObject arrow = currentMenuActive.Second;
+            arrow.transform.position = new Vector3(arrow.transform.position.x, -menu.position * 2.1f, arrow.transform.position.z);
         }
+            //menu.Second.transform.position = new Vector3(menu.Second.transform.position.x , menu.Second.transform.position.y + menu.First.position, menu.Second.transform.position.z);
+        //}
 	}
 
     void sceneChanged(ScenesType newScene)
@@ -88,7 +101,8 @@ public class MenuManager : MonoBehaviour
         }
         GameObject arrow = Instantiate(arrowFight);
 
-        currentMenuActive.Add(new Pair<Menu, GameObject>(_menu, arrow));
+        //currentMenuActive.Add(new Pair<Menu, GameObject>(_menu, arrow));
+        currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
     }
 
     void printDialogue(Menu _menu)
@@ -105,7 +119,7 @@ public class MenuManager : MonoBehaviour
         }
         GameObject arrow = Instantiate(arrowFight);
 
-        currentMenuActive.Add(new Pair<Menu, GameObject>(_menu, arrow));
+        currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
     }
 
     void printBattle(Menu _menu)
@@ -121,8 +135,13 @@ public class MenuManager : MonoBehaviour
         }
         GameObject arrow = Instantiate(arrowFight);
 
-        currentMenuActive.Add(new Pair<Menu, GameObject>(_menu, arrow));
+        currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
 
+    }
+
+    void onMenuExit()
+    {
+        currentMenuActive = null;
     }
 
     void OnDestroy()
