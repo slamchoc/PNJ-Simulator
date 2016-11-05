@@ -21,7 +21,6 @@ public class PNJFactory : MonoBehaviour
             Destroy(this.gameObject);
         else
         {
-            Debug.Log("add !");
             DontDestroyOnLoad(this.gameObject);
             Debug.Log(listMonsters.Count);
 
@@ -57,21 +56,29 @@ public class PNJFactory : MonoBehaviour
 
     private void createPNJs()
     {
-        Debug.Log("createPNJ");
 
         /******* Creation des PNJs *********/
         List<Pair<Callback, String>> listCallbacks = new List<Pair<Callback, String>>();
-        listCallbacks.Add(new Pair<Callback, String>(() => { Debug.Log("?"); }, "Loultest"));
+        listCallbacks.Add(new Pair<Callback, String>(() => {
+            Debug.Log("?");
+            EventManager.raise(EventType.MENU_EXIT);
+        }, "Loultest"));
         string textPnj = "Je suis le texte du PNJ";
         listPNJs.Add( new PNJToCreate(new Vector3(-6, -6, -1), listCallbacks, textPnj));
 
         listCallbacks = new List<Pair<Callback, String>>();
-        listCallbacks.Add(new Pair<Callback, String>(() => { Debug.Log("?"); }, "Loultest"));
+        listCallbacks.Add(new Pair<Callback, String>(() => {
+            Debug.Log("?");
+            EventManager.raise(EventType.MENU_EXIT);
+        }, "Loultest"));
         textPnj = "Je suis le texte du garde !";
         listPNJs.Add(new PNJToCreate(new Vector3(1.25f, 1.17f, -1), listCallbacks, textPnj));
 
         listCallbacks = new List<Pair<Callback, String>>();
-        listCallbacks.Add(new Pair<Callback, String>(() => { Debug.Log("?"); }, "Loultest"));
+        listCallbacks.Add(new Pair<Callback, String>(() =>
+        {
+            Debug.Log("?"); EventManager.raise(EventType.MENU_EXIT);
+        }, "Loultest"));
         textPnj = "Je suis le texte du garde numero 2!";
         listPNJs.Add(new PNJToCreate(new Vector3(1.25f, 0.17f, -1), listCallbacks, textPnj));
 
