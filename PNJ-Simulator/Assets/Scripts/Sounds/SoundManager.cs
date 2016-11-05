@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Collections;
+using System;
 
 public enum Sounds
 {
@@ -45,8 +46,6 @@ public class SoundManager : MonoBehaviour {
 
     public GameObject audioPrefab;
 
-    public Dictionary<string, AudioClip> translateAudioToString;
-
     public Dictionary<string, Sound> actualSounds;
 
     private string absolutePath = "Assets/Sound";
@@ -58,7 +57,6 @@ public class SoundManager : MonoBehaviour {
     void Start ()
     {
         actualSounds = new Dictionary<string, Sound>();
-        translateAudioToString = new Dictionary<string, AudioClip>();
 
         DontDestroyOnLoad(this.gameObject);
 
@@ -66,12 +64,11 @@ public class SoundManager : MonoBehaviour {
         sources = new List<AudioClip>();
         var info = new DirectoryInfo(absolutePath);
         FileInfo[] sourcesFiles = info.GetFiles().Where(f => IsValidFileType(f.Name)).ToArray();
-        foreach (FileInfo s in sourcesFiles)
-            StartCoroutine(LoadFile(s.FullName));
 
-        foreach (AudioClip clip in sources)
+        for (int i = 0; i < sourcesFiles.Length; i++)
         {
-            translateAudioToString.Add(clip.name, clip); 
+            sources.Add(new AudioClip());
+            StartCoroutine(LoadFile(sourcesFiles[i].FullName, i ));
         }
 
         EventManager.addActionToEvent<Sounds>(EventType.PLAY_SOUND_ONCE, playSound);
@@ -83,7 +80,7 @@ public class SoundManager : MonoBehaviour {
         return validExtensions.Contains(Path.GetExtension(fileName));
     }
 
-    IEnumerator LoadFile(string path)
+    IEnumerator LoadFile(string path, int i)
     {
         WWW www = new WWW("file://" + path);
         print("loading " + path);
@@ -94,7 +91,7 @@ public class SoundManager : MonoBehaviour {
 
         print("done loading");
         clip.name = Path.GetFileName(path);
-        sources.Add(clip);
+        sources[i] = (clip);
     }
 
     public void playSound(Sounds soundToPlay)
@@ -102,9 +99,9 @@ public class SoundManager : MonoBehaviour {
         GameObject audio = Instantiate(audioPrefab);
         audio.transform.parent = this.transform;
 
-        Debug.Log(soundToPlay+" to "+ translateAudioToString.Keys.ElementAt((int)soundToPlay));
+        Debug.Log(soundToPlay+" to "+ sources[(int)soundToPlay]);
 
-        audio.GetComponent<Sound>().playOnce(translateAudioToString.Values.ElementAt((int)soundToPlay));
+        audio.GetComponent<Sound>().playOnce(sources[(int)soundToPlay]);
     }
 
     public void playSoundLoop(Sounds soundToPlayLoop)
@@ -112,9 +109,9 @@ public class SoundManager : MonoBehaviour {
         GameObject audio = Instantiate(audioPrefab);
         audio.transform.parent = this.transform;
 
-        Debug.Log(soundToPlayLoop + " to " + translateAudioToString.Keys.ElementAt((int)soundToPlayLoop));
+        Debug.Log(soundToPlayLoop + " to " + sources[(int)soundToPlayLoop]);
 
-        audio.GetComponent<Sound>().playLoop(translateAudioToString.Values.ElementAt((int)soundToPlayLoop));
+        audio.GetComponent<Sound>().playLoop(sources[(int)soundToPlayLoop]);
     }
 
     void OnDestroy()
