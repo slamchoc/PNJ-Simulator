@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class PNJ : MonoBehaviour
 {
-
     private Menu menu;
+
+
 
 	// Use this for initialization
 	void Start ()
@@ -19,9 +21,9 @@ public class PNJ : MonoBehaviour
 	
 	}
 
-    public void setMenu(Delegate[] arrayOfFunctions)
+    public void setMenu(List<Pair<Callback, String>> arrayOfFunctions, String text)
     {
-        menu = new Menu(arrayOfFunctions);
+        menu = new Menu(arrayOfFunctions, text);
     }
 
     virtual public void printMenu()

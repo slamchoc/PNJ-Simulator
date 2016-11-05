@@ -2,30 +2,36 @@
 using System;
 using System.Collections.Generic;
 
-public class Menu : MonoBehaviour {
+public class Menu
+{
 
-    private Callback[] options;
-    private int position=0;
-
-    public Menu(Delegate[] _options)
+    public string text { get; private set; }
+    public List<Pair<Callback, String>> options { get; private set; }
+    public int position { get; private set; }
+    
+    public Menu(List<Pair<Callback, String>> _options, String _text)
     {
-        options = (Callback[])_options;
+        position = 0;
+        text = _text;
+        options = _options;
     }
 
 	public void call()
     {
-        options[position]();
+        options[position].First();
     }
     public void incrementPosition()
     {
         position++;
-        if (position >= options.Length)
+        if (position >= options.Count)
             position = 0;
+        EventManager.raise(EventType.SELECTION_CHANGED);
     }
     public void decrementPosition()
     {
         position--;
-        if (position <= 0)
-            position = options.Length - 1;
+        if (position < 0)
+            position = options.Count - 1;
+        EventManager.raise(EventType.SELECTION_CHANGED);
     }
 }

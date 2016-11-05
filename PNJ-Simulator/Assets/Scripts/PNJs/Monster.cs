@@ -19,7 +19,7 @@ public class Monster : PNJ
     [SerializeField]
     private float speed = 1.5f;
 
-    public Monster(int _pvs, Vector3 _patternA, Vector3 _patternB)
+    public void createMonster(int _pvs, Vector3 _patternA, Vector3 _patternB)
     {
         nbPvs = _pvs;
         pointPatterA = _patternA;
@@ -40,12 +40,12 @@ public class Monster : PNJ
 
         if (Vector3.Distance(this.transform.position, pointPatterB) >= Vector3.Distance(pointPatterA, pointPatterB))
         {
-            this.transform.GetComponent<Rigidbody>().velocity = pointPatterB - pointPatterA;
+            this.transform.GetComponent<Rigidbody>().velocity = (pointPatterB - pointPatterA) * speed;
         }
         else if (Vector3.Distance(this.transform.position, pointPatterA) >= Vector3.Distance(pointPatterA, pointPatterB))
 
         {
-            this.transform.GetComponent<Rigidbody>().velocity = pointPatterA - pointPatterB;
+            this.transform.GetComponent<Rigidbody>().velocity = (pointPatterA - pointPatterB) * speed;
         }
     }
 

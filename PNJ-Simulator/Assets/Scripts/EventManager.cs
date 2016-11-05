@@ -7,12 +7,16 @@ using UnityEngine;
 /// </summary>
 public enum EventType
 {
+    SELECTION_CHANGED,
+    SELECTION_VALIDATED,
     END_SCENE,
+    NEW_SCENE,
     KILL_MONSTER,
     SELL,
     GIVE_QUEST,
     MENU_ENTERED,
-    MENU_EXIT
+    MENU_EXIT,
+    QUIT_GAME
 }
 
 public delegate void Callback();
