@@ -19,39 +19,15 @@ public class SceneManager : MonoBehaviour
 {
     ScenesType actualScene = ScenesType.MAIN_MENU;
 
-    public GameObject cinematique;
-
-    private bool cinematiqueBeforeShop = false;
-
 	// Use this for initialization
 	void Start ()
     {
-        cinematique.SetActive(false);
-        cinematique.transform.position = new Vector3(
-            - cinematique.GetComponent<SpriteRenderer>().bounds.size.x / 2 - Camera.main.aspect * Camera.main.orthographicSize,
-            0, 
-            0
-            );
         DontDestroyOnLoad(this.gameObject);
     }
 
     void Update()
     {
-        if(cinematiqueBeforeShop)
-        {
-            // cinematique
-            cinematique.transform.position += new Vector3(
-                       Time.deltaTime * 2.0f,
-                       0,
-                       0
-                       );
-            if (cinematique.transform.position.x > cinematique.GetComponent<SpriteRenderer>().bounds.size.x + Camera.main.aspect * Camera.main.orthographicSize)
-            {
-                cinematiqueBeforeShop = false;
-                cinematique.SetActive(false);
-                goToShop();
-            }
-        }
+
     }
 
     /// <summary>
@@ -60,6 +36,8 @@ public class SceneManager : MonoBehaviour
     /// <param name="newScene"></param>
     public void changeScene(ScenesType newScene)
     {
+        EventManager.raise<ScenesType>(EventType.END_SCENE, actualScene);
+
         actualScene = newScene;
 
         switch (newScene)
@@ -74,8 +52,8 @@ public class SceneManager : MonoBehaviour
                 goToMap();
                 break;
             case ScenesType.SHOP:
-                cinematiqueBeforeShop = true;
-                cinematique.SetActive(true);
+                Debug.Log("DONT FORGET TO CHANGE DAT");
+                goToMap();
                 break;
             default:
                 Debug.Log("Probleme dans changeScene");
@@ -87,25 +65,21 @@ public class SceneManager : MonoBehaviour
 
     void goToMainMenu()
     {
-        EventManager.raise<ScenesType>(EventType.END_SCENE, actualScene);
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenuScene");
     }
 
     void goToBattle()
     {
-        EventManager.raise<ScenesType>(EventType.END_SCENE, actualScene);
         UnityEngine.SceneManagement.SceneManager.LoadScene("BattleScene");
     }
 
     void goToMap()
     {
-        EventManager.raise<ScenesType>(EventType.END_SCENE, actualScene);
         UnityEngine.SceneManagement.SceneManager.LoadScene("Mapscene");
     }
 
     void goToShop()
     {
-        EventManager.raise<ScenesType>(EventType.END_SCENE, actualScene);
         UnityEngine.SceneManagement.SceneManager.LoadScene("ShopScene");
     }
 

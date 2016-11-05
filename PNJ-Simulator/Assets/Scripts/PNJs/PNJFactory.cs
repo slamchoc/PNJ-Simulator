@@ -23,14 +23,14 @@ public class PNJFactory : MonoBehaviour
         listCallbacks.Add(new Pair<Callback, String>(() => { Debug.Log("?"); }, "Loultest"));
         string textPnj = "Je suis le texte du PNJ";
 
-        createPNJ(new Vector3(0, 0, 0), listCallbacks, textPnj);
+        createPNJ(new Vector3(0, 0, -1), listCallbacks, textPnj);
 
         /************ Creation des monstres **********************/
-        listCallbacks = new List<Pair<Callback, String>>();
+        /*listCallbacks = new List<Pair<Callback, String>>();
         listCallbacks.Add(new Pair<Callback, String>(() => { Debug.Log("?"); }, "Loultest"));
         string textMonster = "Je suis le texte du MONSTRE";
 
-        createMonster(new Vector3(0, 0, 0), listCallbacks, textMonster, 3, new Vector3(0,0,0), new Vector3(1,1,0));
+        createMonster(new Vector3(0, 0, -1), listCallbacks, textMonster, 3, new Vector3(0,0,0), new Vector3(1,1,0));*/
     }
 
     void createPNJ(Vector3 position, List<Pair<Callback, String>> menu, string text)

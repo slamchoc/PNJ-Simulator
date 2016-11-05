@@ -15,6 +15,11 @@ public class Player : MonoBehaviour {
     [SerializeField]
     Animator animator;
 
+    void Start()
+    {
+        DontDestroyOnLoad(this);
+    }
+
     public void move (float dx, float dy)
     {
         if (dy > 0)
@@ -27,9 +32,19 @@ public class Player : MonoBehaviour {
             currentOrientation = Orientation.RIGHT;
         GetComponent<Rigidbody>().velocity = new Vector2(dx * speed, dy * speed);
         if (dx != 0 || dy != 0)
+        {
+            animator.enabled = true;
             playAnimation();
+        }
         else if (currentOrientation == Orientation.DOWN)
+        {
+            animator.enabled = true;
             animator.Play("Idle");
+        }
+        else
+        {
+            stopAnimation();
+        }
         
     }
 
@@ -38,8 +53,10 @@ public class Player : MonoBehaviour {
         GameObject interactWith = null;
         Vector2 direction = new Vector2((currentOrientation == Orientation.LEFT) ? -1 : ((currentOrientation == Orientation.RIGHT) ? 1 : 0),
                                         (currentOrientation == Orientation.DOWN) ? -1 : ((currentOrientation == Orientation.UP) ? 1 : 0));
-        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, 1.5f);
-        if (hit.collider != null)
+
+        RaycastHit hit = new RaycastHit();
+        //Debug.DrawLine(this.transform.position, this.transform.position + new Vector3(direction.x,direction.y,0) * 42f);
+        if (Physics.Raycast(this.transform.position, direction, out hit, 1.5f))
             interactWith = hit.collider.gameObject;
         else
             return;
@@ -69,7 +86,7 @@ public class Player : MonoBehaviour {
 
     public void playAnimation()
     {
-        if(currentOrientation == Orientation.UP)
+        if (currentOrientation == Orientation.UP)
             animator.Play("WalkUp");
         else if (currentOrientation == Orientation.DOWN)
             animator.Play("WalkDown");
@@ -77,5 +94,15 @@ public class Player : MonoBehaviour {
             animator.Play("WalkRight");
         else if (currentOrientation == Orientation.LEFT)
             animator.Play("WalkLeft");
+    }
+
+    public void stopAnimation()
+    {
+        if (currentOrientation == Orientation.UP)
+            animator.enabled = false;
+        else if (currentOrientation == Orientation.RIGHT)
+            animator.Play("RightIdle");
+        else if (currentOrientation == Orientation.LEFT)
+            animator.Play("LeftIdle");
     }
 }

@@ -45,7 +45,7 @@ public class SoundManager : MonoBehaviour {
 
     public GameObject audioPrefab;
 
-    public Dictionary<string, Sound> actualSounds;
+    public List<Sound> actualSounds;
 
     private string absolutePath = "Assets/Sound";
 
@@ -55,7 +55,7 @@ public class SoundManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        actualSounds = new Dictionary<string, Sound>();
+        actualSounds = new List<Sound>();
 
         DontDestroyOnLoad(this.gameObject);
 
@@ -71,6 +71,8 @@ public class SoundManager : MonoBehaviour {
         }
 
         EventManager.addActionToEvent<SoundsType>(EventType.PLAY_SOUND_ONCE, playSound);
+        EventManager.addActionToEvent(EventType.STOP_SOUND, stopSounds);
+
         EventManager.addActionToEvent<SoundsType>(EventType.PLAY_SOUND_LOOP, playSoundLoop);
     }
 
@@ -111,9 +113,20 @@ public class SoundManager : MonoBehaviour {
         audio.GetComponent<Sound>().playLoop(sources[(int)soundToPlayLoop]);
     }
 
+    public void stopSounds()
+    {
+        AudioSource[]  allAudioSources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+        foreach (AudioSource audioS in allAudioSources)
+        {
+            audioS.Stop();
+        }
+    }
+
     void OnDestroy()
     {
         EventManager.removeActionFromEvent<SoundsType>(EventType.PLAY_SOUND_ONCE, playSound);
         EventManager.removeActionFromEvent<SoundsType>(EventType.PLAY_SOUND_LOOP, playSoundLoop);
+        EventManager.removeActionFromEvent(EventType.STOP_SOUND, stopSounds);
+
     }
 }

@@ -5,9 +5,7 @@ using System.Collections.Generic;
 
 public class PNJ : MonoBehaviour
 {
-    private Menu menu;
-
-
+    protected Menu menu;
 
 	// Use this for initialization
 	void Start ()
