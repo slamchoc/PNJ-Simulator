@@ -23,6 +23,7 @@ public class Player : MonoBehaviour {
     Animator animator;
 
 
+
     private int damagesAttackMagical = 0;
 
     private int damagesAttackStrong = 5;
@@ -41,7 +42,7 @@ public class Player : MonoBehaviour {
 
         EventManager.addActionToEvent<AttackType>(EventType.ATTACK_ENNEMY, attack);
     }
-    
+
 
     void OnDestroy()
     {
@@ -79,6 +80,7 @@ public class Player : MonoBehaviour {
 
     void damagesTaken(int damages)
     {
+        Debug.Log(lifePoint + " " + damages);
         lifePoint -= damages;
         if(damages > lifePoint/3)
         {
