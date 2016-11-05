@@ -4,8 +4,9 @@ using System;
 
 public class PNJ : MonoBehaviour
 {
-
     private Menu menu;
+
+
 
 	// Use this for initialization
 	void Start ()
