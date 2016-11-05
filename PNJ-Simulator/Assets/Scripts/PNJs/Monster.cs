@@ -8,6 +8,7 @@ public class Monster : PNJ
     /// </summary>
     private int nbPvs = 1;
 
+    public int id = 0;
     /// <summary>
     /// Points that the monster will cross
     /// </summary>

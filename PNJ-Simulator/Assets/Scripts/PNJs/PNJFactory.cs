@@ -40,7 +40,7 @@ public class PNJFactory : MonoBehaviour
 
     void monsterHasbeenKilled(GameObject monster)
     {
-       // listMonsters.Remove(monster);
+        listMonsters[monster.GetComponent<Monster>().id].isDead = true;
         EventManager.raise(EventType.STOP_SOUND);
         EventManager.raise<ScenesType>(EventType.CHANGE_SCENE, ScenesType.MAP);
     }
@@ -48,8 +48,8 @@ public class PNJFactory : MonoBehaviour
 
     private void instantiatePNJs()
     {
-        foreach (MonsterToCreate m in listMonsters)
-            m.instantiateMonster(prefabMonster);
+        for (int i = 0; i < listMonsters.Count; i++)
+            listMonsters[i].instantiateMonster(prefabMonster, i);
 
         foreach (PNJToCreate m in listPNJs)
             m.createPNJ(prefabPNJ);
@@ -82,20 +82,20 @@ public class PNJFactory : MonoBehaviour
 
         listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(-3,3,0), new Vector3(3,3,0)));
     }
-
-  
 }
 
 class MonsterToCreate
 {
     List<Pair<Callback, String>> _menu;
-    public string _text;
+    string _text;
     int _pv;
     Vector3 _patternA;
     Vector3 _patternB;
+    public bool isDead;
 
     public MonsterToCreate(List<Pair<Callback, String>> menu, string text, int pv, Vector3 patternA, Vector3 patternB)
     {
+        isDead = false;
         _menu = menu;
         _text = text;
         _pv = pv;
@@ -103,14 +103,17 @@ class MonsterToCreate
         _patternB = patternB;
     }
 
-    public GameObject instantiateMonster(GameObject prefabMonster)
+    public void instantiateMonster(GameObject prefabMonster, int id)
     {
-        GameObject monster = UnityEngine.Object.Instantiate(prefabMonster);
-        monster.GetComponent<Monster>().createMonster(_pv, _patternA, _patternB);
-        monster.GetComponent<Monster>().setMenu(_menu, _text);
-        monster.transform.position = _patternA;
+        if(!isDead)
+        {
+            GameObject monster = UnityEngine.Object.Instantiate(prefabMonster);
+            monster.GetComponent<Monster>().createMonster(_pv, _patternA, _patternB);
+            monster.GetComponent<Monster>().setMenu(_menu, _text);
+            monster.GetComponent<Monster>().id = id;
 
-        return monster;
+            monster.transform.position = _patternA;
+        }
     }
 }
 
@@ -118,20 +121,24 @@ class PNJToCreate
 {
     Vector3 _position;
     List<Pair<Callback, String>> _menu;
-    public string _text;
+    string _text;
+    public bool isDead;
 
     public PNJToCreate(Vector3 position, List<Pair<Callback, String>> menu, string text)
     {
+        isDead = false;
         _position = position;
         _menu = menu;
         _text = text;
     }
 
-    public GameObject createPNJ(GameObject prefabPNJ)
+    public void createPNJ(GameObject prefabPNJ)
     {
-        GameObject pnj = UnityEngine.Object.Instantiate(prefabPNJ);
-        pnj.GetComponent<PNJ>().setMenu(_menu, _text);
-        pnj.transform.position = _position;
-        return pnj;
+        if (!isDead)
+        {
+            GameObject pnj = UnityEngine.Object.Instantiate(prefabPNJ);
+            pnj.GetComponent<PNJ>().setMenu(_menu, _text);
+            pnj.transform.position = _position;
+        }
     }
 }
