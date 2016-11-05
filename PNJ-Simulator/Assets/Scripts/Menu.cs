@@ -16,6 +16,16 @@ public class Menu
         options = _options;
     }
 
+    public Menu(Menu _nextOne, String _text)
+    {
+        position = 0;
+        text = _text;
+        options = new List<Pair<Callback, string>> { new Pair<Callback,String>(()=>
+                                                                            {
+                                                                                EventManager.raise<Menu>(EventType.MENU_ENTERED,_nextOne);
+                                                                            },"Continue...")};
+    }
+
 	public void call()
     {
         options[position].First();
