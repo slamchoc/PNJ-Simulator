@@ -58,7 +58,9 @@ public class InputManager : MonoBehaviour {
                     OnMenu();
                 break;
             case ScenesType.BATTLE:
-                if(player!=null)
+                if (menu != null)
+                    OnMenu();
+                else if (player != null)
                     OnBattle();
                 break;
             default:
