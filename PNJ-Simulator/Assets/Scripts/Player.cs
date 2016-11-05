@@ -231,4 +231,9 @@ public class Player : MonoBehaviour {
     {
         reputation -= (int)(reputation * 0.2f);
     }
+
+    public void looseGold()
+    {
+        gold -= 100;
+    }
 }
