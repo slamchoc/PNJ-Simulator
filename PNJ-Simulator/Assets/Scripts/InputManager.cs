@@ -104,6 +104,10 @@ public class InputManager : MonoBehaviour {
 
     private void OnBattle()
     {
-
+        player.move(horizontal, vertical);
+        if (attack1 != 0)
+            player.attack1();
+        if (attack2 != 0)
+            player.attack2();
     }
 }

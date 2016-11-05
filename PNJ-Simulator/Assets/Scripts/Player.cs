@@ -38,4 +38,19 @@ public class Player : MonoBehaviour {
             interactScript.printMenu();
         }
     }
+
+    public void attack1()
+    {
+
+    }
+
+    public void attack2()
+    {
+
+    }
+
+    public void splash()
+    {
+
+    }
 }
