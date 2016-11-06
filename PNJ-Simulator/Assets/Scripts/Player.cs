@@ -37,7 +37,6 @@ public class Player : MonoBehaviour {
     void Start()
     {
         DontDestroyOnLoad(this);
-
         EventManager.addActionToEvent<ScenesType>(EventType.END_SCENE, sceneEnded);
         EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, sceneBegin);
         EventManager.addActionToEvent<int>(EventType.DAMAGE_PLAYER, damagesTaken);

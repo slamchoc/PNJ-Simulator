@@ -31,8 +31,6 @@ public class Door : MonoBehaviour {
         spriteTitre.GetComponent<SpriteRenderer>().enabled = true;
 
         yield return new WaitForSeconds(sec);
-
-        spriteTitre.GetComponent<SpriteRenderer>().enabled = false;
         EventManager.raise<ScenesType>(EventType.CHANGE_SCENE, ScenesType.MAP);
     }
 

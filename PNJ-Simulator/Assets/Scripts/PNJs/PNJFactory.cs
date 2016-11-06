@@ -117,7 +117,7 @@ public class PNJFactory : MonoBehaviour
             EventManager.raise<Menu>(EventType.MENU_ENTERED, gardequete);
         }, "Donner une quète épique au garde."));
         textPnj = "Garde :\nTu ne peux pas sortir, désolé.\nTu n'es qu'un forgeron, c'est dangereux d'y aller tout seul.";
-        listPNJs.Add(new PNJToCreate(new Vector3(0.63f, 0.5f, -1), listCallbacks, textPnj));
+        listPNJs.Add(new PNJToCreate(new Vector3(3.65f, -3.81f, -1), listCallbacks, textPnj));
 
 
         listCallbacks = new List<Pair<Callback, String>>();
@@ -155,7 +155,7 @@ public class PNJFactory : MonoBehaviour
             EventManager.raise<Menu>(EventType.MENU_ENTERED, gardequete2);
         }, "Donner une quète épique au garde."));
         textPnj = "Garde :\nTu ne peux pas sortir, désolé.\nTu n'es qu'un forgeron, c'est dangereux d'y aller tout seul.";
-        listPNJs.Add(new PNJToCreate(new Vector3(0.63f, 1.7f, -1), listCallbacks, textPnj));
+        listPNJs.Add(new PNJToCreate(new Vector3(3.65f, -2.39f, -1), listCallbacks, textPnj));
 
 
         listCallbacks = new List<Pair<Callback, String>>();
@@ -172,7 +172,7 @@ public class PNJFactory : MonoBehaviour
             EventManager.raise(EventType.MENU_EXIT);
         }, "Ah ok."));
         textPnj = "Jean-Eudes :\nLe héros est vraiment impressionnant !\nIl va tous nous sauver !";
-        listPNJs.Add(new PNJToCreate(new Vector3(-4, 16, -1), listCallbacks, textPnj));
+        listPNJs.Add(new PNJToCreate(new Vector3(-4, 12, -1), listCallbacks, textPnj));
 
 
 
@@ -188,7 +188,7 @@ public class PNJFactory : MonoBehaviour
             EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.WEAK);
         }, "Attaque faible"));
         string textMonster = "??";
-        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(6,3,-2), new Vector3(9,3,-2)));
+        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(8,3,-2), new Vector3(12,3,-2)));
 
         listCallbacks = new List<Pair<Callback, String>>();
         listCallbacks.Add(new Pair<Callback, String>(() =>

@@ -31,7 +31,6 @@ public class SceneManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
         EventManager.addActionToEvent<ScenesType>(EventType.CHANGE_SCENE, changeScene);
         EventManager.addActionToEvent(EventType.PLAYER_DEAD, playerIsDead);
-
     }
 
     void Update()
