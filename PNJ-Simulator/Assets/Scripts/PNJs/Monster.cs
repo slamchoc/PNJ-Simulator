@@ -36,7 +36,7 @@ public class Monster : PNJ
 
     private int damages = 3;
 
-    private bool neverCollided = true;
+    public bool neverCollided = true;
 
     private bool attacking = false;
 
