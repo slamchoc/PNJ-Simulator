@@ -168,7 +168,7 @@ public class Player : MonoBehaviour {
             else
                 EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PNJ_TOUCHE3);
         }
-      
+        EventManager.raise<int>(EventType.LOOSE_LIFE_PLAYER, lifePoint);
         if (lifePoint <= 0)
         {
             EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.MORT_PNJ);
@@ -193,6 +193,8 @@ public class Player : MonoBehaviour {
         Debug.Log("sceneBegin " + sceneBegin);
         if(sceneBegin == ScenesType.SHOP)
             this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        if(sceneBegin == ScenesType.BATTLE)
+            EventManager.raise<int>(EventType.LOOSE_LIFE_PLAYER, lifePoint);
     }
 
     public void move (float dx, float dy)
