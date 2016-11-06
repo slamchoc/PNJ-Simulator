@@ -77,8 +77,6 @@ public class SceneManager : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         Application.Quit();
-        Debug.Log("Applicaation quitee");
-
     }
 
     /// <summary>
@@ -87,7 +85,6 @@ public class SceneManager : MonoBehaviour
     /// <param name="newScene"></param>
     public void changeScene(ScenesType newScene)
     {
-        Debug.Log("Change to " + newScene);
         EventManager.raise<ScenesType>(EventType.END_SCENE, actualScene);
         EventManager.raise(EventType.STOP_SOUND);
 

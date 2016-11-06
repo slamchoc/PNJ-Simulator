@@ -15,7 +15,7 @@ public enum Orientation { UP,DOWN,LEFT,RIGHT}
 public class Player : MonoBehaviour {
     
     [SerializeField]
-    private int lifePoint = 10;
+    private int lifePoint = 100;
     public int gold { get; private set; }
     public int reputation { get; private set; }
     private Orientation currentOrientation = Orientation.DOWN;
@@ -54,12 +54,16 @@ public class Player : MonoBehaviour {
 
         if(goal != new Vector3(-100,-100,-100))
         {
-            if(Vector3.Distance(this.transform.position, goal) < 1)
+            if(Vector2.Distance(this.transform.position, goal) > 3.0)
             {
                 move(Vector3.Normalize((goal - this.transform.position)).x, Vector3.Normalize((goal - this.transform.position)).y);
             }
             else
+            {
+                move(0, 0);
                 goal = new Vector3(-100, -100, -100);
+                stopAnimation();
+            }
         }
 
         if (this.gameObject.GetComponent<SpriteRenderer>().enabled == false)
@@ -177,19 +181,19 @@ public class Player : MonoBehaviour {
 
     void sceneEnded(ScenesType sceneEnded)
     {
-        Debug.Log("scene ended " + sceneEnded);
         if (sceneEnded == ScenesType.MAIN_MENU)
             this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
         else if (sceneEnded == ScenesType.SHOP)
         {
             this.gameObject.transform.localScale = new Vector3(1, 1, 1);
+            this.gameObject.transform.position = new Vector3(-2.6f, 0.9f, -2);
+
             EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, thinkToYourself);
         }
     }
 
     void sceneBegin(ScenesType sceneBegin)
     {
-        Debug.Log("sceneBegin " + sceneBegin);
         if(sceneBegin == ScenesType.SHOP)
             this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
         if (sceneBegin == ScenesType.BATTLE)
@@ -326,6 +330,8 @@ public class Player : MonoBehaviour {
 
     public void stopAnimation()
     {
+        Debug.Log("stop");
+
         if (currentOrientation == Orientation.UP)
             animator.enabled = false;
         else if (currentOrientation == Orientation.RIGHT)
