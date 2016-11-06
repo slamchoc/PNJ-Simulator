@@ -196,24 +196,28 @@ public class MenuManager : MonoBehaviour
     {
         Vector3 battleScale = new Vector3(0.5f, 0.3f, 1);
         Vector3 panelPos = fightStartPos;
-        foreach (Pair<Callback,string> pair in _menu.options)
+        if(_menu != null)
         {
-            GameObject tmpPanel = Instantiate(panelFight);
-            tmpPanel.transform.parent = Camera.main.transform;
+            foreach (Pair<Callback, string> pair in _menu.options)
+            {
+                GameObject tmpPanel = Instantiate(panelFight);
+                tmpPanel.transform.parent = Camera.main.transform;
 
-            tmpPanel.GetComponentInChildren<TextMesh>().text = pair.Second;
-            tmpPanel.transform.localPosition = panelPos;
-            tmpPanel.transform.localScale = battleScale;
-            panelPos += fightOffset;
-            actualMenuPrinted.Add(tmpPanel);
+                tmpPanel.GetComponentInChildren<TextMesh>().text = pair.Second;
+                tmpPanel.transform.localPosition = panelPos;
+                tmpPanel.transform.localScale = battleScale;
+                panelPos += fightOffset;
+                actualMenuPrinted.Add(tmpPanel);
+            }
+            GameObject arrow = Instantiate(arrowFight);
+            arrow.transform.parent = Camera.main.transform;
+
+            arrow.transform.localPosition = dialogueStartPos - new Vector3(1.5f, 0, 0);
+            arrow.transform.localScale = battleScale;
+            actualMenuPrinted.Add(arrow);
+            currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
         }
-        GameObject arrow = Instantiate(arrowFight);
-        arrow.transform.parent = Camera.main.transform;
-
-        arrow.transform.localPosition = dialogueStartPos - new Vector3(1.5f, 0, 0);
-        arrow.transform.localScale = battleScale;
-        actualMenuPrinted.Add(arrow);
-        currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
+    
     }
 
     void onMenuExit()

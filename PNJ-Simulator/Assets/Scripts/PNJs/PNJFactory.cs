@@ -53,8 +53,6 @@ public class PNJFactory : MonoBehaviour
 
     private void instantiatePNJs()
     {
-        Debug.Log("Instantiate");
-
         for (int i = 0; i < listMonsters.Count; i++)
             listMonsters[i].instantiateMonster(prefabMonster ,i);
         for (int i = 0; i < listMonstersEpic.Count; i++)
@@ -69,7 +67,6 @@ public class PNJFactory : MonoBehaviour
 
     private void createPNJs()
     {
-        Debug.Log("create pnj");
         listGO.Clear();
 
         /******* Creation des PNJs *********/
@@ -179,12 +176,9 @@ public class PNJFactory : MonoBehaviour
         /************ Creation des monstres **********************/
 
         listCallbacks = new List<Pair<Callback, String>>();
-        listCallbacks.Add(new Pair<Callback, String>(() =>
-        {
-            EventManager.raise(EventType.MENU_EXIT);
-        }, "Mais pourquoi j'attend mon tour ?"));
+ 
         string textMonster = "??";
-        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(50, 3,-2), new Vector3(55, 3,-2)));
+        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 10, new Vector3(50, 3,-2), new Vector3(55, 3,-2)));
 
 
         listCallbacks = new List<Pair<Callback, String>>();
@@ -197,13 +191,16 @@ public class PNJFactory : MonoBehaviour
             EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.WEAK);
         }, "Attaque faible"));
         textMonster = "??";
-        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(35, 10, -2), new Vector3(35, -5, -2)));
+        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 5, new Vector3(35, 10, -2), new Vector3(35, -5, -2)));
 
 
         listCallbacks = new List<Pair<Callback, String>>();
+        listCallbacks.Add(new Pair<Callback, String>(() =>
+        {
+            EventManager.raise(EventType.MENU_EXIT);
+        }, "Mais pourquoi j'attend mon tour ?"));
         textMonster = "??";
-        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 5, new Vector3(45, 0, -2), new Vector3(45, -10, -2)));
-
+        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 10, new Vector3(45, 0, -2), new Vector3(45, -10, -2)));
     }
 }
 

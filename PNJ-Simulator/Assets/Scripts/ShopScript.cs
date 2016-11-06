@@ -173,7 +173,6 @@ public class ShopScript : MonoBehaviour {
                 cinematique.SetActive(false);
                 EventManager.raise(EventType.STOP_SOUND);
                 EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.AMBIANCE_FORGE);
-                EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.MUSIQUE_HEROS);
 
                 nextDay();
             }
@@ -235,6 +234,8 @@ public class ShopScript : MonoBehaviour {
 
     void nextDay()
     {
+        EventManager.raise(EventType.STOP_SOUND);
+        EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.AMBIANCE_FORGE);
         EventManager.raise(EventType.MENU_EXIT);
         //hero.player.transform.position = new Vector3(0, -1, -2);
         currentDay++;
@@ -252,12 +253,17 @@ public class ShopScript : MonoBehaviour {
         //on regarde le visiteur acctuel
         if(hero.load(currentDay))
         {
+        
+            EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.MUSIQUE_HEROS);
+
             visitor = hero.gameObject;
             if(!hero.isPissed)
                 visitor.GetComponent<Animator>().Play("Down");
         }
         else
         {
+            EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.MUSIQUE_VILLAGE);
+
             generatePNJ();
             myPNJ.GetComponent<PNJ>().setMenu(new List<Pair<Callback, String>> { new Pair<Callback, String>(option1, textOption1Random), new Pair<Callback, String>(option2, textOption2Random), new Pair<Callback, String>(option3, textOption3Random) }, textRandom);
             visitor = myPNJ;
