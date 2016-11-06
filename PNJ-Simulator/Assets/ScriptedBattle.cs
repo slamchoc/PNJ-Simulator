@@ -45,9 +45,7 @@ public class ScriptedBattle : MonoBehaviour
                 hero.GetComponent<SpriteRenderer>().enabled = true;
                 hero.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
 
-                hero.GetComponent<Animator>().Play("FirstBattlePart1");
-
-                
+                hero.GetComponent<Animator>().Play("FirstBattlePart1");                
             }
         }
     }
