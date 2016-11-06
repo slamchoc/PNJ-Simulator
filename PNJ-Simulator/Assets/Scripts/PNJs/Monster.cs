@@ -20,6 +20,8 @@ public class Monster : PNJ
     [SerializeField]
     private float speed = 1.5f;
 
+    private Player player;
+
     private Animator animator = null;
 
     private int damages = 3;
@@ -98,14 +100,24 @@ public class Monster : PNJ
         }
         else
         {
+            if (animator != null)
+            {
+                Debug.Log("Anim");
+                if (player.transform.position.x > this.transform.position.x)
+                    animator.Play("Attack");
+                else
+                    animator.Play("LeftAttack");
+                    }
             EventManager.raise<int>(EventType.DAMAGE_PLAYER, damages);
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
+        
         if (collision.gameObject.GetComponent<Player>() != null)
         {
+            player = collision.gameObject.GetComponent<Player>();
             if (neverCollided)
             {
                 neverCollided = false;
