@@ -13,6 +13,7 @@ public class Fin : MonoBehaviour {
 	
     void print()
     {
+        EventManager.raise(EventType.CINEMATIC_BEGIN);
         gameObject.GetComponent<SpriteRenderer>().enabled = true;
         defiler = true;
     }
@@ -25,7 +26,8 @@ public class Fin : MonoBehaviour {
             if(transform.localPosition.y >= 6)
             {
                 Debug.Log("FIN !");
-                Application.Quit();
+                defiler = false;
+                EventManager.raise(EventType.QUIT_GAME);
             }
         }
 	}
