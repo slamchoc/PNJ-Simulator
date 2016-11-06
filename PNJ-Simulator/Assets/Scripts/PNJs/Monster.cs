@@ -20,13 +20,24 @@ public class Monster : PNJ
     [SerializeField]
     private float speed = 1.5f;
 
+    [SerializeField]
+    private float attackDelay = 2;
+
+    private float timePassed;
+    [SerializeField]
+    private float timeAttack = 1.5f;
+
     private Player player;
+
+    private Coroutine currentCoroutine = null;
 
     private Animator animator = null;
 
     private int damages = 3;
 
     private bool neverCollided = true;
+
+    private bool attacking = false;
 
     public void createMonster(int _pvs, Vector3 _patternA, Vector3 _patternB)
     {
@@ -77,8 +88,39 @@ public class Monster : PNJ
                 }
             }
         }
-        else
-            this.transform.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+        else if(!attacking)
+        {
+            pointPatterA = this.transform.position;
+            pointPatterB = player.transform.position;
+            if(Vector3.Distance(pointPatterA,pointPatterB)<= 2)
+            {
+                this.transform.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+                currentCoroutine = StartCoroutine(battleCoroutine());
+            }
+            else if (Vector3.Distance(this.transform.position, pointPatterB) >= Vector3.Distance(pointPatterA, pointPatterB))
+            {
+                this.transform.GetComponent<Rigidbody>().velocity = Vector3.Normalize(pointPatterB - pointPatterA) * speed;
+                if (animator != null)
+                {
+                    if (this.transform.GetComponent<Rigidbody>().velocity.x < 0)
+                        animator.Play("LeftMove");
+                    else
+                        animator.Play("Move");
+                }
+
+            }
+            else if (Vector3.Distance(this.transform.position, pointPatterA) >= Vector3.Distance(pointPatterA, pointPatterB))
+            {
+                this.transform.GetComponent<Rigidbody>().velocity = Vector3.Normalize(pointPatterA - pointPatterB) * speed;
+                if (animator != null)
+                {
+                    if (this.transform.GetComponent<Rigidbody>().velocity.x < 0)
+                        animator.Play("LeftMove");
+                    else
+                        animator.Play("Move");
+                }
+            }
+        }
 
     }
 
@@ -89,7 +131,8 @@ public class Monster : PNJ
     public void hitMonster(int pvRemoved)
     {
         nbPvs =  nbPvs - pvRemoved;
-        if (nbPvs < 0)
+        EventManager.raise<int>(EventType.LOOSE_LIFE_ENNEMY, nbPvs);
+        if (nbPvs <= 0)
         {
             EventManager.raise(EventType.KILL_MONSTER, this.gameObject);
             EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.MONSTRE_MORT);
@@ -97,18 +140,19 @@ public class Monster : PNJ
             EventManager.raise(EventType.MENU_EXIT);
             Destroy(this.gameObject);
         }
-        else
+    }
+
+    void attack()
+    {
+
+        if (animator != null)
         {
-            if (animator != null)
-            {
-                Debug.Log("Anim");
-                if (player.transform.position.x > this.transform.position.x)
-                    animator.Play("Attack");
-                else
-                    animator.Play("LeftAttack");
-                    }
-            EventManager.raise<int>(EventType.DAMAGE_PLAYER, damages);
+            if (player.transform.position.x > this.transform.position.x)
+                animator.Play("Attack");
+            else
+                animator.Play("LeftAttack");
         }
+        EventManager.raise<int>(EventType.DAMAGE_PLAYER, damages);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -140,6 +184,7 @@ public class Monster : PNJ
             EventManager.raise<Menu>(EventType.MENU_ENTERED, menu);
             EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.MUSIQUE_PNJ);
             EventManager.addActionToEvent<int>(EventType.DAMAGE_ENNEMY, hitMonster);
+            EventManager.raise<int>(EventType.LOOSE_LIFE_ENNEMY, nbPvs);
 
         }
     }
@@ -149,6 +194,28 @@ public class Monster : PNJ
         EventManager.removeActionFromEvent<ScenesType>(EventType.NEW_SCENE, sceneLoaded);
         EventManager.removeActionFromEvent<int>(EventType.DAMAGE_ENNEMY, hitMonster);
 
+    }
+
+    IEnumerator battleCoroutine()
+    {
+        timePassed = 0;
+        attack();
+        attacking = true;
+        while (timePassed < timeAttack)
+        {
+            this.transform.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+            timePassed += Time.deltaTime;
+            yield return null;
+        }
+        timePassed = 0;
+        while (timePassed < attackDelay)
+        {
+            this.transform.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+            timePassed += Time.deltaTime;
+            yield return null;
+        }
+        currentCoroutine = null;
+        attacking = false;
     }
 
 }
