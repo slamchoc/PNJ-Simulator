@@ -157,7 +157,7 @@ public class Monster : PNJ
         EventManager.raise<int>(EventType.DAMAGE_PLAYER, damages);
     }
 
-    void OnCollisionEnter(Collision collision)
+    public void OnCollisionEnter(Collision collision)
     {
         
         if (collision.gameObject.GetComponent<Player>() != null)
@@ -165,16 +165,20 @@ public class Monster : PNJ
             player = collision.gameObject.GetComponent<Player>();
             if (neverCollided)
             {
-                neverCollided = false;
-                //We save the monster
-                DontDestroyOnLoad(this.gameObject);
-
-                EventManager.raise<ScenesType>(EventType.CHANGE_SCENE, ScenesType.BATTLE);
-                EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, sceneLoaded);
-                this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                laucnhBattle();
             }
         }
+    }
+
+    public void laucnhBattle()
+    {
+        neverCollided = false;
+        //We save the monster
+        DontDestroyOnLoad(this.gameObject);
+
+        EventManager.raise<ScenesType>(EventType.CHANGE_SCENE, ScenesType.BATTLE);
+        EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, sceneLoaded);
+        this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
 
     void sceneLoaded(ScenesType oldScene)
