@@ -7,6 +7,8 @@ public class Door : MonoBehaviour {
     [SerializeField]
     private Sprite spriteDestructed;
 
+    public GameObject spriteTitre;
+
     // Use this for initialization
     void OnCollisionEnter(Collision other)
     {
@@ -16,12 +18,21 @@ public class Door : MonoBehaviour {
             other.gameObject.transform.position = new Vector2(10,10);
         else if (other.gameObject.GetComponent<Player>() != null)
         {
-            EventManager.raise<ScenesType>(EventType.CHANGE_SCENE, ScenesType.MAP);
+            StartCoroutine(showMapDuring(3));
         }
         else
             Destroy(other.gameObject);
 
     }
+
+    IEnumerator showMapDuring(float sec)
+    {
+        spriteTitre.GetComponent<SpriteRenderer>().enabled = true;
+        yield return new WaitForSeconds(sec);
+        spriteTitre.GetComponent<SpriteRenderer>().enabled = false;
+        EventManager.raise<ScenesType>(EventType.CHANGE_SCENE, ScenesType.MAP);
+    }
+
 
     public void changeToDestructedSprite()
     {

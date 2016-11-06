@@ -17,6 +17,8 @@ public class Table : MonoBehaviour {
         {
             other.gameObject.GetComponent<Hero>().printnextMenu();
             other.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+            Debug.Log("IDLE");
+            other.gameObject.GetComponent<Animator>().Play("Idle");
         }
         
     }

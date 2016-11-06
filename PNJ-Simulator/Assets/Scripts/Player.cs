@@ -253,20 +253,24 @@ public class Player : MonoBehaviour {
     public void addGold()
     {
         gold += (int)(100 + (reputation - 100) / 2);
+        EventManager.raise<int>(EventType.GOLD_CHANGE, gold);
     }
 
     public void addReputation()
     {
         reputation += (int)(reputation*0.1f);
+        EventManager.raise<int>(EventType.REPUTATION_CHANGE, reputation);
     }
 
     public void looseReputation()
     {
         reputation -= (int)(reputation * 0.2f);
+        EventManager.raise<int>(EventType.REPUTATION_CHANGE, reputation);
     }
 
     public void looseGold()
     {
         gold -= 100;
+        EventManager.raise<int>(EventType.GOLD_CHANGE, gold);
     }
 }
