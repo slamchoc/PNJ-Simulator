@@ -179,16 +179,13 @@ public class PNJFactory : MonoBehaviour
         /************ Creation des monstres **********************/
 
         listCallbacks = new List<Pair<Callback, String>>();
-        listCallbacks.Add(new Pair<Callback, String>(() => 
-        {
-            EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.STRONG);
-        }, "Attaque forte"));
         listCallbacks.Add(new Pair<Callback, String>(() =>
         {
-            EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.WEAK);
-        }, "Attaque faible"));
+            EventManager.raise(EventType.MENU_EXIT);
+        }, "Mais pourquoi j'attend mon tour ?"));
         string textMonster = "??";
         listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(50, 3,-2), new Vector3(55, 3,-2)));
+
 
         listCallbacks = new List<Pair<Callback, String>>();
         listCallbacks.Add(new Pair<Callback, String>(() =>
@@ -200,8 +197,12 @@ public class PNJFactory : MonoBehaviour
             EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.WEAK);
         }, "Attaque faible"));
         textMonster = "??";
+        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(35, 10, -2), new Vector3(35, -5, -2)));
 
-        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(40, 15, -2), new Vector3(40, 0, -2)));
+
+        listCallbacks = new List<Pair<Callback, String>>();
+        textMonster = "??";
+        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 5, new Vector3(45, 0, -2), new Vector3(45, -10, -2)));
 
     }
 }

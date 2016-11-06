@@ -15,7 +15,7 @@ public enum Orientation { UP,DOWN,LEFT,RIGHT}
 public class Player : MonoBehaviour {
     
     [SerializeField]
-    private int lifePoint = 10;
+    private int lifePoint = 100;
     public int gold { get; private set; }
     public int reputation { get; private set; }
     private Orientation currentOrientation = Orientation.DOWN;
@@ -181,7 +181,6 @@ public class Player : MonoBehaviour {
 
     void sceneEnded(ScenesType sceneEnded)
     {
-        Debug.Log("scene ended " + sceneEnded);
         if (sceneEnded == ScenesType.MAIN_MENU)
             this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
         else if (sceneEnded == ScenesType.SHOP)
@@ -195,7 +194,6 @@ public class Player : MonoBehaviour {
 
     void sceneBegin(ScenesType sceneBegin)
     {
-        Debug.Log("sceneBegin " + sceneBegin);
         if(sceneBegin == ScenesType.SHOP)
             this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
         if (sceneBegin == ScenesType.BATTLE)
@@ -214,7 +212,6 @@ public class Player : MonoBehaviour {
 
     public void move (float dx, float dy)
     {
-        Debug.Log("Move "+dx+" "+dy);
         if (dy > 0)
             currentOrientation = Orientation.UP;
         else if (dy < 0)
