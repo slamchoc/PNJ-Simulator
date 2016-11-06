@@ -17,6 +17,7 @@ public class Monster : PNJ
     [SerializeField]
     private Vector3 pointPatterB = new Vector3(0, 0, 0);
 
+    public bool bossFinal = false;
     [SerializeField]
     private float speed = 1.5f;
 
@@ -140,6 +141,9 @@ public class Monster : PNJ
             EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.MONSTRE_MORT);
 
             EventManager.raise(EventType.MENU_EXIT);
+
+            if (bossFinal)
+                EventManager.raise(EventType.WIN);
             Destroy(this.gameObject);
         }
     }

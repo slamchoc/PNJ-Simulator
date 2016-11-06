@@ -132,7 +132,7 @@ public class ScriptedBattle : MonoBehaviour
         GameObject monster = UnityEngine.Object.Instantiate(prefabMonster);
 
         monster.GetComponent<Monster>().createMonster(25, toHide.transform.position, toHide.transform.position);
-
+        monster.GetComponent<Monster>().bossFinal = true;
         monster.GetComponent<Monster>().laucnhBattle();
 
         toHide.GetComponent<SpriteRenderer>().enabled = false;
