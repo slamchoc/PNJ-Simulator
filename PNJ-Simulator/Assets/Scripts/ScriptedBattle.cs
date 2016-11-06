@@ -15,6 +15,8 @@ public class ScriptedBattle : MonoBehaviour
 
     public GameObject hero;
 
+    public GameObject prefabMonster;
+
     public ScriptedBattleType typeBattle;
 
     string nameAnimator = "";
@@ -119,6 +121,24 @@ public class ScriptedBattle : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    private IEnumerator laucnhbattle(GameObject toHide)
+    {
+
+        yield return new WaitForSeconds(5);
+      
+        EventManager.raise(EventType.CINEMATIC_ENDED);
+
+
+        GameObject monster = UnityEngine.Object.Instantiate(prefabMonster);
+
+        monster.GetComponent<Monster>().createMonster(25, toHide.transform.position, toHide.transform.position);
+
+        monster.GetComponent<Monster>().laucnhBattle();
+
+        toHide.GetComponent<SpriteRenderer>().enabled = false;
+        toHide.transform.position = new Vector3(0, 0, 0);
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.GetComponent<Player>() != null)
@@ -131,7 +151,7 @@ public class ScriptedBattle : MonoBehaviour
                 hero.transform.position = this.transform.position;
                 nameAnimator = "SecondBattle";
                 hero.GetComponent<Animator>().Play(nameAnimator);
-                EventManager.raise(EventType.CINEMATIC_ENDED);
+                StartCoroutine(laucnhbattle(hero));
             }
             else
             {
