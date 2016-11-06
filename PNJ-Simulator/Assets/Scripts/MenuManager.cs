@@ -188,7 +188,7 @@ public class MenuManager : MonoBehaviour
         GameObject arrow = Instantiate(arrowDialogue);
         arrow.transform.parent = Camera.main.transform;
 
-        arrow.transform.localPosition = dialogueStartPos - new Vector3(1.5f,0,0);
+        arrow.transform.localPosition = dialogueStartPos - new Vector3(1.75f,0,0);
         arrow.transform.localScale = new Vector3(arrow.transform.localScale.x * dialogueScale.x, arrow.transform.localScale.y * dialogueScale.y, arrow.transform.localScale.z * dialogueScale.z);
         actualMenuPrinted.Add(arrow);
 
