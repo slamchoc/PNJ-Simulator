@@ -140,7 +140,6 @@ public class SceneManager : MonoBehaviour
 
     public void quitGame()
     {
-        EventManager.raise(EventType.QUIT_GAME);
         Application.Quit();
     }
 
