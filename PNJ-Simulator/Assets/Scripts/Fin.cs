@@ -7,7 +7,7 @@ public class Fin : MonoBehaviour {
 
     bool defiler = false;
     float speed = 0.5f;
-    GameObject pnj;
+    public GameObject pnj;
 
 	// Use this for initialization
 	void Start () {
