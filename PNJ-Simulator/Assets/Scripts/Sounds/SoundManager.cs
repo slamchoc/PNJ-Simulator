@@ -73,7 +73,7 @@ public class SoundManager : MonoBehaviour {
         // Loading of the sounds 
         sources = new List<AudioClip>();
 
-        if (Application.isEditor)
+       /* if (Application.isEditor)
         {
 
             var info = new DirectoryInfo(absolutePath);
@@ -88,8 +88,8 @@ public class SoundManager : MonoBehaviour {
             EventManager.addActionToEvent(EventType.STOP_SOUND, stopSounds);
 
             EventManager.addActionToEvent<SoundsType>(EventType.PLAY_SOUND_LOOP, playSoundLoop);
-        }
-        else
+        
+        else*/
         {
             sources = Resources.LoadAll<AudioClip>("").ToList<AudioClip>();
 

@@ -54,12 +54,16 @@ public class Player : MonoBehaviour {
 
         if(goal != new Vector3(-100,-100,-100))
         {
-            if(Vector3.Distance(this.transform.position, goal) < 1)
+            if(Vector2.Distance(this.transform.position, goal) > 3.0)
             {
                 move(Vector3.Normalize((goal - this.transform.position)).x, Vector3.Normalize((goal - this.transform.position)).y);
             }
             else
+            {
+                move(0, 0);
                 goal = new Vector3(-100, -100, -100);
+                stopAnimation();
+            }
         }
 
         if (this.gameObject.GetComponent<SpriteRenderer>().enabled == false)
@@ -183,6 +187,8 @@ public class Player : MonoBehaviour {
         else if (sceneEnded == ScenesType.SHOP)
         {
             this.gameObject.transform.localScale = new Vector3(1, 1, 1);
+            this.gameObject.transform.position = new Vector3(-2.6f, 0.9f, -2);
+
             EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, thinkToYourself);
         }
     }
@@ -208,6 +214,7 @@ public class Player : MonoBehaviour {
 
     public void move (float dx, float dy)
     {
+        Debug.Log("Move "+dx+" "+dy);
         if (dy > 0)
             currentOrientation = Orientation.UP;
         else if (dy < 0)
@@ -326,6 +333,8 @@ public class Player : MonoBehaviour {
 
     public void stopAnimation()
     {
+        Debug.Log("stop");
+
         if (currentOrientation == Orientation.UP)
             animator.enabled = false;
         else if (currentOrientation == Orientation.RIGHT)

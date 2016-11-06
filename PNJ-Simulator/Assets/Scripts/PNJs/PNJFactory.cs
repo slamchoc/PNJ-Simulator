@@ -163,7 +163,7 @@ public class PNJFactory : MonoBehaviour
         {
             EventManager.raise(EventType.MENU_EXIT);
         }, "Baisser les yeux"));
-        textPnj = "Gerard :\nTu veux faire comme le heros, mais te battre avec un balai...\nT'es mignon mais...";
+        textPnj = "Gerard :\nTu veux faire comme le heros,\nmais te battre avec un balai...\nT'es mignon mais...";
         listPNJs.Add(new PNJToCreate(new Vector3(-6, 1, -1), listCallbacks, textPnj));
 
         listCallbacks = new List<Pair<Callback, String>>();
@@ -188,16 +188,20 @@ public class PNJFactory : MonoBehaviour
             EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.WEAK);
         }, "Attaque faible"));
         string textMonster = "??";
-        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(8,3,-2), new Vector3(12,3,-2)));
+        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(50, 3,-2), new Vector3(55, 3,-2)));
 
         listCallbacks = new List<Pair<Callback, String>>();
         listCallbacks.Add(new Pair<Callback, String>(() =>
         {
-            EventManager.raise(EventType.MENU_EXIT);
-        }, "Mais pourquoi j'attend mon tour ?"));
+            EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.STRONG);
+        }, "Attaque forte"));
+        listCallbacks.Add(new Pair<Callback, String>(() =>
+        {
+            EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.WEAK);
+        }, "Attaque faible"));
         textMonster = "??";
 
-        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(10, 15, -2), new Vector3(9, 13, -2)));
+        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(40, 15, -2), new Vector3(40, 0, -2)));
 
     }
 }
