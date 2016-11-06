@@ -57,7 +57,7 @@ public class SoundManager : MonoBehaviour {
 
     public List<Sound> actualSounds;
 
-    private string absolutePath = "Assets/Sound";
+    private string absolutePath = "Assets/Resources";
 
     private List<string> validExtensions = new List<string> { ".ogg", ".wav" }; 
 
@@ -65,25 +65,39 @@ public class SoundManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        
         actualSounds = new List<Sound>();
 
         DontDestroyOnLoad(this.gameObject);
 
         // Loading of the sounds 
         sources = new List<AudioClip>();
-        var info = new DirectoryInfo(absolutePath);
-        FileInfo[] sourcesFiles = info.GetFiles().Where(f => IsValidFileType(f.Name)).ToArray();
 
-        for (int i = 0; i < sourcesFiles.Length; i++)
+        if (Application.isEditor)
         {
-            sources.Add(new AudioClip());
-            StartCoroutine(LoadFile(sourcesFiles[i].FullName, i ));
+
+            var info = new DirectoryInfo(absolutePath);
+            FileInfo[] sourcesFiles = info.GetFiles().Where(f => IsValidFileType(f.Name)).ToArray();
+            for (int i = 0; i < sourcesFiles.Length; i++)
+            {
+                sources.Add(new AudioClip());
+                LoadFile(sourcesFiles[i].Name.Remove(sourcesFiles[i].Name.Length - 4), i);
+            }
+
+            EventManager.addActionToEvent<SoundsType>(EventType.PLAY_SOUND_ONCE, playSound);
+            EventManager.addActionToEvent(EventType.STOP_SOUND, stopSounds);
+
+            EventManager.addActionToEvent<SoundsType>(EventType.PLAY_SOUND_LOOP, playSoundLoop);
         }
+        else
+        {
+            sources = Resources.LoadAll<AudioClip>("").ToList<AudioClip>();
 
-        EventManager.addActionToEvent<SoundsType>(EventType.PLAY_SOUND_ONCE, playSound);
-        EventManager.addActionToEvent(EventType.STOP_SOUND, stopSounds);
+            EventManager.addActionToEvent<SoundsType>(EventType.PLAY_SOUND_ONCE, playSound);
+            EventManager.addActionToEvent(EventType.STOP_SOUND, stopSounds);
 
-        EventManager.addActionToEvent<SoundsType>(EventType.PLAY_SOUND_LOOP, playSoundLoop);
+            EventManager.addActionToEvent<SoundsType>(EventType.PLAY_SOUND_LOOP, playSoundLoop);
+        }
     }
 
     bool IsValidFileType(string fileName)
@@ -91,16 +105,19 @@ public class SoundManager : MonoBehaviour {
         return validExtensions.Contains(Path.GetExtension(fileName));
     }
 
-    IEnumerator LoadFile(string path, int i)
+    void LoadFile(string path, int i)
     {
-        WWW www = new WWW("file://" + path);
+        /*   WWW www = new WWW("file://" + path);
 
-        AudioClip clip = www.GetAudioClip(false);
-        while (clip.loadState != AudioDataLoadState.Loaded)
-            yield return www;
-
-        clip.name = Path.GetFileName(path);
-        sources[i] = (clip);
+           AudioClip clip = www.GetAudioClip(false);
+           while (clip.loadState != AudioDataLoadState.Loaded)
+               yield return www;
+               */
+        AudioClip clip = Resources.Load<AudioClip>(path);
+        if (clip == null)
+            Debug.Log("><");
+        //  clip.name = Path.GetFileName(path);
+        sources[i] = clip;
     }
 
     public void playSound(SoundsType soundToPlay)
@@ -108,7 +125,6 @@ public class SoundManager : MonoBehaviour {
         GameObject audio = Instantiate(audioPrefab);
         audio.transform.parent = this.transform;
 
-       // Debug.Log(soundToPlay+" to "+ sources[(int)soundToPlay]);
 
         audio.GetComponent<Sound>().playOnce(sources[(int)soundToPlay]);
     }
@@ -117,9 +133,6 @@ public class SoundManager : MonoBehaviour {
     {
         GameObject audio = Instantiate(audioPrefab);
         audio.transform.parent = this.transform;
-
-     //   Debug.Log(soundToPlayLoop + " to " + sources[(int)soundToPlayLoop]);
-
         audio.GetComponent<Sound>().playLoop(sources[(int)soundToPlayLoop]);
     }
 

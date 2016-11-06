@@ -131,7 +131,8 @@ public class Monster : PNJ
     public void hitMonster(int pvRemoved)
     {
         nbPvs =  nbPvs - pvRemoved;
-        if (nbPvs < 0)
+        EventManager.raise<int>(EventType.LOOSE_LIFE_ENNEMY, nbPvs);
+        if (nbPvs <= 0)
         {
             EventManager.raise(EventType.KILL_MONSTER, this.gameObject);
             EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.MONSTRE_MORT);
@@ -183,6 +184,7 @@ public class Monster : PNJ
             EventManager.raise<Menu>(EventType.MENU_ENTERED, menu);
             EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.MUSIQUE_PNJ);
             EventManager.addActionToEvent<int>(EventType.DAMAGE_ENNEMY, hitMonster);
+            EventManager.raise<int>(EventType.LOOSE_LIFE_ENNEMY, nbPvs);
 
         }
     }

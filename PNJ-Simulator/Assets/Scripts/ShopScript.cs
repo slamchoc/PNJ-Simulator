@@ -88,8 +88,6 @@ public class ShopScript : MonoBehaviour {
 
     private bool needCinematique = true;
 
-    public GameObject titre;
-
     // Use this for initialization
     void Start ()
     {
