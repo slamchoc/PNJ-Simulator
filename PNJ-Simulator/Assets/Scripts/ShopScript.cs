@@ -12,6 +12,9 @@ public class ShopScript : MonoBehaviour {
     private GameObject myPNJ;
     [SerializeField]
     private Door door;
+    [SerializeField]
+    private GameObject fondu;
+    private bool fade = false;
 
     private Vector3 initPlayerPosition = new Vector3(0, -1, -2);
 
@@ -100,8 +103,11 @@ public class ShopScript : MonoBehaviour {
                                         new List<Pair<Callback, String>> { new Pair<Callback, String>(() => { exitVisitor(); hero.player.addGold(); hero.player.addReputation(); EventManager.raise(EventType.MENU_EXIT); }, "Finir journée") }
                                         , PNJName + " :\nAh, parfait !\nMerci"
                                     );
-
-
+        if (fade)
+        {
+            fondu.GetComponent<SpriteRenderer>().color = new Color(fondu.GetComponent<SpriteRenderer>().color.r, fondu.GetComponent<SpriteRenderer>().color.g, fondu.GetComponent<SpriteRenderer>().color.b, 0);
+            fondu.GetComponentInChildren<TextMesh>().color = new Color(fondu.GetComponentInChildren<TextMesh>().color.r, fondu.GetComponentInChildren<TextMesh>().color.g, fondu.GetComponentInChildren<TextMesh>().color.b, 0);
+        }
 
         EventManager.raise(EventType.STOP_SOUND);
         EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.MUSIQUE_CINEMATIQUE2);
@@ -137,16 +143,21 @@ public class ShopScript : MonoBehaviour {
     void slamDoor()
     {
         door.changeToDestructedSprite();
-        hero.GetComponent<Rigidbody>().velocity = new Vector2(0, -5);
+        hero.GetComponent<Rigidbody>().velocity += new Vector3(0, -5,0);
         hero.GetComponent<Animator>().Play("Grrrr");
         EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PORTE_CASSEE);
+        //TODO move camera
 
     }
 
     // Update is called once per frame
     void Update ()
     {
-        if(needCinematique)
+        fondu.GetComponent<SpriteRenderer>().color = new Color(fondu.GetComponent<SpriteRenderer>().color.r, fondu.GetComponent<SpriteRenderer>().color.g, fondu.GetComponent<SpriteRenderer>().color.b,fondu.GetComponent<SpriteRenderer>().color.a - 0.02f);
+        fondu.GetComponentInChildren<TextMesh>().color = new Color(fondu.GetComponentInChildren<TextMesh>().color.r, fondu.GetComponentInChildren<TextMesh>().color.g, fondu.GetComponentInChildren<TextMesh>().color.b, fondu.GetComponentInChildren<TextMesh>().color.a - 0.02f);
+
+
+        if (needCinematique)
         {
             cinematique.SetActive(true);
 
@@ -229,6 +240,13 @@ public class ShopScript : MonoBehaviour {
         EventManager.raise(EventType.MENU_EXIT);
         //hero.player.transform.position = new Vector3(0, -1, -2);
         currentDay++;
+
+        //fondu jour
+        fondu.GetComponentInChildren<TextMesh>().text = "jour " + currentDay;
+        fondu.GetComponent<SpriteRenderer>().color = new Color(fondu.GetComponent<SpriteRenderer>().color.r, fondu.GetComponent<SpriteRenderer>().color.g, fondu.GetComponent<SpriteRenderer>().color.b, 1);
+        fondu.GetComponentInChildren<TextMesh>().color = new Color(fondu.GetComponentInChildren<TextMesh>().color.r, fondu.GetComponentInChildren<TextMesh>().color.g, fondu.GetComponentInChildren<TextMesh>().color.b,1);
+        fade = true;
+
         //on annule le visiteur precedent
         visitor.transform.position = new Vector2(10, 10);
         visitor.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
@@ -236,8 +254,9 @@ public class ShopScript : MonoBehaviour {
         //on regarde le visiteur acctuel
         if(hero.load(currentDay))
         {
-           visitor = hero.gameObject;
-           visitor.GetComponent<Animator>().Play("Down");
+            visitor = hero.gameObject;
+            if(!hero.isPissed)
+                visitor.GetComponent<Animator>().Play("Down");
         }
         else
         {
@@ -249,7 +268,7 @@ public class ShopScript : MonoBehaviour {
         visitor.SetActive(true);
         visitor.transform.position = new Vector3(0,4,-2);
         visitor.transform.localScale = new Vector2(2, 2);
-        visitor.GetComponent<Rigidbody>().velocity = new Vector3(0,-0.5f,0);
+        visitor.GetComponent<Rigidbody>().velocity += new Vector3(0,-1,0);
         visitor.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
         EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PORTE_OUVERTE);
     }
