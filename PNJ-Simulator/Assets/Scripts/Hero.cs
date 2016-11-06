@@ -116,7 +116,6 @@ public class Hero : MonoBehaviour {
     String venteEpee = "Tiens, voila cette épée, elle est de très bonne facture.\nElle a été forgée à base d'éponge de Valsemin";
     String betterSword = "Ouais, mais cette épée elle est mieux !";
 
-
     void initJour1()
     {
         jour1 = new Menu(

@@ -38,6 +38,7 @@ public class InputManager : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
+
         if (!isInCinematic)
         {
             horizontal = Input.GetAxis("Horizontal");
@@ -45,34 +46,36 @@ public class InputManager : MonoBehaviour {
             attack1 = Input.GetAxis("Attack1");
             attack2 = Input.GetAxis("Attack2");
             splash = Input.GetAxis("Splash");
-            submit = Input.GetAxis("Submit");
-            switch (currentType)
-            {
-                case ScenesType.MAP:
-                    if (menu != null)
-                        OnMenu();
-                    else if (player != null)
-                        OnMap();
-                    break;
-                case ScenesType.SHOP:
-                    if (menu != null)
-                        OnMenu();
-                    else if (player != null)
-                        OnMap();
-                    break;
-                case ScenesType.MAIN_MENU:
-                    if (menu != null)
-                        OnMenu();
-                    break;
-                case ScenesType.BATTLE:
-                    if (menu != null)
-                        OnMenu();
-                    else if (player != null)
-                        OnBattle();
-                    break;
-                default:
-                    break;
-            }
+        }
+
+        submit = Input.GetAxis("Submit");
+            
+        switch (currentType)
+        {
+            case ScenesType.MAP:
+                if (menu != null)
+                    OnMenu();
+                else if (player != null)
+                    OnMap();
+                break;
+            case ScenesType.SHOP:
+                if (menu != null)
+                    OnMenu();
+                else if (player != null)
+                    OnMap();
+                break;
+            case ScenesType.MAIN_MENU:
+                if (menu != null)
+                    OnMenu();
+                break;
+            case ScenesType.BATTLE:
+                if (menu != null)
+                    OnMenu();
+                else if (player != null)
+                    OnBattle();
+                break;
+            default:
+                break;
         }
 	}
 

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
+using System;
 
 public enum ScriptedBattleType
 {
@@ -16,6 +17,13 @@ public class ScriptedBattle : MonoBehaviour
 
     public ScriptedBattleType typeBattle;
 
+    string nameAnimator = "";
+
+    float timeBeforeNext = 0;
+    float timeLaunchAnim = 0;
+
+    bool firstTime = true;
+
     void Start()
     {
         hero = FindObjectOfType<Hero>().gameObject;
@@ -24,8 +32,87 @@ public class ScriptedBattle : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-	
-	}
+        if (nameAnimator == "FirstBattlePart2" && Time.time > timeBeforeNext + timeLaunchAnim && firstTime)
+        {
+            nameAnimator = "";
+            hero.GetComponent<Animator>().Play("FirstBattlePart1");
+            firstTime = false;
+            Menu think = new Menu(
+                      new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=>
+                                                                {
+                                                                    EventManager.raise(EventType.MENU_EXIT);
+                                                                    timeLaunchAnim = Time.time;
+                                                                    nameAnimator = "FirstBattlePart2";
+                                                                    hero.GetComponent<Animator>().Play(nameAnimator);
+                                                                }, "Continuer")
+                                                       },
+                      "(* C'est donc ça un combat... *)"
+                  );
+
+            Menu battle = new Menu(
+                        new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=> 
+                                                                {
+                                                                    EventManager.raise(EventType.MENU_EXIT);
+                                                                    EventManager.raise<Menu>(EventType.MENU_ENTERED, think);
+                                                                }, "Continuer")
+                                                         },
+                        "Héros :\nAh, vil démon ! C'est à ton tour de m'attaquer,\nje suis prêt à encaisser ton coup !"
+                    );
+
+          
+
+            EventManager.raise<Menu>(EventType.MENU_ENTERED, battle);
+        }
+        else if (nameAnimator == "FirstBattlePart2" && Time.time > timeBeforeNext + timeLaunchAnim && !firstTime)
+        {
+            nameAnimator = "FirstBattlePart3";
+            hero.GetComponent<Animator>().Play(nameAnimator);
+        }
+        
+        if (nameAnimator == "FirstBattlePart3" && hero.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("FirstBattlePart3"))
+        {
+            nameAnimator = "FirstBattlePart4";
+            hero.GetComponent<Animator>().Play(nameAnimator);
+
+            Menu think = new Menu(
+                 new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=>
+                                                                {
+                                                                    EventManager.raise(EventType.MENU_EXIT);
+                                                                }, "Continuer")
+                                                  },
+                 "(* Il se bat quand même bizarrement... *)"
+             );
+
+            Menu battle = new Menu(
+                        new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=>
+                                                                {
+                                                                    EventManager.raise(EventType.MENU_EXIT);
+                                                                    EventManager.raise<Menu>(EventType.MENU_ENTERED, think);
+                                                                    hero.GetComponent<Animator>().Play("Up");
+                                                                    hero.GetComponent<Rigidbody>().velocity = new Vector3(0,1,0);
+                                                                    StartCoroutine(waithThenHide(hero));
+                                                                }, "Continuer")
+                                                         },
+                        "Héros :\nEt voilà pour toi, je t'ai pourfendu ! Allez, au suivant."
+                    );
+
+            EventManager.raise<Menu>(EventType.MENU_ENTERED, battle);
+
+            EventManager.raise(EventType.CINEMATIC_ENDED);
+        }
+    }
+
+
+    private IEnumerator waithThenHide(GameObject toHide)
+    {
+        yield return new WaitForSeconds(5);
+        toHide.GetComponent<SpriteRenderer>().enabled = false;
+        toHide.transform.position = new Vector3(0, 0, 0);
+    }
 
     void OnCollisionEnter(Collision collision)
     {
@@ -36,16 +123,21 @@ public class ScriptedBattle : MonoBehaviour
 
             if(typeBattle == ScriptedBattleType.HERODIE)
             {
-                hero.transform.position = new Vector3(10, 0, 0);
-                hero.GetComponent<Animator>().Play("SecondBattle");
+                hero.transform.position = this.transform.position;
+                nameAnimator = "SecondBattle";
+                hero.GetComponent<Animator>().Play(nameAnimator);
+                EventManager.raise(EventType.CINEMATIC_ENDED);
             }
             else
             {
-                hero.transform.position = new Vector3(20, 2, 0);
+                hero.transform.position = this.transform.position;
                 hero.GetComponent<SpriteRenderer>().enabled = true;
                 hero.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+                nameAnimator = "FirstBattlePart2";
+                timeBeforeNext = 3.0f;
+                timeLaunchAnim = Time.time;
 
-                hero.GetComponent<Animator>().Play("FirstBattlePart1");                
+                hero.GetComponent<Animator>().Play(nameAnimator);
             }
         }
     }
