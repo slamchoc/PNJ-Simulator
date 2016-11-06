@@ -9,6 +9,8 @@ public class PNJFactory : MonoBehaviour
 
     [SerializeField]
     private GameObject prefabMonster;
+    [SerializeField]
+    private GameObject prefabMonsterEpic;
 
     public List<Sprite> PNJS;
     public List<Sprite> monstres;
@@ -16,6 +18,8 @@ public class PNJFactory : MonoBehaviour
     List<GameObject> listGO = new List<GameObject>();
 
     private List<MonsterToCreate> listMonsters = new List<MonsterToCreate>();
+    private List<MonsterToCreate> listMonstersEpic = new List<MonsterToCreate>();
+
     private List<PNJToCreate> listPNJs = new List<PNJToCreate>();
 
     // Use this for initialization
@@ -52,7 +56,9 @@ public class PNJFactory : MonoBehaviour
         Debug.Log("Instantiate");
 
         for (int i = 0; i < listMonsters.Count; i++)
-            listMonsters[i].instantiateMonster(prefabMonster, monstres[i] ,i);
+            listMonsters[i].instantiateMonster(prefabMonster ,i);
+        for (int i = 0; i < listMonstersEpic.Count; i++)
+            listMonstersEpic[i].instantiateMonster(prefabMonsterEpic, i);
         listGO.Clear();
 
         for (int i = 0; i < listPNJs.Count; i++)
@@ -184,7 +190,7 @@ public class PNJFactory : MonoBehaviour
         string textMonster = "??";
         listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(6,3,-2), new Vector3(9,3,-2)));
 
-        listCallbacks = new List<Pair<Callback, String>>();
+        listCallbacks = new List<Pair<Callback, String>>();/*
         listCallbacks.Add(new Pair<Callback, String>(() =>
         {
             EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.STRONG);
@@ -193,7 +199,13 @@ public class PNJFactory : MonoBehaviour
         {
             EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.WEAK);
         }, "Attaque faible"));
+        textMonster = "??";*/
+        listCallbacks.Add(new Pair<Callback, String>(() =>
+        {
+            EventManager.raise(EventType.MENU_EXIT);
+        }, "Mais pourquoi j'attend mon tour ?"));
         textMonster = "??";
+
         listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(10, 15, -2), new Vector3(9, 13, -2)));
 
     }
@@ -218,12 +230,11 @@ class MonsterToCreate
         _patternB = patternB;
     }
 
-    public GameObject instantiateMonster(GameObject prefabMonster, Sprite sprite, int id)
+    public GameObject instantiateMonster(GameObject prefabMonster, int id)
     {
         if(!isDead)
         {
             GameObject monster = UnityEngine.Object.Instantiate(prefabMonster);
-            monster.GetComponent<SpriteRenderer>().sprite = sprite;
 
             monster.GetComponent<Monster>().createMonster(_pv, _patternA, _patternB);
             monster.GetComponent<Monster>().setMenu(_menu, _text);
