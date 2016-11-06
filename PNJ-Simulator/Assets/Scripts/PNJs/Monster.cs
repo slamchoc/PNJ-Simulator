@@ -28,7 +28,7 @@ public class Monster : PNJ
     [SerializeField]
     private float timeAttack = 1.5f;
 
-    private Player player;
+    public Player player;
 
     private Coroutine currentCoroutine = null;
 
@@ -44,7 +44,8 @@ public class Monster : PNJ
 
     public void createMonster(int _pvs, Vector3 _patternA, Vector3 _patternB)
     {
-        neverCollided = true;
+        if (!bossFinal)
+            neverCollided = true;
         nbPvs = _pvs;
         pointPatterA = _patternA;
         pointPatterB = _patternB;
@@ -54,10 +55,15 @@ public class Monster : PNJ
 
     void Start()
     {
-        neverCollided = true;
+        if(!bossFinal)
+        {
+            neverCollided = true;
+            this.transform.position = pointPatterA;
+            this.transform.GetComponent<Rigidbody>().velocity = pointPatterB - pointPatterA;
 
-        this.transform.position = pointPatterA;
-        this.transform.GetComponent<Rigidbody>().velocity = pointPatterB - pointPatterA;
+        }
+
+
         animator = this.transform.GetComponent<Animator>();
     }
 
@@ -137,14 +143,20 @@ public class Monster : PNJ
         EventManager.raise<int>(EventType.LOOSE_LIFE_ENNEMY, nbPvs);
         if (nbPvs <= 0)
         {
-            EventManager.raise(EventType.KILL_MONSTER, this.gameObject);
-            EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.MONSTRE_MORT);
-
-            EventManager.raise(EventType.MENU_EXIT);
-
             if (bossFinal)
+            {
+                EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.MONSTRE_MORT);
                 EventManager.raise(EventType.EVENTBEFOREWIN);
-            Destroy(this.gameObject);
+                Destroy(this.gameObject);
+            }
+            else
+            {
+
+                EventManager.raise(EventType.KILL_MONSTER, this.gameObject);
+                EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.MONSTRE_MORT);
+                EventManager.raise(EventType.MENU_EXIT);
+                Destroy(this.gameObject);
+            }
         }
     }
 
@@ -164,7 +176,7 @@ public class Monster : PNJ
     public void OnCollisionEnter(Collision collision)
     {
         
-        if (collision.gameObject.GetComponent<Player>() != null)
+        if (collision.gameObject.GetComponent<Player>() != null && !bossFinal)
         {
             player = collision.gameObject.GetComponent<Player>();
             if (neverCollided)

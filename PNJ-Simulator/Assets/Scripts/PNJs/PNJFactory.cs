@@ -178,9 +178,12 @@ public class PNJFactory : MonoBehaviour
         listCallbacks = new List<Pair<Callback, String>>();
  
         string textMonster = "??";
+        listCallbacks.Add(new Pair<Callback, String>(() =>
+        {
+            EventManager.raise(EventType.MENU_EXIT);
+        }, "Mais pourquoi j'attend mon tour ?"));
         listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 10, new Vector3(41, 3,-2), new Vector3(45, 0,-2)));
-
-
+      
         listCallbacks = new List<Pair<Callback, String>>();
         listCallbacks.Add(new Pair<Callback, String>(() =>
         {
@@ -198,7 +201,7 @@ public class PNJFactory : MonoBehaviour
         listCallbacks.Add(new Pair<Callback, String>(() =>
         {
             EventManager.raise(EventType.MENU_EXIT);
-        }, "Mais pourquoi j'attend mon tour ?"));
+        }, "AAAAAAAAAAAAAAHHHH !"));
         textMonster = "??";
         listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 10, new Vector3(45, 0, -2), new Vector3(45, -10, -2)));
     }

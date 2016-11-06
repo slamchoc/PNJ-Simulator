@@ -1,16 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+using System.Collections.Generic;
 
 public class Fin : MonoBehaviour {
 
     bool defiler = false;
     float speed = 0.5f;
+    GameObject pnj;
 
 	// Use this for initialization
 	void Start () {
         EventManager.addActionToEvent(EventType.WIN,print);
-	}
-	
+        EventManager.addActionToEvent(EventType.EVENTBEFOREWIN, cinematiqueEnd);
+    }
+
     void print()
     {
         EventManager.raise(EventType.CINEMATIC_BEGIN);
@@ -31,4 +35,23 @@ public class Fin : MonoBehaviour {
             }
         }
 	}
+
+    void cinematiqueEnd()
+    {
+        pnj.GetComponent<SpriteRenderer>().enabled = true;
+        Menu bravo = new Menu(
+                     new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=>
+                                                                {
+                                                                    EventManager.raise(EventType.MENU_EXIT);
+                                                                    print();
+                                                                }, "Finir")
+                                                      },
+                     "Mon dieu ! Mais tu as tué celui qui a écrasé le héros !\nMais tu n'es pourtant qu'un forgeron sans avenir...\nC'est..."
+                 );
+        EventManager.raise<Menu>(EventType.MENU_ENTERED, bravo);
+    }
 }
+
+
+
