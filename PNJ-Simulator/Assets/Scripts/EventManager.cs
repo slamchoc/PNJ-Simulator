@@ -9,6 +9,7 @@ public enum EventType
 {
     CHANGE_SCENE,
     WIN,
+    EVENTBEFOREWIN,
     TITRE_APPARAIT,
     CINEMATIC_ENDED,
     CINEMATIC_BEGIN,

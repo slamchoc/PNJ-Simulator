@@ -143,7 +143,7 @@ public class Monster : PNJ
             EventManager.raise(EventType.MENU_EXIT);
 
             if (bossFinal)
-                EventManager.raise(EventType.WIN);
+                EventManager.raise(EventType.EVENTBEFOREWIN);
             Destroy(this.gameObject);
         }
     }
