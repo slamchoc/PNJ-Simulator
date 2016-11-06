@@ -9,6 +9,8 @@ public class Hero : MonoBehaviour {
 
     public Menu nextMenu { get; private set; }
 
+    public bool isPissed {get; private set;}
+
 	// Use this for initialization
 	void Start ()
     {
@@ -16,6 +18,7 @@ public class Hero : MonoBehaviour {
         DontDestroyOnLoad(this.gameObject);
 
         EventManager.addActionToEvent<ScenesType>(EventType.CHANGE_SCENE, hideHero);
+        isPissed = false;
 	}
 
     // Update is called once per frame
@@ -52,6 +55,7 @@ public class Hero : MonoBehaviour {
             initJour7();
             nextMenu = jour7;
             EventManager.raise(EventType.SLAM_DOOR);
+            isPissed = true;
         }
         else
             return false;
@@ -146,7 +150,7 @@ public class Hero : MonoBehaviour {
 
         jourFin = new Menu(
                             new List<Pair<Callback, String>> {
-                                                            new Pair<Callback, String>(() => {GetComponent<Animator>().Play("Up"); GetComponent<Rigidbody>().velocity = new Vector3(0,0.5f,0); nextMenu = null; EventManager.raise(EventType.MENU_EXIT); EventManager.raise(EventType.MENU_EXIT); EventManager.raise(EventType.END_DAY); }, "Terminer le jour")
+                                                            new Pair<Callback, String>(() => {GetComponent<Animator>().Play("Up"); GetComponent<Rigidbody>().velocity += new Vector3(0,1,0); nextMenu = null; EventManager.raise(EventType.MENU_EXIT); EventManager.raise(EventType.MENU_EXIT); EventManager.raise(EventType.END_DAY); }, "Terminer le jour")
                                                              },
                             "Merci, et bonne journée a vous"
                         );
@@ -210,7 +214,7 @@ public class Hero : MonoBehaviour {
                    );
         jour2Internal2 = new Menu(
                        new List<Pair<Callback, String>> {
-                                                                new Pair<Callback, String>(()=> {GetComponent<Animator>().Play("Up"); GetComponent<Rigidbody>().velocity = new Vector3(0,0.5f,0); nextMenu = null; player.addGold();player.looseReputation(); EventManager.raise(EventType.MENU_EXIT); }, "Terminer le jour")
+                                                                new Pair<Callback, String>(()=> {GetComponent<Animator>().Play("Up"); GetComponent<Rigidbody>().velocity += new Vector3(0,1,0); nextMenu = null; player.addGold();player.looseReputation(); EventManager.raise(EventType.MENU_EXIT); }, "Terminer le jour")
                                                         },
                        "(* Le Héros commence à m'enerver !\nIl n'y aura plus personne pour aujourd'hui.\n Je vais vers l'escalier, il serait temps d'aller me coucher *)"
                    );
@@ -262,7 +266,7 @@ public class Hero : MonoBehaviour {
                             );
         jour5Buy = new Menu(
                                 new List<Pair<Callback, String>> {
-                                                                new Pair<Callback, String>(()=> {GetComponent<Animator>().Play("Up"); GetComponent<Rigidbody>().velocity = new Vector3(0,0.5f,0); nextMenu = null;player.addGold();player.looseReputation(); EventManager.raise(EventType.MENU_EXIT); }, "Continuer")
+                                                                new Pair<Callback, String>(()=> {GetComponent<Animator>().Play("Up"); GetComponent<Rigidbody>().velocity += new Vector3(0,1,0); nextMenu = null;player.addGold();player.looseReputation(); EventManager.raise(EventType.MENU_EXIT); }, "Continuer")
                                                                  },
                                 "Héros :\nBon OK, mais c'est la dernière fois sinon ...\nEssaie de faire ce que je fait avec ta camelote..."
                             );    }
@@ -326,7 +330,7 @@ public class Hero : MonoBehaviour {
                     );
         jour7_9 = new Menu(
                         new List<Pair<Callback, String>> {
-                                                                new Pair<Callback, String>(()=> {GetComponent<Animator>().Play("Up"); GetComponent<Rigidbody>().velocity = new Vector3(0,0.5f,0); nextMenu = null; EventManager.raise(EventType.MENU_EXIT); }, "Continuer")
+                                                                new Pair<Callback, String>(()=> {GetComponent<Animator>().Play("Up"); GetComponent<Rigidbody>().velocity += new Vector3(0,0.5f,0); nextMenu = null; EventManager.raise(EventType.MENU_EXIT); }, "Continuer")
                                                          },
                         "(* A part ça, moi aussi je peux le faire ! *)"
                     );
