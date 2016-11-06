@@ -40,7 +40,6 @@ public class Monster : PNJ
 
     void Start()
     {
-        Debug.Log("Changer les prefabs des ennemis par les prefab MonsterBase et MonsterEpic");
         neverCollided = true;
 
         this.transform.position = pointPatterA;

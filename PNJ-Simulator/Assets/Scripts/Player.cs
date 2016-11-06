@@ -32,6 +32,7 @@ public class Player : MonoBehaviour {
     private int damagesAttackMiddle = 3;
     private int damagesAttackWeak = 1;
 
+    private Vector3 goal = new Vector3(-100, -100, -100);
 
     void Start()
     {
@@ -44,8 +45,24 @@ public class Player : MonoBehaviour {
         EventManager.addActionToEvent<AttackType>(EventType.ATTACK_ENNEMY, attack);
     }
 
+    public void goToGoal(Vector3 _goal)
+    {
+        goal = _goal;
+    }
+
     void Update()
     {
+
+        if(goal != new Vector3(-100,-100,-100))
+        {
+            if(Vector3.Distance(this.transform.position, goal) < 1)
+            {
+                move(Vector3.Normalize((goal - this.transform.position)).x, Vector3.Normalize((goal - this.transform.position)).y);
+            }
+            else
+                goal = new Vector3(-100, -100, -100);
+        }
+
         if (this.gameObject.GetComponent<SpriteRenderer>().enabled == false)
             Debug.Log(this.gameObject.GetComponent<SpriteRenderer>().sprite);
     }
@@ -83,6 +100,7 @@ public class Player : MonoBehaviour {
                                "Prendre le balai ou l'épée ?"
                            );
 
+        EventManager.removeActionFromEvent<ScenesType>(EventType.NEW_SCENE, thinkToYourself);
         EventManager.raise<Menu>(EventType.MENU_ENTERED, choice);
     }
 
@@ -226,17 +244,49 @@ public class Player : MonoBehaviour {
     public void attack1()
     {
         if (currentOrientation == Orientation.LEFT)
+        {
             animator.Play("LeftNormalAttack");
+            Monster interactWith = null;
+            RaycastHit hit = new RaycastHit();
+            if (Physics.Raycast(this.transform.position, new Vector3(-1, 0, 0), out hit, 1.5f))
+                interactWith = hit.collider.gameObject.GetComponent<Monster>();
+            if (interactWith != null)
+                interactWith.hitMonster(1);
+        }
         else
+        {
             animator.Play("RightNormalAttack");
+            Monster interactWith = null;
+            RaycastHit hit = new RaycastHit();
+            if (Physics.Raycast(this.transform.position, new Vector3(1, 0, 0), out hit, 1.5f))
+                interactWith = hit.collider.gameObject.GetComponent<Monster>();
+            if (interactWith != null)
+                interactWith.hitMonster(1);
+        }
     }
 
     public void attack2()
     {
         if (currentOrientation == Orientation.LEFT)
+        {
             animator.Play("LeftPowerAttack");
+            Monster interactWith = null;
+            RaycastHit hit = new RaycastHit();
+            if (Physics.Raycast(this.transform.position, new Vector3(-1, 0, 0), out hit, 1.5f))
+                interactWith = hit.collider.gameObject.GetComponent<Monster>();
+            if (interactWith != null)
+                interactWith.hitMonster(5);
+        }
         else
+        {
             animator.Play("RightPowerAttack");
+            Monster interactWith = null;
+            RaycastHit hit = new RaycastHit();
+            if (Physics.Raycast(this.transform.position, new Vector3(1, 0, 0), out hit, 1.5f))
+                interactWith = hit.collider.gameObject.GetComponent<Monster>();
+            if (interactWith != null)
+                interactWith.hitMonster(5);
+        }
     }
 
     public void splash()

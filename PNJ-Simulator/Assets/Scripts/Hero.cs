@@ -17,6 +17,8 @@ public class Hero : MonoBehaviour {
         Debug.Assert(player != null);
         DontDestroyOnLoad(this.gameObject);
 
+         EventManager.addActionToEvent(EventType.TITRE_APPARAIT, () => { this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0); });
+ 
         EventManager.addActionToEvent<ScenesType>(EventType.CHANGE_SCENE, hideHero);
         isPissed = false;
 	}
@@ -25,6 +27,11 @@ public class Hero : MonoBehaviour {
     void Update()
     {
 
+    }
+
+    void OnDestroy()
+    {
+        EventManager.removeActionFromEvent(EventType.TITRE_APPARAIT, () => { this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0); });
     }
 
     void hideHero(ScenesType newScene)
