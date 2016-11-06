@@ -20,6 +20,8 @@ public class Monster : PNJ
     [SerializeField]
     private float speed = 1.5f;
 
+    private Animator animator = null;
+
     private int damages = 3;
 
     private bool neverCollided = true;
@@ -36,25 +38,47 @@ public class Monster : PNJ
 
     void Start()
     {
+        Debug.Log("Changer les prefabs des ennemis par les prefab MonsterBase et MonsterEpic");
         neverCollided = true;
 
         this.transform.position = pointPatterA;
         this.transform.GetComponent<Rigidbody>().velocity = pointPatterB - pointPatterA;
+        animator = this.transform.GetComponent<Animator>();
     }
 
     void Update()
     {
         // move through the pattern 
-
-        if (Vector3.Distance(this.transform.position, pointPatterB) >= Vector3.Distance(pointPatterA, pointPatterB))
+        if (neverCollided)
         {
-            this.transform.GetComponent<Rigidbody>().velocity = (pointPatterB - pointPatterA) * speed;
-        }
-        else if (Vector3.Distance(this.transform.position, pointPatterA) >= Vector3.Distance(pointPatterA, pointPatterB))
+            if (Vector3.Distance(this.transform.position, pointPatterB) >= Vector3.Distance(pointPatterA, pointPatterB))
+            {
+                this.transform.GetComponent<Rigidbody>().velocity = (pointPatterB - pointPatterA) * speed;
+                if (animator != null)
+                {
+                    if (this.transform.GetComponent<Rigidbody>().velocity.x < 0)
+                        animator.Play("LeftMove");
+                    else
+                        animator.Play("Move");
+                }
 
-        {
-            this.transform.GetComponent<Rigidbody>().velocity = (pointPatterA - pointPatterB) * speed;
+            }
+            else if (Vector3.Distance(this.transform.position, pointPatterA) >= Vector3.Distance(pointPatterA, pointPatterB))
+
+            {
+                this.transform.GetComponent<Rigidbody>().velocity = (pointPatterA - pointPatterB) * speed;
+                if (animator != null)
+                {
+                    if (this.transform.GetComponent<Rigidbody>().velocity.x < 0)
+                        animator.Play("LeftMove");
+                    else
+                        animator.Play("Move");
+                }
+            }
         }
+        else
+            this.transform.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+
     }
 
     /// <summary>
@@ -80,12 +104,11 @@ public class Monster : PNJ
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.GetComponent<Player>() != null )
+        if (collision.gameObject.GetComponent<Player>() != null)
         {
-            if(neverCollided)
+            if (neverCollided)
             {
                 neverCollided = false;
-                Debug.Log("COLLISION ENTER !");
                 //We save the monster
                 DontDestroyOnLoad(this.gameObject);
 
@@ -101,8 +124,6 @@ public class Monster : PNJ
     {
         if(oldScene == ScenesType.BATTLE)
         {
-            Debug.Log("BATTLE loaded, raise de menu entered");
-
             EventManager.removeActionFromEvent<ScenesType>(EventType.NEW_SCENE, sceneLoaded);
 
             EventManager.raise<Menu>(EventType.MENU_ENTERED, menu);

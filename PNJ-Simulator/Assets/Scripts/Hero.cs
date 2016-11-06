@@ -10,15 +10,26 @@ public class Hero : MonoBehaviour {
     public Menu nextMenu { get; private set; }
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         Debug.Assert(player != null);
         DontDestroyOnLoad(this.gameObject);
+
+        EventManager.addActionToEvent<ScenesType>(EventType.CHANGE_SCENE, hideHero);
+
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 	
 	}
+
+    void hideHero(ScenesType newScene)
+    {
+        if (newScene == ScenesType.MAP)
+            this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+    }
 
     public bool load(int day)
     {

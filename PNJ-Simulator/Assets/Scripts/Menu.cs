@@ -11,7 +11,7 @@ public class Menu
     
     public Menu(List<Pair<Callback, String>> _options, String _text)
     {
-        position = 0;
+        position = _options.Count - 1;
         text = _text;
         options = _options;
     }
