@@ -72,15 +72,15 @@ public class Player : MonoBehaviour {
                                                                 new Pair<Callback, String>(()=> { EventManager.raise(EventType.MENU_EXIT); EventManager.raise<Menu>(EventType.MENU_ENTERED, broomTaken);}, "Je vais prendre le balai"),
                                                                 new Pair<Callback, String>(()=> { EventManager.raise(EventType.MENU_EXIT); EventManager.raise<Menu>(EventType.MENU_ENTERED, broomTaken);}, "Je vais prendre le balai")
                                                                 },
-                               "Vous n'avez pas la force necessaire pour manier cette epee."
+                               "Vous n'avez pas la force nécessaire pour manier cette épée."
                            );
 
         Menu choice = new Menu(
                                new List<Pair<Callback, String>> {
                                                                 new Pair<Callback, String>(()=> { EventManager.raise(EventType.MENU_EXIT); EventManager.raise<Menu>(EventType.MENU_ENTERED, broomTaken);}, "Je vais prendre le balai"),
-                                                                new Pair<Callback, String>(()=> { EventManager.raise(EventType.MENU_EXIT); EventManager.raise<Menu>(EventType.MENU_ENTERED, swordTaken);}, "Je vais prendre l'epee"),
+                                                                new Pair<Callback, String>(()=> { EventManager.raise(EventType.MENU_EXIT); EventManager.raise<Menu>(EventType.MENU_ENTERED, swordTaken);}, "Je vais prendre l'épée"),
                                                                 },
-                               "Prendre le balai ou l'epee ?"
+                               "Prendre le balai ou l'épée ?"
                            );
 
         EventManager.raise<Menu>(EventType.MENU_ENTERED, choice);
@@ -89,7 +89,30 @@ public class Player : MonoBehaviour {
     void attack(AttackType type)
     {
         int damages = 0;
-        switch(type)
+
+        float rand = UnityEngine.Random.Range(0, 10);
+        if (rand > 9)
+            EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PETIT_COUP1);
+        else if (rand > 8)
+            EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PETIT_COUP2);
+        else if (rand > 7)
+            EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PETIT_COUP3);
+        else if (rand > 6)
+            EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PETIT_COUP4);
+        else if (rand > 5)
+            EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PETIT_COUP5);
+        else if (rand > 4)
+            EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PETIT_COUP6);
+        else if (rand > 3)
+            EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PETIT_COUP7);
+        else if (rand > 2)
+            EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PETIT_COUP8);
+        else if (rand > 1)
+            EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.COUP1);
+        else
+            EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.COUP2);
+
+        switch (type)
         {
             case AttackType.WEAK:
                 damages = damagesAttackWeak;
@@ -253,20 +276,24 @@ public class Player : MonoBehaviour {
     public void addGold()
     {
         gold += (int)(100 + (reputation - 100) / 2);
+        EventManager.raise<int>(EventType.GOLD_CHANGE, gold);
     }
 
     public void addReputation()
     {
         reputation += (int)(reputation*0.1f);
+        EventManager.raise<int>(EventType.REPUTATION_CHANGE, reputation);
     }
 
     public void looseReputation()
     {
         reputation -= (int)(reputation * 0.2f);
+        EventManager.raise<int>(EventType.REPUTATION_CHANGE, reputation);
     }
 
     public void looseGold()
     {
         gold -= 100;
+        EventManager.raise<int>(EventType.GOLD_CHANGE, gold);
     }
 }

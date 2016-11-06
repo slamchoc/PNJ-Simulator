@@ -26,7 +26,7 @@ public class ShopScript : MonoBehaviour {
 
     List<String> list1 = new List<String>
     {
-        "epee",
+        "épée",
         "bouclier",
         "bombe"
     };
@@ -36,8 +36,9 @@ public class ShopScript : MonoBehaviour {
         "un dragon",
         "un tabouret malin",
         "une tortue",
-        "un geant",
-        "une grand-mere",
+        "un pinguoin",
+        "un géant",
+        "une grand-mère",
         "un feunouil",
     };
     List<String> list3 = new List<String>
@@ -45,7 +46,8 @@ public class ShopScript : MonoBehaviour {
         "de givre",
         "de dragon",
         "divine",
-        "etoilee",
+        "étoilée",
+        "pinguesque",
         "pour les poulettes",
         "de flammes",
         "pour myopes",
@@ -58,12 +60,13 @@ public class ShopScript : MonoBehaviour {
     };
     List<String> listQuetes = new List<String>
     {
-        "J'ai perdu mon marteau.\nPeux-tu aller le recuperer dans le marecage maudit ?",
-        "Peux-tu me donner 800 ailes de papillon albinos",
+        "J'ai perdu mon marteau.\nPeux-tu aller le récuperer dans le marécage maudit ?",
+        "Peux-tu me donner 800 ailes de papillon albinos.",
         "Peux-tu aller tuer l'\"Emma la cruelle\" ?",
+        "Peux-tu aider les développeurs de ce jeu ?",
         "Peux-tu aller accompagner Joe le rigolo au fleuve de Coco l'asticot ?",
-        "Jean des egouts voudrai un gouteur qui ne soit pas allergique au cyanure.",
-        "Vas tuer la grande mechante belle-mere juste derriere ma forge"
+        "Jean des égouts voudrait un goûteur qui ne soit pas allergique au cyanure.",
+        "Va tuer la grande méchante belle-mère juste derrière ma forge."
     };
 
     Menu goodRetour;
@@ -82,33 +85,30 @@ public class ShopScript : MonoBehaviour {
 
     private bool needCinematique = true;
 
+    public GameObject titre;
+
     // Use this for initialization
     void Start ()
     {
 
         /*menu du PNJ*/
         goodRetour = new Menu(
-                                new List<Pair<Callback, String>> { new Pair<Callback, String>(() => { exitVisitor(); hero.player.addGold(); hero.player.addReputation(); EventManager.raise(EventType.MENU_EXIT); }, "finir journee") }
+                                new List<Pair<Callback, String>> { new Pair<Callback, String>(() => { exitVisitor(); hero.player.addGold(); hero.player.addReputation(); EventManager.raise(EventType.MENU_EXIT); }, "Finir journée") }
                                 , PNJName + " :\nAh, parfait !\nMerci"
                             );
         badRetour = new Menu(
-                                        new List<Pair<Callback, String>> { new Pair<Callback, String>(() => { exitVisitor(); hero.player.addGold(); hero.player.addReputation(); EventManager.raise(EventType.MENU_EXIT); }, "finir journee") }
+                                        new List<Pair<Callback, String>> { new Pair<Callback, String>(() => { exitVisitor(); hero.player.addGold(); hero.player.addReputation(); EventManager.raise(EventType.MENU_EXIT); }, "Finir journée") }
                                         , PNJName + " :\nAh, parfait !\nMerci"
                                     );
-        
 
 
 
+        EventManager.raise(EventType.STOP_SOUND);
         EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.MUSIQUE_CINEMATIQUE2);
-        cinematique.SetActive(false);
-        cinematique.transform.position = new Vector3(
-            -cinematique.GetComponent<SpriteRenderer>().bounds.size.x / 2 - Camera.main.aspect * Camera.main.orthographicSize,
-            0,
-            -4
-            );
+        cinematique.SetActive(true);
 
         Menu stairMenu = new Menu(
-                                        new List<Pair<Callback, String>> { new Pair<Callback, String>(nextDay,"dormir") }, "(* Enfin, la journee se termine *)"
+                                        new List<Pair<Callback, String>> { new Pair<Callback, String>(nextDay,"Dormir") }, "(* Enfin, la journée se termine *)"
                                     );
         stair.GetComponent<PNJ>().setMenu(stairMenu);
         EventManager.addActionToEvent(EventType.END_DAY, nextDay);
@@ -138,6 +138,9 @@ public class ShopScript : MonoBehaviour {
     {
         door.changeToDestructedSprite();
         hero.GetComponent<Rigidbody>().velocity = new Vector2(0, -5);
+        hero.GetComponent<Animator>().Play("Grrrr");
+        EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PORTE_CASSEE);
+
     }
 
     // Update is called once per frame
@@ -148,16 +151,19 @@ public class ShopScript : MonoBehaviour {
             cinematique.SetActive(true);
 
             // cinematique
-            cinematique.transform.position += new Vector3(
+            cinematique.transform.position -= new Vector3(
                        Time.deltaTime * 2.0f,
                        0,
                        0
                        );
-            if (cinematique.transform.position.x > cinematique.GetComponent<SpriteRenderer>().bounds.size.x / 2 + Camera.main.aspect * Camera.main.orthographicSize)
+            if (cinematique.transform.position.x < -  cinematique.GetComponent<SpriteRenderer>().bounds.size.x / 2 - Camera.main.aspect * Camera.main.orthographicSize)
             {
                 needCinematique = false;
                 cinematique.SetActive(false);
                 EventManager.raise(EventType.STOP_SOUND);
+                EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.AMBIANCE_FORGE);
+                EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.MUSIQUE_HEROS);
+
                 nextDay();
             }
 
@@ -176,8 +182,8 @@ public class ShopScript : MonoBehaviour {
         bool isSecondChoiceGood = (UnityEngine.Random.Range(0,2) == 0);
 
         textRandom = PNJName+" :\nBonjour forgeron, peux-tu me conseiller en " + rand1 + " ?\nJe dois me battre contre "+rand2;  
-        textOption1Random = "Donner une quete";
-        option1Retour = new Menu(new List<Pair<Callback, String>> {new Pair<Callback,String>(queteRetour,"continuer")},texteQuete);
+        textOption1Random = "Donner une quète";
+        option1Retour = new Menu(new List<Pair<Callback, String>> {new Pair<Callback,String>(queteRetour,"Continuer")},texteQuete);
         textOption2Random = rand1+" "+rand3;
         textOption3Random = rand1+" "+rand4;
 
@@ -201,7 +207,7 @@ public class ShopScript : MonoBehaviour {
     private void queteRetour()
     {
         EventManager.raise(EventType.MENU_EXIT);
-        EventManager.raise<Menu>(EventType.MENU_ENTERED, new Menu(new List<Pair<Callback, String>> { new Pair<Callback,String>(()=> { exitVisitor(); EventManager.raise(EventType.MENU_EXIT); hero.player.addReputation(); hero.player.looseGold(); },"finir journee")},PNJName+" :\nVous avez raison, je vais prendre votre quete.\nMerci !"));
+        EventManager.raise<Menu>(EventType.MENU_ENTERED, new Menu(new List<Pair<Callback, String>> { new Pair<Callback,String>(()=> { exitVisitor(); EventManager.raise(EventType.MENU_EXIT); hero.player.addReputation(); hero.player.looseGold(); },"Finir journée")},PNJName+" :\nVous avez raison, je vais prendre votre quète.\nMerci !"));
     }
     private void option2()
     {
@@ -229,6 +235,7 @@ public class ShopScript : MonoBehaviour {
         if(hero.load(currentDay))
         {
            visitor = hero.gameObject;
+           visitor.GetComponent<Animator>().Play("Down");
         }
         else
         {
@@ -241,6 +248,7 @@ public class ShopScript : MonoBehaviour {
         visitor.transform.position = new Vector3(0,4,-2);
         visitor.transform.localScale = new Vector2(2, 2);
         visitor.GetComponent<Rigidbody>().velocity = new Vector3(0,-0.5f,0);
+        EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PORTE_OUVERTE);
     }
 
     void exitVisitor()

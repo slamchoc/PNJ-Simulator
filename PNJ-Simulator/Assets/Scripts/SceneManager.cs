@@ -54,7 +54,6 @@ public class SceneManager : MonoBehaviour
                     EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.SON_FOULE);
                     break;
                 case ScenesType.SHOP:
-                    EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.AMBIANCE_FORGE);
                     break;
                 default:
                     Debug.Log("Probleme dans changeScene");

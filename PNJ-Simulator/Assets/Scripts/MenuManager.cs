@@ -142,6 +142,7 @@ public class MenuManager : MonoBehaviour
         }
         GameObject arrow = Instantiate(arrowMainMenu);
         arrow.transform.parent = Camera.main.transform;
+        arrow.transform.localPosition = new Vector3(arrow.transform.localPosition.x, arrow.transform.localPosition.y, 1);
 
         actualMenuPrinted.Add(arrow);
         currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
@@ -153,16 +154,29 @@ public class MenuManager : MonoBehaviour
         Vector3 dialogueScale = new Vector3(0.4f, 0.3f, 1);
 
         Vector3 panelPos = dialogueStartPos;
+        List<GameObject> panels = new List<GameObject>();
+        Vector2 size = new Vector2(0, 0);
         foreach (Pair<Callback, string> pair in _menu.options)
         {
             GameObject tmpPanel = Instantiate(panelDialogue);
+            panels.Add(tmpPanel);
             tmpPanel.transform.parent = Camera.main.transform;
             tmpPanel.GetComponentInChildren<TextMesh>().text = pair.Second;
+            Bounds tmp = tmpPanel.GetComponentInChildren<TextMesh>().GetComponent<Renderer>().bounds;
+            if (tmp.size.x > size.x)
+                size.x = tmp.size.x;
+            if (tmp.size.y > size.y)
+                size.y = tmp.size.y;
             tmpPanel.transform.localPosition = panelPos;
 
             tmpPanel.transform.localScale = new Vector3(tmpPanel.transform.localScale.x* dialogueScale.x, tmpPanel.transform.localScale.y * dialogueScale.y, tmpPanel.transform.localScale.z * dialogueScale.z);
             panelPos += dialogueOffset;
             actualMenuPrinted.Add(tmpPanel);
+        }
+        foreach (var panel in panels)
+        {
+            panel.GetComponentInChildren<TextMesh>().anchor = TextAnchor.MiddleLeft;
+            panel.GetComponentInChildren<TextMesh>().transform.position += new Vector3(-1, 0, 0);
         }
 
         GameObject text = Instantiate(textDialogue);
@@ -175,7 +189,7 @@ public class MenuManager : MonoBehaviour
         GameObject arrow = Instantiate(arrowDialogue);
         arrow.transform.parent = Camera.main.transform;
 
-        arrow.transform.localPosition = dialogueStartPos - new Vector3(1.5f,0,0);
+        arrow.transform.localPosition = dialogueStartPos - new Vector3(1.75f,0,0);
         arrow.transform.localScale = new Vector3(arrow.transform.localScale.x * dialogueScale.x, arrow.transform.localScale.y * dialogueScale.y, arrow.transform.localScale.z * dialogueScale.z);
         actualMenuPrinted.Add(arrow);
 
