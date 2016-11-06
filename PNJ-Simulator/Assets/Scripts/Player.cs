@@ -36,7 +36,6 @@ public class Player : MonoBehaviour {
     void Start()
     {
         DontDestroyOnLoad(this);
-        this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
         EventManager.addActionToEvent<ScenesType>(EventType.END_SCENE, sceneEnded);
         EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, sceneBegin);
@@ -45,6 +44,11 @@ public class Player : MonoBehaviour {
         EventManager.addActionToEvent<AttackType>(EventType.ATTACK_ENNEMY, attack);
     }
 
+    void Update()
+    {
+        if (this.gameObject.GetComponent<SpriteRenderer>().enabled == false)
+            Debug.Log(this.gameObject.GetComponent<SpriteRenderer>().sprite);
+    }
 
     void OnDestroy()
     {
@@ -146,9 +150,7 @@ public class Player : MonoBehaviour {
     void sceneBegin(ScenesType sceneBegin)
     {
         Debug.Log("sceneBegin " + sceneBegin);
-        if (sceneBegin == ScenesType.MAIN_MENU)
-            this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        else if(sceneBegin == ScenesType.SHOP)
+        if(sceneBegin == ScenesType.SHOP)
             this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
     }
 
