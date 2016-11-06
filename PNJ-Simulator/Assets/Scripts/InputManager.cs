@@ -21,6 +21,7 @@ public class InputManager : MonoBehaviour {
     private bool HasNormalAttack = false;
     private bool HasSplashed = false;
 
+    private bool isInCinematic = false;
 
     // Use this for initialization
     void Start () {
@@ -29,44 +30,50 @@ public class InputManager : MonoBehaviour {
         EventManager.addActionToEvent<ScenesType>(EventType.NEW_SCENE, OnSceneChanged);
         EventManager.addActionToEvent<Menu>(EventType.MENU_ENTERED, OnMenuEntered);
         EventManager.addActionToEvent(EventType.MENU_EXIT, OnMenuExit);
+
+        EventManager.addActionToEvent(EventType.CINEMATIC_BEGIN, ()=> { isInCinematic = true; });
+        EventManager.addActionToEvent(EventType.CINEMATIC_ENDED, () => { isInCinematic = false; });
     }
 
     // Update is called once per frame
-    void Update () {
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
-        attack1 = Input.GetAxis("Attack1");
-        attack2 = Input.GetAxis("Attack2");
-        splash = Input.GetAxis("Splash");
-        submit = Input.GetAxis("Submit");
-        switch (currentType)
+    void Update ()
+    {
+        if (!isInCinematic)
         {
-            case ScenesType.MAP:
-                if (menu != null)
-                    OnMenu();
-                else if (player != null)
-                    OnMap();
-                break;
-            case ScenesType.SHOP:
-                if (menu != null)
-                    OnMenu();
-                else if(player != null)
-                    OnMap();
-                break;
-            case ScenesType.MAIN_MENU:
-                if(menu != null)
-                    OnMenu();
-                break;
-            case ScenesType.BATTLE:
-                if (menu != null)
-                    OnMenu();
-                else if (player != null)
-                    OnBattle();
-                break;
-            default:
-                break;
+            horizontal = Input.GetAxis("Horizontal");
+            vertical = Input.GetAxis("Vertical");
+            attack1 = Input.GetAxis("Attack1");
+            attack2 = Input.GetAxis("Attack2");
+            splash = Input.GetAxis("Splash");
+            submit = Input.GetAxis("Submit");
+            switch (currentType)
+            {
+                case ScenesType.MAP:
+                    if (menu != null)
+                        OnMenu();
+                    else if (player != null)
+                        OnMap();
+                    break;
+                case ScenesType.SHOP:
+                    if (menu != null)
+                        OnMenu();
+                    else if (player != null)
+                        OnMap();
+                    break;
+                case ScenesType.MAIN_MENU:
+                    if (menu != null)
+                        OnMenu();
+                    break;
+                case ScenesType.BATTLE:
+                    if (menu != null)
+                        OnMenu();
+                    else if (player != null)
+                        OnBattle();
+                    break;
+                default:
+                    break;
+            }
         }
-
 	}
 
     private void OnSceneChanged(ScenesType type)

@@ -106,7 +106,7 @@ public class ShopScript : MonoBehaviour {
         EventManager.raise(EventType.STOP_SOUND);
         EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.MUSIQUE_CINEMATIQUE2);
         cinematique.SetActive(true);
-
+        EventManager.raise(EventType.CINEMATIC_BEGIN);
         Menu stairMenu = new Menu(
                                         new List<Pair<Callback, String>> { new Pair<Callback, String>(nextDay,"Dormir") }, "(* Enfin, la journée se termine *)"
                                     );
@@ -159,6 +159,8 @@ public class ShopScript : MonoBehaviour {
             if (cinematique.transform.position.x < -  cinematique.GetComponent<SpriteRenderer>().bounds.size.x / 2 - Camera.main.aspect * Camera.main.orthographicSize)
             {
                 needCinematique = false;
+                EventManager.raise(EventType.CINEMATIC_ENDED);
+
                 cinematique.SetActive(false);
                 EventManager.raise(EventType.STOP_SOUND);
                 EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.AMBIANCE_FORGE);
@@ -225,7 +227,7 @@ public class ShopScript : MonoBehaviour {
     void nextDay()
     {
         EventManager.raise(EventType.MENU_EXIT);
-        hero.player.transform.position = new Vector3(0, -1, -2);
+        //hero.player.transform.position = new Vector3(0, -1, -2);
         currentDay++;
         //on annule le visiteur precedent
         visitor.transform.position = new Vector2(10, 10);
@@ -248,6 +250,7 @@ public class ShopScript : MonoBehaviour {
         visitor.transform.position = new Vector3(0,4,-2);
         visitor.transform.localScale = new Vector2(2, 2);
         visitor.GetComponent<Rigidbody>().velocity = new Vector3(0,-0.5f,0);
+        visitor.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
         EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PORTE_OUVERTE);
     }
 
