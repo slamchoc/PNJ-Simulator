@@ -77,6 +77,7 @@ public class InputManager : MonoBehaviour {
     private void OnMenuEntered(Menu m)
     {
         menu = m;
+        player.move(0, 0);
     }
 
     private void OnMenuExit()
@@ -96,9 +97,9 @@ public class InputManager : MonoBehaviour {
             if (!SelectedOptionChanged)
             {
                 if (vertical > 0)
-                    menu.decrementPosition();
-                else
                     menu.incrementPosition();
+                else
+                    menu.decrementPosition();
                 SelectedOptionChanged = true;
             }
         }

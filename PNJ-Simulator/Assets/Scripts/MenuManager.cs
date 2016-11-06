@@ -46,9 +46,8 @@ public class MenuManager : MonoBehaviour
                                         new List<Pair<Callback, String>> {
                                                                             new Pair<Callback,String>(()=> 
                                                                             {
-                                                                                EventManager.raise(EventType.MENU_EXIT);
-                                                                                sceneManager.changeScene(ScenesType.SHOP);
-                                                                            },"Game"),
+                                                                                sceneManager.quitGame();
+                                                                            }, "Exit"),
                                                                             new Pair<Callback,String>(()=> 
                                                                             {
                                                                                 EventManager.raise(EventType.MENU_EXIT);
@@ -56,20 +55,21 @@ public class MenuManager : MonoBehaviour
                                                                             },"Alt"),
                                                                             new Pair<Callback,String>(()=> 
                                                                             {
-                                                                                sceneManager.quitGame();
-                                                                            }, "Exit")
+                                                                                EventManager.raise(EventType.MENU_EXIT);
+                                                                                sceneManager.changeScene(ScenesType.SHOP);
+                                                                            },"Game")
                                                                         },
                                         "mainMenu"
                                     );
         DontDestroyOnLoad(this.gameObject);
 
-        mainMenuStartPos = new Vector3(0, 2.1f, 1);
-        mainMenuOffset = new Vector3(0, -2.1f, 0);
+        mainMenuStartPos = new Vector3(0, -2.1f, 1);
+        mainMenuOffset = new Vector3(0, 2.1f, 0);
 
-        fightStartPos = new Vector3(0, 2.1f, 1);
-        fightOffset = new Vector3(0, -2.1f, 0);
+        fightStartPos = new Vector3(-6.5f, -2.1f, 1);
+        fightOffset = new Vector3(0, 0.75f, 0);
 
-        dialogueStartPos = new Vector3(-6.75f, -0.5f, 1);
+        dialogueStartPos = new Vector3(-6.75f, -1.25f, 1);
         dialogueOffset = new Vector3(0, 0.75f, 0);
 
         actualScene = ScenesType.MAIN_MENU;
@@ -167,6 +167,7 @@ public class MenuManager : MonoBehaviour
 
         GameObject text = Instantiate(textDialogue);
         text.transform.parent = Camera.main.transform;
+        text.transform.localPosition = new Vector3(0, -3.25f, 1);
 
         text.GetComponentInChildren<TextMesh>().text = _menu.text;
         actualMenuPrinted.Add(text);
@@ -183,6 +184,7 @@ public class MenuManager : MonoBehaviour
 
     void printBattle(Menu _menu)
     {
+        Vector3 battleScale = new Vector3(0.5f, 0.3f, 1);
         Vector3 panelPos = fightStartPos;
         foreach (Pair<Callback,string> pair in _menu.options)
         {
@@ -191,12 +193,15 @@ public class MenuManager : MonoBehaviour
 
             tmpPanel.GetComponentInChildren<TextMesh>().text = pair.Second;
             tmpPanel.transform.localPosition = panelPos;
+            tmpPanel.transform.localScale = battleScale;
             panelPos += fightOffset;
             actualMenuPrinted.Add(tmpPanel);
         }
         GameObject arrow = Instantiate(arrowFight);
         arrow.transform.parent = Camera.main.transform;
 
+        arrow.transform.localPosition = dialogueStartPos - new Vector3(1.5f, 0, 0);
+        arrow.transform.localScale = battleScale;
         actualMenuPrinted.Add(arrow);
         currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
     }
