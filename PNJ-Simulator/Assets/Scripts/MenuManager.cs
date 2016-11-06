@@ -184,6 +184,7 @@ public class MenuManager : MonoBehaviour
         text.transform.localPosition = new Vector3(0, -3.25f, 1);
 
         text.GetComponentInChildren<TextMesh>().text = _menu.text;
+        text.GetComponentInChildren<TextMesh>().transform.localScale = new Vector3(1, 1 + dialogueScale.y, 1);
         actualMenuPrinted.Add(text);
 
         GameObject arrow = Instantiate(arrowDialogue);
