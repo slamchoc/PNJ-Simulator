@@ -44,6 +44,11 @@ public class Player : MonoBehaviour {
         EventManager.addActionToEvent<AttackType>(EventType.ATTACK_ENNEMY, attack);
     }
 
+    void Update()
+    {
+        if (this.gameObject.GetComponent<SpriteRenderer>().enabled == false)
+            Debug.Log(this.gameObject.GetComponent<SpriteRenderer>().sprite);
+    }
 
     void OnDestroy()
     {
