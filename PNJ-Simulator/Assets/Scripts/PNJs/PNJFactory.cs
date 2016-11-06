@@ -178,7 +178,7 @@ public class PNJFactory : MonoBehaviour
         listCallbacks = new List<Pair<Callback, String>>();
  
         string textMonster = "??";
-        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 10, new Vector3(50, 3,-2), new Vector3(55, 3,-2)));
+        listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 10, new Vector3(41, 3,-2), new Vector3(45, 0,-2)));
 
 
         listCallbacks = new List<Pair<Callback, String>>();

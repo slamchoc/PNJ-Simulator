@@ -15,6 +15,8 @@ public class ScriptedBattle : MonoBehaviour
 
     public GameObject hero;
 
+    public GameObject pnj;
+
     public GameObject prefabMonster;
 
     public ScriptedBattleType typeBattle;
@@ -29,6 +31,24 @@ public class ScriptedBattle : MonoBehaviour
     void Start()
     {
         hero = FindObjectOfType<Hero>().gameObject;
+        EventManager.addActionToEvent(EventType.EVENTBEFOREWIN, cinematiqueEnd);
+    }
+
+    void cinematiqueEnd()
+    {
+        pnj.GetComponent<SpriteRenderer>().enabled = true;
+        Menu bravo = new Menu(
+                     new List<Pair<Callback, String>> {
+                                                                new Pair<Callback, String>(()=>
+                                                                {
+                                                                    EventManager.raise(EventType.MENU_EXIT);
+                                                                    EventManager.raise(EventType.WIN);
+                                                                }, "Finir")
+                                                      },
+                     "Mon dieu ! Mais tu as tué celui qui a écrasé le héros !\nMais tu n'es pourtant qu'un forgeron sans avenir...\nC'est..."
+                 );
+        EventManager.raise<Menu>(EventType.MENU_ENTERED, bravo);
+
     }
 
     // Update is called once per frame
@@ -132,7 +152,7 @@ public class ScriptedBattle : MonoBehaviour
         GameObject monster = UnityEngine.Object.Instantiate(prefabMonster);
 
         monster.GetComponent<Monster>().createMonster(25, toHide.transform.position, toHide.transform.position);
-
+        monster.GetComponent<Monster>().bossFinal = true;
         monster.GetComponent<Monster>().launchBattle();
 
         toHide.GetComponent<SpriteRenderer>().enabled = false;
