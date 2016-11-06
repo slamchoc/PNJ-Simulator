@@ -154,16 +154,29 @@ public class MenuManager : MonoBehaviour
         Vector3 dialogueScale = new Vector3(0.4f, 0.3f, 1);
 
         Vector3 panelPos = dialogueStartPos;
+        List<GameObject> panels = new List<GameObject>();
+        Vector2 size = new Vector2(0, 0);
         foreach (Pair<Callback, string> pair in _menu.options)
         {
             GameObject tmpPanel = Instantiate(panelDialogue);
+            panels.Add(tmpPanel);
             tmpPanel.transform.parent = Camera.main.transform;
             tmpPanel.GetComponentInChildren<TextMesh>().text = pair.Second;
+            Bounds tmp = tmpPanel.GetComponentInChildren<TextMesh>().GetComponent<Renderer>().bounds;
+            if (tmp.size.x > size.x)
+                size.x = tmp.size.x;
+            if (tmp.size.y > size.y)
+                size.y = tmp.size.y;
             tmpPanel.transform.localPosition = panelPos;
 
             tmpPanel.transform.localScale = new Vector3(tmpPanel.transform.localScale.x* dialogueScale.x, tmpPanel.transform.localScale.y * dialogueScale.y, tmpPanel.transform.localScale.z * dialogueScale.z);
             panelPos += dialogueOffset;
             actualMenuPrinted.Add(tmpPanel);
+        }
+        foreach (var panel in panels)
+        {
+            panel.GetComponentInChildren<TextMesh>().anchor = TextAnchor.MiddleLeft;
+            panel.GetComponentInChildren<TextMesh>().transform.position += new Vector3(-1, 0, 0);
         }
 
         GameObject text = Instantiate(textDialogue);

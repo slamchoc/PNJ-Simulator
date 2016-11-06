@@ -20,6 +20,8 @@ public enum EventType
     DAMAGE_ENNEMY,
     DAMAGE_PLAYER,
     SELL,
+    GOLD_CHANGE,
+    REPUTATION_CHANGE,
     GIVE_QUEST,
     END_DAY,
     SLAM_DOOR,
