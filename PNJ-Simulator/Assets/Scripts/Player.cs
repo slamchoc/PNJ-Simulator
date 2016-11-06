@@ -57,7 +57,7 @@ public class Player : MonoBehaviour {
         {
             if(Vector3.Distance(this.transform.position, goal) < 1)
             {
-                this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.Normalize((goal - this.transform.position))* 1.0f;
+                move(Vector3.Normalize((goal - this.transform.position)).x, Vector3.Normalize((goal - this.transform.position)).y);
             }
             else
                 goal = new Vector3(-100, -100, -100);

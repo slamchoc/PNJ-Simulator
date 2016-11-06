@@ -41,8 +41,13 @@ public class ScriptedBattle : MonoBehaviour
             }
             else
             {
-                hero.transform.position = new Vector3(5, 0, 0);
+                hero.transform.position = new Vector3(20, 2, 0);
+                hero.GetComponent<SpriteRenderer>().enabled = true;
+                hero.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+
                 hero.GetComponent<Animator>().Play("FirstBattlePart1");
+
+                
             }
         }
     }

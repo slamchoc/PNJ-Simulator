@@ -10,11 +10,16 @@ public class PNJ : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-	    
+        EventManager.addActionToEvent(EventType.TITRE_APPARAIT, () => { this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0); });
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    void OnDestroy()
+    {
+        EventManager.removeActionFromEvent(EventType.TITRE_APPARAIT, () => { this.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0); });
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
     
 	
