@@ -12,7 +12,6 @@ public class Fin : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         EventManager.addActionToEvent(EventType.WIN,print);
-        EventManager.addActionToEvent(EventType.EVENTBEFOREWIN, cinematiqueEnd);
     }
 
     void print()
@@ -26,8 +25,8 @@ public class Fin : MonoBehaviour {
 	void Update () {
         if (defiler)
         {
-            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - (speed * Time.deltaTime), transform.localPosition.z);
-            if(transform.localPosition.y >= 6)
+            transform.localPosition = new Vector3(0, transform.localPosition.y + (speed * Time.deltaTime), transform.localPosition.z);
+            if(transform.localPosition.y > 5)               
             {
                 Debug.Log("FIN !");
                 defiler = false;
@@ -36,26 +35,9 @@ public class Fin : MonoBehaviour {
         }
 	}
 
-    void cinematiqueEnd()
-    {
-        pnj.GetComponent<SpriteRenderer>().enabled = true;
-        Menu bravo = new Menu(
-                     new List<Pair<Callback, String>> {
-                                                                new Pair<Callback, String>(()=>
-                                                                {
-                                                                    EventManager.raise(EventType.MENU_EXIT);
-                                                                    print();
-                                                                }, "Finir")
-                                                      },
-                     "Mon dieu ! Mais tu as tué celui qui a écrasé le héros !\nMais tu n'es pourtant qu'un forgeron sans avenir...\nC'est..."
-                 );
-        EventManager.raise<Menu>(EventType.MENU_ENTERED, bravo);
-    }
-
     void OnDestroy()
     {
         EventManager.removeActionFromEvent(EventType.WIN, print);
-        EventManager.removeActionFromEvent(EventType.EVENTBEFOREWIN, cinematiqueEnd);
     }
 }
 

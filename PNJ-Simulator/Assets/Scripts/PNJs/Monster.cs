@@ -146,7 +146,7 @@ public class Monster : PNJ
             if (bossFinal)
             {
                 EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.MONSTRE_MORT);
-                EventManager.raise(EventType.EVENTBEFOREWIN);
+                EventManager.raise(EventType.WIN);
                 Destroy(this.gameObject);
             }
             else
