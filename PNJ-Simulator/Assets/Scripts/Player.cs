@@ -32,6 +32,7 @@ public class Player : MonoBehaviour {
     private int damagesAttackMiddle = 3;
     private int damagesAttackWeak = 1;
 
+    private Vector3 goal = new Vector3(-100, -100, -100);
 
     void Start()
     {
@@ -44,8 +45,24 @@ public class Player : MonoBehaviour {
         EventManager.addActionToEvent<AttackType>(EventType.ATTACK_ENNEMY, attack);
     }
 
+    public void goToGoal(Vector3 _goal)
+    {
+        goal = _goal;
+    }
+
     void Update()
     {
+
+        if(goal != new Vector3(-100,-100,-100))
+        {
+            if(Vector3.Distance(this.transform.position, goal) < 1)
+            {
+                move(Vector3.Normalize((goal - this.transform.position)).x, Vector3.Normalize((goal - this.transform.position)).y);
+            }
+            else
+                goal = new Vector3(-100, -100, -100);
+        }
+
         if (this.gameObject.GetComponent<SpriteRenderer>().enabled == false)
             Debug.Log(this.gameObject.GetComponent<SpriteRenderer>().sprite);
     }
