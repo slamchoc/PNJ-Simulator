@@ -72,15 +72,15 @@ public class Player : MonoBehaviour {
                                                                 new Pair<Callback, String>(()=> { EventManager.raise(EventType.MENU_EXIT); EventManager.raise<Menu>(EventType.MENU_ENTERED, broomTaken);}, "Je vais prendre le balai"),
                                                                 new Pair<Callback, String>(()=> { EventManager.raise(EventType.MENU_EXIT); EventManager.raise<Menu>(EventType.MENU_ENTERED, broomTaken);}, "Je vais prendre le balai")
                                                                 },
-                               "Vous n'avez pas la force necessaire pour manier cette epee."
+                               "Vous n'avez pas la force nécessaire pour manier cette épée."
                            );
 
         Menu choice = new Menu(
                                new List<Pair<Callback, String>> {
                                                                 new Pair<Callback, String>(()=> { EventManager.raise(EventType.MENU_EXIT); EventManager.raise<Menu>(EventType.MENU_ENTERED, broomTaken);}, "Je vais prendre le balai"),
-                                                                new Pair<Callback, String>(()=> { EventManager.raise(EventType.MENU_EXIT); EventManager.raise<Menu>(EventType.MENU_ENTERED, swordTaken);}, "Je vais prendre l'epee"),
+                                                                new Pair<Callback, String>(()=> { EventManager.raise(EventType.MENU_EXIT); EventManager.raise<Menu>(EventType.MENU_ENTERED, swordTaken);}, "Je vais prendre l'épée"),
                                                                 },
-                               "Prendre le balai ou l'epee ?"
+                               "Prendre le balai ou l'épée ?"
                            );
 
         EventManager.raise<Menu>(EventType.MENU_ENTERED, choice);
