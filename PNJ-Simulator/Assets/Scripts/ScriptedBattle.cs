@@ -48,7 +48,6 @@ public class ScriptedBattle : MonoBehaviour
                      "Mon dieu ! Mais tu as tué celui qui a écrasé le héros !\nMais tu n'es pourtant qu'un forgeron sans avenir...\nC'est..."
                  );
         EventManager.raise<Menu>(EventType.MENU_ENTERED, bravo);
-
     }
 
     // Update is called once per frame
