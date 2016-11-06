@@ -78,7 +78,7 @@ public class PNJFactory : MonoBehaviour
         {
             EventManager.raise(EventType.MENU_EXIT);
         }, "Fuir."));
-        string textPnj = "Genevieve\nMais que fais tu avec un balai dehors ?\nRentre chez toi, ce n'est pas ta place.";
+        string textPnj = "Geneviève :\nMais que fais tu avec un balai dehors ?\nRentre chez toi, ce n'est pas ta place.";
         listPNJs.Add(new PNJToCreate(new Vector3(-6, -6, -1), listCallbacks, textPnj));
 
 
@@ -94,7 +94,7 @@ public class PNJFactory : MonoBehaviour
                                                                     Destroy(listGO[1], 5f);
                                                                 }, "..."),
                                                                 },
-                               "Garde\nC'est vrai ?! Bon, bah j'y vais, merci !"
+                               "Garde :\nC'est vrai ?! Bon, bah j'y vais, merci !"
                            );
         Menu gardequete = new Menu(
                                new List<Pair<Callback, String>> {
@@ -104,7 +104,7 @@ public class PNJFactory : MonoBehaviour
                                                                      EventManager.raise<Menu>(EventType.MENU_ENTERED, answerGarde);
                                                                 }, "Continuer"),
                                                                 },
-                               "Je viens ici pour vous donner une quète !\nVous devez recuperer 20 plumes de Dorade des plaines,\nvous deviendrez riches !"
+                               "Je viens ici pour vous donner une quète !\nVous devez récuperer 20 plumes de Dorade des plaines,\nvous deviendrez riches !"
                            );
 
         listCallbacks.Add(new Pair<Callback, String>(() =>
@@ -115,8 +115,8 @@ public class PNJFactory : MonoBehaviour
         {
             EventManager.raise(EventType.MENU_EXIT);
             EventManager.raise<Menu>(EventType.MENU_ENTERED, gardequete);
-        }, "Donner une quete epique au garde."));
-        textPnj = "Garde\nTu ne peux pas sortir, désolé.\nTu n'est qu'un forgeron, c'est dangereux d'y aller tout seul.";
+        }, "Donner une quète épique au garde."));
+        textPnj = "Garde :\nTu ne peux pas sortir, désolé.\nTu n'es qu'un forgeron, c'est dangereux d'y aller tout seul.";
         listPNJs.Add(new PNJToCreate(new Vector3(0.63f, 0.5f, -1), listCallbacks, textPnj));
 
 
@@ -132,7 +132,7 @@ public class PNJFactory : MonoBehaviour
                                                                     Destroy(listGO[2], 5f);
                                                                 }, "..."),
                                                                 },
-                               "Garde\nC'est vrai ?! Bon, bah j'y vais, merci !"
+                               "Garde :\nC'est vrai ?! Bon, bah j'y vais, merci !"
                            );
         Menu gardequete2 = new Menu(
                                new List<Pair<Callback, String>> {
@@ -142,7 +142,7 @@ public class PNJFactory : MonoBehaviour
                                                                      EventManager.raise<Menu>(EventType.MENU_ENTERED, answerGarde2);
                                                                 }, "Continuer"),
                                                                 },
-                               "Je viens ici pour vous donner une quète !\nVous devez recuperer 50 pendules malefiques\ndans la rivière aux noyés !"
+                               "Je viens ici pour vous donner une quète !\nVous devez récuperer 50 pendules maléfiques\ndans la rivière aux noyés !"
                            );
 
         listCallbacks.Add(new Pair<Callback, String>(() =>
@@ -153,8 +153,8 @@ public class PNJFactory : MonoBehaviour
         {
             EventManager.raise(EventType.MENU_EXIT);
             EventManager.raise<Menu>(EventType.MENU_ENTERED, gardequete2);
-        }, "Donner une quete epique au garde."));
-        textPnj = "Garde\nTu ne peux pas sortir, désolé.\nTu n'est qu'un forgeron, c'est dangereux d'y aller tout seul.";
+        }, "Donner une quète épique au garde."));
+        textPnj = "Garde :\nTu ne peux pas sortir, désolé.\nTu n'es qu'un forgeron, c'est dangereux d'y aller tout seul.";
         listPNJs.Add(new PNJToCreate(new Vector3(0.63f, 1.7f, -1), listCallbacks, textPnj));
 
 
@@ -163,7 +163,7 @@ public class PNJFactory : MonoBehaviour
         {
             EventManager.raise(EventType.MENU_EXIT);
         }, "Baisser les yeux"));
-        textPnj = "Gerard\nTu veux faire comme le heros, mais te battre avec un balai...\nT'es mignon mais...";
+        textPnj = "Gerard :\nTu veux faire comme le heros, mais te battre avec un balai...\nT'es mignon mais...";
         listPNJs.Add(new PNJToCreate(new Vector3(-6, 1, -1), listCallbacks, textPnj));
 
         listCallbacks = new List<Pair<Callback, String>>();
@@ -171,7 +171,7 @@ public class PNJFactory : MonoBehaviour
         {
             EventManager.raise(EventType.MENU_EXIT);
         }, "Ah ok."));
-        textPnj = "Jean-Eudes\nLe héros est vraiment impressionnant !\nIl va tous nous sauver !";
+        textPnj = "Jean-Eudes :\nLe héros est vraiment impressionnant !\nIl va tous nous sauver !";
         listPNJs.Add(new PNJToCreate(new Vector3(-4, 16, -1), listCallbacks, textPnj));
 
 
@@ -190,16 +190,7 @@ public class PNJFactory : MonoBehaviour
         string textMonster = "??";
         listMonsters.Add(new MonsterToCreate(listCallbacks, textMonster, 3, new Vector3(6,3,-2), new Vector3(9,3,-2)));
 
-        listCallbacks = new List<Pair<Callback, String>>();/*
-        listCallbacks.Add(new Pair<Callback, String>(() =>
-        {
-            EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.STRONG);
-        }, "Attaque forte"));
-        listCallbacks.Add(new Pair<Callback, String>(() =>
-        {
-            EventManager.raise<AttackType>(EventType.ATTACK_ENNEMY, AttackType.WEAK);
-        }, "Attaque faible"));
-        textMonster = "??";*/
+        listCallbacks = new List<Pair<Callback, String>>();
         listCallbacks.Add(new Pair<Callback, String>(() =>
         {
             EventManager.raise(EventType.MENU_EXIT);

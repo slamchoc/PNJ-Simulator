@@ -31,7 +31,7 @@ public enum SoundsType
     PETIT_COUP6,
     PETIT_COUP7,
     PETIT_COUP8,
-    PNG_SAUT,
+    PNJ_SAUT,
     PNJ_TOMBE1,
     PNJ_TOMBE2,
     PNJ_TOMBE3,
