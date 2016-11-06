@@ -8,6 +8,8 @@ using UnityEngine;
 public enum EventType
 {
     CHANGE_SCENE,
+    TITRE_APPARAIT,
+
     CINEMATIC_ENDED,
     CINEMATIC_BEGIN,
     THINK_ABOUT_BROOM,

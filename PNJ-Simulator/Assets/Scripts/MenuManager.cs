@@ -51,13 +51,8 @@ public class MenuManager : MonoBehaviour
                                                                             new Pair<Callback,String>(()=> 
                                                                             {
                                                                                 EventManager.raise(EventType.MENU_EXIT);
-                                                                                sceneManager.changeScene(ScenesType.MAP);
-                                                                            },"Alt"),
-                                                                            new Pair<Callback,String>(()=> 
-                                                                            {
-                                                                                EventManager.raise(EventType.MENU_EXIT);
                                                                                 sceneManager.changeScene(ScenesType.SHOP);
-                                                                            },"Game")
+                                                                            },"Play")
                                                                         },
                                         "mainMenu"
                                     );
