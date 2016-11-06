@@ -9,7 +9,6 @@ public class Table : MonoBehaviour {
     {
         if (other.gameObject.GetComponent<PNJ>() != null)
         {
-            Debug.Log("PNJ");
             other.gameObject.GetComponent<PNJ>().printMenu();
             other.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         }
@@ -17,7 +16,6 @@ public class Table : MonoBehaviour {
         {
             other.gameObject.GetComponent<Hero>().printnextMenu();
             other.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-            Debug.Log("IDLE");
             if(other.gameObject.GetComponent<Hero>().isPissed)
                 other.gameObject.GetComponent<Animator>().Play("Grrrr");
             else

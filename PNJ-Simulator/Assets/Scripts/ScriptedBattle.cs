@@ -81,6 +81,7 @@ public class ScriptedBattle : MonoBehaviour
                                                                 new Pair<Callback, String>(()=>
                                                                 {
                                                                     EventManager.raise(EventType.MENU_EXIT);
+                                                                    EventManager.raise(EventType.CINEMATIC_ENDED);
                                                                 }, "Continuer")
                                                   },
                  "(* Il se bat quand même bizarrement... *)"
@@ -93,7 +94,8 @@ public class ScriptedBattle : MonoBehaviour
                                                                     EventManager.raise(EventType.MENU_EXIT);
                                                                     EventManager.raise<Menu>(EventType.MENU_ENTERED, think);
                                                                     hero.GetComponent<Animator>().Play("Up");
-                                                                    hero.GetComponent<Rigidbody>().velocity = new Vector3(0,1,0);
+                                                                    this.GetComponent<Collider>().enabled = false;
+                                                                    hero.GetComponent<Rigidbody>().velocity = new Vector3(0,2,0);
                                                                     StartCoroutine(waithThenHide(hero));
                                                                 }, "Continuer")
                                                          },
@@ -109,9 +111,12 @@ public class ScriptedBattle : MonoBehaviour
 
     private IEnumerator waithThenHide(GameObject toHide)
     {
+
         yield return new WaitForSeconds(5);
         toHide.GetComponent<SpriteRenderer>().enabled = false;
+
         toHide.transform.position = new Vector3(0, 0, 0);
+        Destroy(this.gameObject);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -139,6 +144,9 @@ public class ScriptedBattle : MonoBehaviour
 
                 hero.GetComponent<Animator>().Play(nameAnimator);
             }
+
+
+            this.GetComponent<Collider>().enabled = false;
         }
     }
 
