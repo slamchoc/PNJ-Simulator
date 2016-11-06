@@ -134,6 +134,8 @@ public class InputManager : MonoBehaviour {
         }
         else if (submit == 0)
             Validated = false;
+        if (splash != 0)
+            player.splash();
     }
 
     private void OnBattle()
