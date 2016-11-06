@@ -124,7 +124,6 @@ public class SceneManager : MonoBehaviour
     void goToBattle()
     {
         sceneToLoad = "BattleScene";
-
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
     }
 
@@ -138,6 +137,7 @@ public class SceneManager : MonoBehaviour
     void goToShop()
     {
         sceneToLoad = "ShopScene";
+
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
     }
 
