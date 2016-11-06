@@ -193,8 +193,18 @@ public class Player : MonoBehaviour {
         Debug.Log("sceneBegin " + sceneBegin);
         if(sceneBegin == ScenesType.SHOP)
             this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
-        if(sceneBegin == ScenesType.BATTLE)
+        if (sceneBegin == ScenesType.BATTLE)
+        {
             EventManager.raise<int>(EventType.LOOSE_LIFE_PLAYER, lifePoint);
+            if (Camera.main.GetComponent<CameraFollow>() != null)
+            {
+                Camera.main.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, Camera.main.transform.position.z);
+                Camera.main.GetComponent<CameraFollow>().stopCamera = true;
+            }
+        }
+        else
+            if (Camera.main.GetComponent<CameraFollow>() != null)
+            Camera.main.GetComponent<CameraFollow>().stopCamera = false;
     }
 
     public void move (float dx, float dy)

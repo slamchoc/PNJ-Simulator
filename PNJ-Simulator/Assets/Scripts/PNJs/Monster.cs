@@ -39,6 +39,8 @@ public class Monster : PNJ
 
     private bool attacking = false;
 
+    private bool inBattle = false;
+
     public void createMonster(int _pvs, Vector3 _patternA, Vector3 _patternB)
     {
         neverCollided = true;
@@ -88,7 +90,7 @@ public class Monster : PNJ
                 }
             }
         }
-        else if(!attacking)
+        else if(!attacking && inBattle)
         {
             pointPatterA = this.transform.position;
             pointPatterB = player.transform.position;
@@ -185,7 +187,7 @@ public class Monster : PNJ
             EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.MUSIQUE_PNJ);
             EventManager.addActionToEvent<int>(EventType.DAMAGE_ENNEMY, hitMonster);
             EventManager.raise<int>(EventType.LOOSE_LIFE_ENNEMY, nbPvs);
-
+            inBattle = true;
         }
     }
 
