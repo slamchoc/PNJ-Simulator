@@ -27,7 +27,8 @@ public class PNJ : MonoBehaviour
 
     public void setMenu(List<Pair<Callback, String>> arrayOfFunctions, String text)
     {
-        menu = new Menu(arrayOfFunctions, text);
+        if(arrayOfFunctions.Count != 0)
+            menu = new Menu(arrayOfFunctions, text);
     }
     public void setMenu(Menu _menu)
     {
@@ -36,6 +37,7 @@ public class PNJ : MonoBehaviour
 
     virtual public void printMenu()
     {
-        EventManager.raise<Menu>(EventType.MENU_ENTERED, menu);
+        if(menu != null)
+            EventManager.raise<Menu>(EventType.MENU_ENTERED, menu);
     }
 }

@@ -330,8 +330,6 @@ public class Player : MonoBehaviour {
 
     public void stopAnimation()
     {
-        Debug.Log("stop");
-
         if (currentOrientation == Orientation.UP)
             animator.enabled = false;
         else if (currentOrientation == Orientation.RIGHT)

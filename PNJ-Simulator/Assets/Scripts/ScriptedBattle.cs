@@ -149,6 +149,9 @@ public class ScriptedBattle : MonoBehaviour
             if(typeBattle == ScriptedBattleType.HERODIE)
             {
                 hero.transform.position = this.transform.position;
+                hero.GetComponent<SpriteRenderer>().enabled = true;
+                hero.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+
                 nameAnimator = "SecondBattle";
                 hero.GetComponent<Animator>().Play(nameAnimator);
                 StartCoroutine(laucnhbattle(hero));
