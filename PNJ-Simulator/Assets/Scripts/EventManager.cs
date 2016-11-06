@@ -8,6 +8,7 @@ using UnityEngine;
 public enum EventType
 {
     CHANGE_SCENE,
+    WIN,
     TITRE_APPARAIT,
     CINEMATIC_ENDED,
     CINEMATIC_BEGIN,
