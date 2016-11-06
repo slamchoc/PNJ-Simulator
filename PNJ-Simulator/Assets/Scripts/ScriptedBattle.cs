@@ -133,7 +133,7 @@ public class ScriptedBattle : MonoBehaviour
 
         monster.GetComponent<Monster>().createMonster(25, toHide.transform.position, toHide.transform.position);
 
-        monster.GetComponent<Monster>().laucnhBattle();
+        monster.GetComponent<Monster>().launchBattle();
 
         toHide.GetComponent<SpriteRenderer>().enabled = false;
         toHide.transform.position = new Vector3(0, 0, 0);

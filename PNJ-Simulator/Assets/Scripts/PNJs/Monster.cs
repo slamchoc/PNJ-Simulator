@@ -165,12 +165,12 @@ public class Monster : PNJ
             player = collision.gameObject.GetComponent<Player>();
             if (neverCollided)
             {
-                laucnhBattle();
+                launchBattle();
             }
         }
     }
 
-    public void laucnhBattle()
+    public void launchBattle()
     {
         neverCollided = false;
         //We save the monster
