@@ -82,6 +82,8 @@ public class ShopScript : MonoBehaviour {
 
     private bool needCinematique = true;
 
+    public GameObject titre;
+
     // Use this for initialization
     void Start ()
     {
@@ -95,17 +97,12 @@ public class ShopScript : MonoBehaviour {
                                         new List<Pair<Callback, String>> { new Pair<Callback, String>(() => { exitVisitor(); hero.player.addGold(); hero.player.addReputation(); EventManager.raise(EventType.MENU_EXIT); }, "finir journee") }
                                         , PNJName + " :\nAh, parfait !\nMerci"
                                     );
-        
 
 
 
+        EventManager.raise(EventType.STOP_SOUND);
         EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.MUSIQUE_CINEMATIQUE2);
-        cinematique.SetActive(false);
-        cinematique.transform.position = new Vector3(
-            -cinematique.GetComponent<SpriteRenderer>().bounds.size.x / 2 - Camera.main.aspect * Camera.main.orthographicSize,
-            0,
-            -4
-            );
+        cinematique.SetActive(true);
 
         Menu stairMenu = new Menu(
                                         new List<Pair<Callback, String>> { new Pair<Callback, String>(nextDay,"dormir") }, "(* Enfin, la journee se termine *)"
@@ -138,6 +135,9 @@ public class ShopScript : MonoBehaviour {
     {
         door.changeToDestructedSprite();
         hero.GetComponent<Rigidbody>().velocity = new Vector2(0, -5);
+        hero.GetComponent<Animator>().Play("Grrrr");
+        EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PORTE_CASSEE);
+
     }
 
     // Update is called once per frame
@@ -148,16 +148,19 @@ public class ShopScript : MonoBehaviour {
             cinematique.SetActive(true);
 
             // cinematique
-            cinematique.transform.position += new Vector3(
+            cinematique.transform.position -= new Vector3(
                        Time.deltaTime * 2.0f,
                        0,
                        0
                        );
-            if (cinematique.transform.position.x > cinematique.GetComponent<SpriteRenderer>().bounds.size.x / 2 + Camera.main.aspect * Camera.main.orthographicSize)
+            if (cinematique.transform.position.x < -  cinematique.GetComponent<SpriteRenderer>().bounds.size.x / 2 - Camera.main.aspect * Camera.main.orthographicSize)
             {
                 needCinematique = false;
                 cinematique.SetActive(false);
                 EventManager.raise(EventType.STOP_SOUND);
+                EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.AMBIANCE_FORGE);
+                EventManager.raise<SoundsType>(EventType.PLAY_SOUND_LOOP, SoundsType.MUSIQUE_HEROS);
+
                 nextDay();
             }
 
@@ -229,6 +232,7 @@ public class ShopScript : MonoBehaviour {
         if(hero.load(currentDay))
         {
            visitor = hero.gameObject;
+           visitor.GetComponent<Animator>().Play("Down");
         }
         else
         {
@@ -241,6 +245,7 @@ public class ShopScript : MonoBehaviour {
         visitor.transform.position = new Vector3(0,4,-2);
         visitor.transform.localScale = new Vector2(2, 2);
         visitor.GetComponent<Rigidbody>().velocity = new Vector3(0,-0.5f,0);
+        EventManager.raise<SoundsType>(EventType.PLAY_SOUND_ONCE, SoundsType.PORTE_OUVERTE);
     }
 
     void exitVisitor()

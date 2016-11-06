@@ -142,6 +142,7 @@ public class MenuManager : MonoBehaviour
         }
         GameObject arrow = Instantiate(arrowMainMenu);
         arrow.transform.parent = Camera.main.transform;
+        arrow.transform.localPosition = new Vector3(arrow.transform.localPosition.x, arrow.transform.localPosition.y, 1);
 
         actualMenuPrinted.Add(arrow);
         currentMenuActive = new Pair<Menu, GameObject>(_menu, arrow);
