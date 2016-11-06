@@ -47,6 +47,14 @@ public class InputManager : MonoBehaviour {
             attack2 = Input.GetAxis("Attack2");
             splash = Input.GetAxis("Splash");
         }
+        else
+        {
+            horizontal = 0;
+            vertical = 0;
+            attack1 = 0;
+            attack2 = 0;
+            splash = 0;
+        }
 
         submit = Input.GetAxis("Submit");
             

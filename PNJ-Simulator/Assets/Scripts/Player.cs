@@ -54,12 +54,13 @@ public class Player : MonoBehaviour {
 
         if(goal != new Vector3(-100,-100,-100))
         {
-            if(Vector2.Distance(this.transform.position, goal) > 1.0)
+            if(Vector2.Distance(this.transform.position, goal) > 3.0)
             {
                 move(Vector3.Normalize((goal - this.transform.position)).x, Vector3.Normalize((goal - this.transform.position)).y);
             }
             else
             {
+                move(0, 0);
                 goal = new Vector3(-100, -100, -100);
                 stopAnimation();
             }
@@ -213,6 +214,7 @@ public class Player : MonoBehaviour {
 
     public void move (float dx, float dy)
     {
+        Debug.Log("Move "+dx+" "+dy);
         if (dy > 0)
             currentOrientation = Orientation.UP;
         else if (dy < 0)
