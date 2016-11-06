@@ -51,6 +51,12 @@ public class Fin : MonoBehaviour {
                  );
         EventManager.raise<Menu>(EventType.MENU_ENTERED, bravo);
     }
+
+    void OnDestroy()
+    {
+        EventManager.removeActionFromEvent(EventType.WIN, print);
+        EventManager.removeActionFromEvent(EventType.EVENTBEFOREWIN, cinematiqueEnd);
+    }
 }
 
 
