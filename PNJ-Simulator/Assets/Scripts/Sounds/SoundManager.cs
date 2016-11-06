@@ -92,10 +92,11 @@ public class SoundManager : MonoBehaviour {
         else
         {
             sources = Resources.LoadAll<AudioClip>("").ToList<AudioClip>();
-            for (int i = 0; i < sources.Count; i++)
-            {
-                Debug.Log(sources[i]);
-            }
+
+            EventManager.addActionToEvent<SoundsType>(EventType.PLAY_SOUND_ONCE, playSound);
+            EventManager.addActionToEvent(EventType.STOP_SOUND, stopSounds);
+
+            EventManager.addActionToEvent<SoundsType>(EventType.PLAY_SOUND_LOOP, playSoundLoop);
         }
     }
 
@@ -112,8 +113,6 @@ public class SoundManager : MonoBehaviour {
            while (clip.loadState != AudioDataLoadState.Loaded)
                yield return www;
                */
-        Debug.Log(path);
-
         AudioClip clip = Resources.Load<AudioClip>(path);
         if (clip == null)
             Debug.Log("><");
