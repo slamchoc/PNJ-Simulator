@@ -30,6 +30,7 @@ public class Fin : MonoBehaviour {
             {
                 Debug.Log("FIN !");
                 defiler = false;
+                EventManager.raise(EventType.QUIT_GAME);
             }
         }
 	}
