@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-guid: 6a3fddbfaae16084986acffbf9c235a0
-timeCreated: 1478360970
-=======
-guid: f50d2f2f32175df45bca364a7f622972
-timeCreated: 1478360811
->>>>>>> c9eb2bf8b62236f26792078843ba15fef9acf545
-licenseType: Free
+guid: 62ff800b4e74f7646ab7e7a5c7b76a1b
 AudioImporter:
   serializedVersion: 6
   defaultSettings:
@@ -16,11 +9,25 @@ AudioImporter:
     compressionFormat: 1
     quality: 1
     conversionMode: 0
-  platformSettingOverrides: {}
+  platformSettingOverrides:
+    1:
+      loadType: 2
+      sampleRateSetting: 0
+      sampleRateOverride: 44100
+      compressionFormat: 1
+      quality: 1
+      conversionMode: 0
+    13:
+      loadType: 2
+      sampleRateSetting: 0
+      sampleRateOverride: 44100
+      compressionFormat: 7
+      quality: 1
+      conversionMode: 0
   forceToMono: 0
   normalize: 1
   preloadAudioData: 1
-  loadInBackground: 0
+  loadInBackground: 1
   3D: 1
   userData: 
   assetBundleName: 
